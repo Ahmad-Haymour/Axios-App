@@ -8,7 +8,10 @@ const path = require('path')
 
 exports.register = async(req, res, next)=>{
     const user = new User(req.body)
-    user.password = await bcrypt.hash(user.password, 10)
+    
+    const salt = await bcrypt.genSalt(10)
+    user.password = await bcrypt.hash(user.password, salt)
+
     user.token = crypto.randomBytes(64).toString('hex')
 
     if(req.file){
@@ -19,7 +22,7 @@ exports.register = async(req, res, next)=>{
         await fs.unlink(filename);
     }
 
-    console.log(user);
+    console.log('Register ', user);
     await user.save()
     res.cookie('user-token', user.token, {maxAge: 999999999999, sameSite: 'strict', httpOnly: true})
 
@@ -60,7 +63,8 @@ exports.getUsers = async(req, res, next) =>{
 
 exports.getSingleUser = async (req, res, next)=>{
     const {id} = req.params
-    const user = await User.findById(id).populate('events').populate('eventslist').populate('messenger').populate('chatting')
+    const user = await User.findById(id)
+    // const user = await User.findById(id).populate('events').populate('eventslist').populate('messenger').populate('chatting')
     if(!user){
         const error = new Error('User not found')
         error.status = 400
@@ -73,8 +77,12 @@ exports.getSingleUser = async (req, res, next)=>{
 
 exports.logout = async(req, res, next)=>{
     const token = req.cookies['user-token']
-    const user = await User.findOne().where('token').equals(token)
+    // const user = await User.findOne().where('token').equals(token)
+    const user = await User.findOne({token:token})
 
+    console.log('LOGOUT TOKEN => ', token);
+
+    console.log('LOGOUT USER => ', user);
     if(!token){
         return res.status(200).send('Token not found')
     }
@@ -82,27 +90,28 @@ exports.logout = async(req, res, next)=>{
         user.token = ''
         await user.save()
     }
-    res.cookie('user-token', '', {minAge: 1, sameSite: 'strict', httpOnly: true})
-    res.status(200).json(null)
+    res.cookie('user-token', user.token, {minAge: 1, sameSite: 'strict', httpOnly: true})
+    res.status(200).send('Logout Success')
 }
 
-// exports.getCurrentUser = async(req, res, next)=>{
+exports.getCurrentUser = async(req, res, next)=>{
  
-//     const token = req.cookies['user-token']
+    const token = req.cookies['user-token']
 
-//     if(!token){
-//         console.log('token failed');
-//         return res.status(200).json(null)
-//     }
+    if(!token){
+        console.log('token failed');
+        return res.status(200).json(null)
+    }
 
-//     const user = await User.findOne().where('token').equals(token).populate('messenger').populate('chatting')
-//     if(!user){
-//         console.log('user failed');
-//         return res.status(200).json(null)
-//     }
+    const user = await User.findOne({token:token})
+    // const user = await User.findOne().where('token').equals(token)
+    if(!user){
+        console.log('user failed');
+        return res.status(200).json(null)
+    }
 
-//     res.status(200).json(user)
-// }
+    res.status(200).json(user)
+}
 
 // exports.updateUser = async(req, res, next)=>{
 //     const {firstname, lastname, age, gender} = req.body

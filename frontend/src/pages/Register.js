@@ -1,7 +1,15 @@
 import React, { useState } from 'react'
-import {Link} from 'react-router-dom';
+import Axios from 'axios';
+import useUser from '../hooks/useUser';
+import {Link, useNavigate} from 'react-router-dom';
+
+Axios.defaults.withCredentials = true;
+
 
 export default function Register() {
+
+  const user = useUser()
+  const navigate = useNavigate()
 
   const [email, setEmail] = useState('');
   const [password , setPassword] = useState('');
@@ -9,14 +17,18 @@ export default function Register() {
   const [lastname, setLastname] = useState('');
   const [gender, setGender] = useState('Male');
   const [age, setAge] = useState('');
-//   const [avatar, setAvatar] = useState('');
-
-  // const user = useUser()
-  // const navigate = useNavigate()
+      const [avatar, setAvatar] = useState('');
 
   const handleSubmit = async(e)=>{
     e.preventDefault()
-    console.log('Hi (Submit)');
+    try{
+        await user.register({email, password, firstname, lastname, age, gender, avatar})
+        console.log('Fine');
+        navigate('/account')
+    }
+    catch{
+      console.log("error");
+    }
   }
 
     return ( 
@@ -53,12 +65,12 @@ export default function Register() {
                                     <div className="flex justify-evenly items-end gap-10 mx-5">
 
                                         <div className="flex items-center">
-                                            <input onClick={(e)=> setGender('Male')} id="default-radio-1" type="radio" value={gender} name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-                                            <label for="default-radio-1" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">Male</label>
+                                            <input onClick={(e)=> setGender('Male')} id="default-radio-1" type="radio" value={"Male"} name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                                            <label htmlFor="default-radio-1" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">Male</label>
                                         </div>
                                         <div className="flex items-center">
-                                            <input onClick={(e)=> setGender('Female')} checked id="default-radio-2" type="radio" value={gender} name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-                                            <label for="default-radio-2" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">Female</label>
+                                            <input onClick={(e)=> setGender('Female')}  id="default-radio-2" type="radio" value={"Female"} name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                                            <label htmlFor="default-radio-2" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">Female</label>
                                         </div>
                                     </div>
 
@@ -77,13 +89,13 @@ export default function Register() {
                                 </div>
 
                                 <div className="flex items-center justify-center w-full py-5">
-                                    <label for="dropzone-file" className="flex flex-col items-center justify-center w-full h-34 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-200 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                    <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-34 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-200 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                         <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                                            <svg aria-hidden="true" className="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                                            <svg aria-hidden="true" className="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
                                             <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload avatar</span> </p>
-                                            <p className="text-xs text-gray-500 dark:text-gray-400">or drag and drop: SVG, PNG, JPG or GIF.</p>
+                                            <p className="text-xs text-gray-500 dark:text-gray-400">or drag and drop: SVG, PNG, JPG or GIF.</p> 
                                         </div>
-                                        <input id="dropzone-file" type="file" className="hidden" />
+                                        <input  accept='image/*' onChange={(e)=> setAvatar(e.target.files[0])} id="dropzone-file" type="file" className="hidden" />
                                     </label>
                                 </div> 
 

@@ -1,6 +1,6 @@
 const express = require('express')
 const controller = require('../controllers/user')
-// const auth = require('../lib/middelwares/auth')
+const auth = require('../lib/middlewares/auth')
 require('express-async-errors')
 // const validator = require('../lib/validators/user')
 
@@ -9,15 +9,15 @@ const app = express.Router()
 
 const upload = multer({dest: "uploads/"})
 
-// app.route('/')
-//     .get( auth ,controller.getCurrentUser )
+app.route('/')
+    .get( auth ,controller.getCurrentUser )
 //     .patch( auth , upload.single("avatar") , controller.updateUser)
 
 app.get('/all',  controller.getUsers)
 
-app.post('/register' , controller.register )
+app.post('/register' ,upload.single("avatar"), controller.register )
 app.post('/login', controller.login )
-app.post('/logout',  controller.logout)
+app.post('/logout', auth, controller.logout)
 
 app.get('/:id',  controller.getSingleUser)
 

@@ -8,16 +8,15 @@ const userSchema = Schema({
     gender: {
         type: String, 
         enum: ['Male', 'Female'],
-
+        required: false
     },
     age: {type: String, required: true},
     avatar: {type: String},
     events: [{
         type: SchemaTypes.ObjectId,
         ref: 'Event'
-    }]
-   
-
+    }],
+    token: {type: String}
 })
 
 // userSchema.methods.toJSON = function(){

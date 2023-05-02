@@ -1,4 +1,5 @@
 import React , {useState , useEffect , createContext } from "react";
+import Axios from "axios"
 
 const Context = createContext({
     data : null ,
@@ -21,27 +22,29 @@ export function UserProvider (props){
 
     const [loggedIn , setLoggedIn] = useState(Boolean)
 
-
-    console.log('useUser is working good');
-    
     useEffect(()=>{
-        fetch(`http://localhost:4000/user`,
-            {
-            method: 'GET',
-            credentials : 'include',
-            })
-            .then(async res =>{
-                const result = await res.json()
-                if(res.status === 200){
-                    setUser(result)
-                    console.log('Use Effect', result);
+
+        Axios.get(`http://127.0.0.1:5000/user`,
+            {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
+        )
+            .then(async (res) =>{
+                // const result = await res.json()
+                console.log('RES LOOK HERE', res);
+                if(res.data._id !== user?.data._id){
+                    setUser(res.data)
+                    console.log('Use Effect NEW User: ', res.data);
+                }
+                else if(res.data._id === user?.data._id){
+                    setUser(res.data)
+                    console.log('Use Effect OLD User: ', res.data);
+
                 }
             })
+            .catch(err=> console.log(err))
             .finally(()=>{
                 setReady(true)
-                console.log(user);
             })
-        },[])
+    },[])
 
         const data = {
             data: user,
@@ -52,38 +55,39 @@ export function UserProvider (props){
             login : async(body)=>{
                 setError('')
                 setErrors([])
-
                 setIsFetching(true)
-                const res = await fetch('http://localhost:4000/user/login' , {
-                    method: "POST",
-                    credentials : 'include',
-                    headers: {
-                        'Content-Type':'application/json'
-                    },
-                    body: JSON.stringify(body)
-                })
 
-                const result = await res.json()
-                if(res.status === 200){
-                    setUser(result)
-                    setLoggedIn(true)
-                }
-                else if(result.errors){
-                    setErrors(result.errors)
-                    setTimeout(() => {
-                        setErrors('')
-                    }, 2000);
-                }
-                else if (result.error){
-                    setError(result.error)
-                    setTimeout(() => {
-                        setError('')
-                    }, 2000);
-                }
-                setIsFetching(false)
+                await Axios.post("http://127.0.0.1:5000/user/login", {email:body.email, password:body.password},  {headers: { 'Content-Type': 'application/json;charset=UTF-8',
+                }})
+                    .then(res=> {
+                        setUser(res.data)
+                    })
+                    .catch(err=>{
+                        console.log(err)
+                        setError(err.response.data.error)
+                    })
 
-                console.log('Result by useUser:',result);
-                return result
+                // const result = await res.json()
+                // if(res.status === 200){
+                //     setUser(result)
+                //     setLoggedIn(true)
+                // }
+                // else if(result.errors){
+                //     setErrors(result.errors)
+                //     setTimeout(() => {
+                //         setErrors('')
+                //     }, 2000);
+                // }
+                // else if (result.error){
+                //     setError(result.error)
+                //     setTimeout(() => {
+                //         setError('')
+                //     }, 2000);
+                // }
+                // setIsFetching(false)
+
+                // console.log('Result by useUser:',result);
+                // return result
             },
 
             register: async(body)=>{
@@ -100,34 +104,45 @@ export function UserProvider (props){
                 formData.append("age", body.age)
                 formData.append("avatar", body.avatar)
 
-                const res = await fetch('http://localhost:4000/user/register', {
-                    method : "POST",
-                    credentials : 'include',
-                    body : formData
-                })
+                await Axios.post("http://127.0.0.1:5000/user/register", formData, {headers: { 'Content-Type': 'application/json;charset=UTF-8',
+                }})
+                    .then(res=> {
+                        console.log(res)
+                        setUser(res.data)
+                    })
+                    .catch(err=>{
+                        console.log(err)
+                        setError(err.response.data.error)
+                    })
 
-                const result = await res.json()
-                if(res.status === 200){
-                    setUser(result)
-                    setLoggedIn(true)
+                // const res = await fetch('http://127.0.0.1:5000/user/register', {
+                //     method : "POST",
+                //     credentials : 'include',
+                //     body : formData
+                // })
 
-                    console.log(result);
-                }
-                else if(result.errors){
-                    setErrors(result.errors)
-                    setTimeout(() => {
-                        setErrors("")
-                    }, 2000);
-                }
-                else if (result.error){
-                    setError(result.error)
-                    setTimeout(() => {
-                        setError('')
-                    }, 2000);
-                }
-                setIsFetching(false)
+                // const result = await res.json()
+                // if(res.status === 200){
+                //     setUser(result)
+                //     setLoggedIn(true)
 
-                return result                
+                //     console.log(result);
+                // }
+                // else if(result.errors){
+                //     setErrors(result.errors)
+                //     setTimeout(() => {
+                //         setErrors("")
+                //     }, 2000);
+                // }
+                // else if (result.error){
+                //     setError(result.error)
+                //     setTimeout(() => {
+                //         setError('')
+                //     }, 2000);
+                // }
+                // setIsFetching(false)
+
+                // return result                
             },
             update: async (body) => {
                 setError('')
@@ -163,10 +178,7 @@ export function UserProvider (props){
               },
 
             logout: async()=>{
-                await fetch('http://localhost:4000/user/logout' , {
-                    method:"POST",
-                    credentials: "include"
-                })
+                await Axios.post('http://127.0.0.1:5000/user/logout')
                 setUser(null)
                 setLoggedIn(false)
             }
