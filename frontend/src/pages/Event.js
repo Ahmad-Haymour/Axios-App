@@ -13,12 +13,12 @@ export default function Event(){
     {id} = useParams(),
     [event, setEvent] = useState({}),
     [showEventOptions, setShowEventOptions] = useState(false),
-    [newUpdate, setNewUpdate] = useState(false),
+    [newUpdate, setNewUpdate] = useState(Boolean),
     [isUserJoined, setIsUserJoined] = useState(Boolean),
 
     handleCloseOptoins =()=>{
         setShowEventOptions(false)
-        setNewUpdate(true)
+        setNewUpdate(!newUpdate)
     },
 
     handleDeleteEvent = async(e)=>{
@@ -36,17 +36,24 @@ export default function Event(){
 
     handleJoinEvent = async(e)=>{
         e.preventDefault()
-        setNewUpdate(false)
 
         console.log('Join EVENT');
         try{
             await user.joinEvent({id})
             // navigate('/account')
-            setNewUpdate(true)
+            setNewUpdate(!newUpdate)
         }
         catch (error){
             console.log(error);
         }
+    },
+
+    checkIsUserInTeam = async(teamArray)=>{
+
+        const userInTeam = await teamArray.find(element => element._id === user.data?._id)
+
+        if(userInTeam) setIsUserJoined(true)
+        else if(!userInTeam) setIsUserJoined(false)
     }
 
     useEffect(()=>{
@@ -56,63 +63,14 @@ export default function Event(){
             .then(async(res)=>{
                     console.log('Event Effect: ', res.data);
                     setEvent(res.data)
-
-                    console.log('Check that user list:  ',  user.data?.eventslist);
-                    console.log('Check that event:  ',  res.data._id);
-                    
-                    // let x = await user.data?.eventslist.find(element => element._id === res.data._id)
-                    const x = await res.data.team.find(element => element._id === user.data?._id)
-
-                    if(x) setIsUserJoined(true)
-                    else if(!x) setIsUserJoined(false)
+                    checkIsUserInTeam(res.data.team)
                 })
         } catch (error) {
             console.log(error);
         }
     }, [ newUpdate, user.data])
 
-    // useEffect(()=>{
-    //     try {
-    //         Axios.get('http://127.0.0.1:5000/event/'+id)
-    //         .then(async(res)=>{
-    //                 // console.log('Event Effect: ', res.data);
-    //                 // setEvent(res.data)
-    //                 console.log('Check that user list:  ', await  user.data?.eventslist);
-    //                 console.log('Check that event:  ',  res.data._id);
-                    
-    //                 let x = await res.data?.team.find(element => element._id === user.data?._id)
-    //                 // const x = await res.data.team.find(element => element._id === user.data._id)
-    //                 // if(user.data.eventslist ) x = null 
 
-    //                 if(x) setIsUserJoined(true)
-    //                 else if(!x) setIsUserJoined(false)
-    //     })}
-    //     catch (error){
-    //         console.log(error);
-    //     }
-    // }, [])
-
-    // if((await res.data.team) && (await res.data.team.length > 0))  {
-    //     await res.data.team.find(element => {
-    //         // element._id === user.data._id
-    //         if(element._id === user.data._id) setIsUserJoined(true)
-    //         else if(element._id !== user.data._id) setIsUserJoined(false)
-    //     })
-    // }
-
-    // const checkTeamUsers = async()=>{
-        // const y = await event.team.find(element => element._id === user.data._id)
-        // console.log('Y HERE=>> ', y);
-        // if(y) setIsUserJoined(false)
-        // else if(!y) setIsUserJoined(true)
-    // }
-
-    // const (e)=>set = async(e)=>{
-    //     e.preventDefault()
-    //     await user.update({})
-    // }
-
-    // if(user.eventslist)
     if(showEventOptions && user.data ) return <UpdateEvent handleCloseOptoins={handleCloseOptoins}/>
 
     return (
@@ -149,7 +107,7 @@ export default function Event(){
                         <p className="inline-block align-bottom mt-2">From open airs & indoor raves</p>
                         <button onClick={handleJoinEvent} className="cursor-pointer border-transparent rounded-xl bg-blue-700 py-2 px-6 font-semibold text-white">
                             {/* { !isUserJoined || event.team.length === 0 ? 'Join' : 'Leave!'} */}
-                            { !isUserJoined || user.data.eventslist.find(el=>el._id !== event._id) ? 'Join' : 'Leave!'}
+                            { !isUserJoined && user.data.eventslist.find(el=>el._id !== event._id) ? 'Join' : 'Leave!'}
                         </button>
                     </div>
                 }
@@ -164,9 +122,9 @@ export default function Event(){
                     ))}
                 </div>
 
-                <div>
-                    <Comments />
-                </div>
+                
+                    <Comments event={event} handleCloseOptoins={handleCloseOptoins} />
+                
 
                 <div>
                     <p className="text-black-700 font-bold text-xl mb-6">Tags</p>

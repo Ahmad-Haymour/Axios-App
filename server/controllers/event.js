@@ -44,7 +44,9 @@ exports.addEvent = async(req, res, next)=>{
 
 exports.getSingleEvent = async(req, res, next)=>{
     const {id} = req.params
-    const event = await Event.findById(id).populate('user', '-token -password -__v').populate('team')
+    const event = await Event.findById(id).populate('user', '-token -password -__v').populate('team').populate('comments')
+
+    await Promise.all(event.comments.map(comment=> comment.populate('user')))
 
     if(!event){
         const error = new Error('Event are not available anymore!!')
