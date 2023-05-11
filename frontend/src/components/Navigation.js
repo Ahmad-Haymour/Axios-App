@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from "react-router-dom";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Account from "../pages/Account";
 import Events from "../pages/Events";
 import useUser from "../hooks/useUser";
+import Event from "../pages/Event";
 
 export default function Navigation() {
 
-  const user = useUser()
-  const [open, setOpen] = useState(false);
-
-  const [width, setWidth] = React.useState(window.innerWidth);
-  const breakpoint = 768;
+  const user = useUser(),
+  [open, setOpen] = useState(false),
+  [width, setWidth] = React.useState(window.innerWidth),
+  breakpoint = 1024
 
   useEffect(() => {
     const handleResizeWindow = () => setWidth(window.innerWidth);
@@ -24,14 +24,20 @@ export default function Navigation() {
 
   const handleLogout = async(e)=>{
     e.preventDefault()
-    await user.logout()
+    try{
+      await user.logout()
+      // navigate('/login')
+    }
+    catch (error){
+      console.log(error);
+    }
   }
 
   return (
     <Router>
-      <div className="relative min-h-screen md:flex bg-gray-100">
+      <div className="relative min-h-screen lg:flex bg-gray-100">
           {/* mobile menu bar */}
-          <div className="md:hidden min-w-full flex justify-between bg-gray-800 text-gray-200">
+          <div className="lg:hidden min-w-full flex justify-between bg-gray-800 text-gray-200">
             <Link to="/">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 m-5">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"/>
@@ -46,20 +52,22 @@ export default function Navigation() {
           </div>
 
           {/* Sidebar */}
-          <div className={`sidebar  space-y-6  px-2 ${ width < breakpoint ? "bg-gray-600 absolute top-15 min-w-full z-[100]" : "bg-blue-800 py-8 w-[240px]"}
-          transform-translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out`}>
+          <div className={`sidebar  space-y-6  px-2 ${ width < breakpoint ? "bg-gray-600 absolute top-15 min-w-full z-[100]" : "bg-blue-800 pt-8 w-[240px]"}
+          transform-translate-x-full lg:relative lg:translate-x-0 transition duration-200 ease-in-out`}>
             { width > breakpoint && (
               <>
-                <Link to="/" className="text-2xl font-extrabold text-blue-100 space-x-3 px-4 pr-8">
+                <Link to="/" className="block min-w-[400px] text-2xl font-extrabold text-blue-100 space-x-3 px-4 pr-4">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 inline pb-1 text-5xl">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"/>
                   </svg>
-
-                  <span className="inline">Events App</span>
+                  <span>Events App</span>
                 </Link>
                 <nav className="px-4">
                   <Link to={"/"} className="text-blue-100 block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700">
                     Home
+                  </Link>
+                  <Link to={"/events"} onClick={() => setOpen(false)} className="text-blue-100 block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700">
+                    Events
                   </Link>
                   {!user.data && <>
                   <Link to={"/login"} className="text-blue-100 block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700">
@@ -90,28 +98,38 @@ export default function Navigation() {
                 >
                   Home
                 </Link>
-                <Link to={"/login"}  onClick={() => setOpen(false)} className="block py-2.5 px-4 hover:bg-gray-700 rounded transition duration-200"
-                >
+                {!user.data && <>
+
+                <Link to={"/login"}  onClick={() => setOpen(false)} className="block py-2.5 px-4 hover:bg-gray-700 rounded transition duration-200">
                   Login
                 </Link>
-                <Link to={"/register"} onClick={() => setOpen(false)} className="block py-2.5 px-4 hover:bg-gray-700 rounded transition duration-200"
-                >
+                <Link to={"/register"} onClick={() => setOpen(false)} className="block py-2.5 px-4 hover:bg-gray-700 rounded transition duration-200">
                   Signup
                 </Link>
-                <Link to={"/account"} onClick={() => setOpen(false)} className="block py-2.5 px-4 hover:bg-gray-700 rounded transition duration-200"
-                >
+                </>}
+                <Link to={"/events"} onClick={() => setOpen(false)} className="block py-2.5 px-4 hover:bg-gray-700 rounded transition duration-200">
+                  Events
+                </Link>
+                { user?.data && <> 
+
+                <Link to={"/account"} onClick={() => setOpen(false)} className="block py-2.5 px-4 hover:bg-gray-700 rounded transition duration-200">
                   Account
                 </Link>
+                <button onClick={handleLogout} className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700" >
+                  Logout
+                </button>
+                </>}
               </nav>
             )}
           </div>
-          <div className="max-w-screen mx-auto my-4">
+          <div className="max-w-screen mx-auto md:my-2">
             <Routes>
               <Route path="/" element={<h1>Home</h1>} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register/>} />
               <Route path="/account" element={<Account/>} />
               <Route path="/events" element={<Events/>} />
+              <Route path="/events/:id" element={<Event/>} />
             </Routes>
           </div>
       </div>

@@ -17,7 +17,7 @@ export default function Register() {
   const [lastname, setLastname] = useState('');
   const [gender, setGender] = useState('Male');
   const [age, setAge] = useState('');
-      const [avatar, setAvatar] = useState('');
+  const [avatar, setAvatar] = useState('');
 
   const handleSubmit = async(e)=>{
     e.preventDefault()
@@ -105,10 +105,10 @@ export default function Register() {
                             </form>
                             <div>
                                 <span className="text-center text-md text-gray-600 mt-50">
-                                    Don't have an account yet? {' '}
+                                    You have an account? {' '}
                                 </span>
-                                <Link to={'/register'} className="font-medium text-blue-600 hover:text-blue-500">
-                                    Signup
+                                <Link to={'/login'} className="font-medium text-blue-600 hover:text-blue-500">
+                                    Signin
                                 </Link>
                             </div>
                         </div>

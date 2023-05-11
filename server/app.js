@@ -65,8 +65,8 @@ app.use(cors(corsConfig))
 app.options('*', cors(corsConfig))
 
 app.use('/user', require('./routes/user'))
-// app.use('/events', require('./routes/events-list') )
-// app.use('/comments', require('./routes/comment'))
+app.use('/event', require('./routes/event') )
+app.use('/comment', require('./routes/comment'))
 // app.use('/chat', require('./routes/messenger'))
 
 app.use(express.static('uploads'))

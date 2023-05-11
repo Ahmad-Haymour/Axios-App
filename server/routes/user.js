@@ -11,7 +11,7 @@ const upload = multer({dest: "uploads/"})
 
 app.route('/')
     .get( auth ,controller.getCurrentUser )
-//     .patch( auth , upload.single("avatar") , controller.updateUser)
+    .patch( auth , upload.single("avatar") , controller.updateUser)
 
 app.get('/all',  controller.getUsers)
 

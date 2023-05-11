@@ -16,7 +16,12 @@ const userSchema = Schema({
         type: SchemaTypes.ObjectId,
         ref: 'Event'
     }],
-    token: {type: String}
+    // Joined Events in list
+    eventslist:[{
+        type: SchemaTypes.ObjectId,
+        ref: 'Event'
+    }],
+    token: {type: String},
 })
 
 // userSchema.methods.toJSON = function(){
