@@ -1,15 +1,17 @@
 import { useState } from "react"
 import Axios from 'axios';
 import { useParams } from "react-router-dom";
+import useUser from "../hooks/useUser";
 
 export default function Comments({event, handleCloseOptoins}){
 
+    const user = useUser()
     const {id} = useParams(),
 
-    // [commentID, setCommentID] = useState(''),
+    [commentID, setCommentID] = useState(''),
     [comment, setComment] = useState(''),
 
-    [open, setOpen] = useState(false),
+    [open , setOpen] = useState(false),
       
 
     handleAddComment = async(e)=>{
@@ -31,24 +33,28 @@ export default function Comments({event, handleCloseOptoins}){
     handleDeleteComment = async(e, commentID)=>{
         e.preventDefault()
 
+        console.log(commentID);
         await Axios.delete("http://127.0.0.1:5000/comment", {
-            id: commentID,
-            event: id
+            data:  {
+                commentID: commentID,
+                eventID: id
+            }
         })
-            .then(res=>{
+            .then(async res=>{
                 console.log(res);
-                setOpen(!open   )
+                await user.invokeUser();
+                setOpen( false  )
             })
             .catch(err=>console.log(err))
     }
-
 
     return (
         <section className="bg-white dark:bg-gray-900 py-8 lg:py-16">
             <div className="max-w-2xl mx-auto px-4">
                 <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Discussion (20)</h2>
+                    <h2 className="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Discussion ({event.comments ? event.comments.length: 0})</h2>
                 </div>
+
                 <form className="mb-6">
                     <div className="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
                         <label htmlFor="comment" className="sr-only">Your comment</label>
@@ -63,7 +69,7 @@ export default function Comments({event, handleCloseOptoins}){
                 </form>
 
                 {event.comments?.map(comment => (
-                    <article key={comment._id} className="relative p-6 mb-6 text-base bg-white rounded-lg bg-gray-300/50">
+                    <article key={comment._id} onMouseEnter={()=>setCommentID(comment._id)} onMouseLeave={()=>setCommentID('')} className="relative p-6 mb-6 text-base bg-white rounded-lg shadow-xl">
                         
                         <footer className="flex justify-between items-center mb-2">
                             <div className="flex items-center">
@@ -78,7 +84,7 @@ export default function Comments({event, handleCloseOptoins}){
                                 <p className="text-sm text-gray-600 dark:text-gray-400"><time pubdate={"true"} dateTime="2022-02-08"
                                         title="February 8th, 2022">Feb. 8, 2022</time></p>
                             </div>
-                            <button onClick={()=>setOpen(!open)}
+                            <button onClick={ ()=>setOpen(true) }
                                 className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                                 type="button">
                                 <svg className="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
@@ -89,30 +95,34 @@ export default function Comments({event, handleCloseOptoins}){
                                 </svg>
                                 <span className="sr-only">Comment settings</span>
                             </button>
+
                             {/* <!-- Dropdown menu --> */}
-                            { open &&
+
+                            { open  && comment._id === commentID &&
                             
-                            <div className={`absolute right-6 top-16 z-10 flex bg-white shadow-xl rounded  ${open ? "active" : ""}`}>
+                            <div className={`absolute right-6 top-16 z-10 flex bg-white shadow-xl rounded  ${ true ?"active" : ""}`}>
 
                                 <div className="flex flex-col justify-between items-start w-32 h-28 p-3 text-sm text-gray-700 dark:text-gray-200">
-                                    <button className="w-full text-left text-black hover:bg-gray-600" onClick={(e)=>{handleDeleteComment(e, comment._id)}}>
-                                        {/* <span className="block py-2 px-4 hover:bg-gray-100 hover:bg-gray-600 hover:text-black"></span> */}
-                                        Edit
-                                    </button>
-                                    <button className="w-full text-left text-black hover:bg-gray-600">
-                                        {/* <span className="block py-2 px-4 hover:bg-gray-100 hover:bg-gray-600 hover:text-black"></span> */}
+                                    <button className="w-full text-left text-black hover:bg-gray-300" onClick={(e)=>{handleDeleteComment(e, comment._id)}}>
+                                        {/* <span className="block py-2 px-4 hover:bg-gray-100 hover:bg-gray-300 hover:text-black"></span> */}
                                         Remove
                                     </button>
-                                    <button className="w-full text-left text-black hover:bg-gray-600">
+                                    <button className="w-full text-left text-black hover:bg-gray-300">
+                                        {/* <span className="block py-2 px-4 hover:bg-gray-100 hover:bg-gray-300 hover:text-black"></span> */}
+                                        {/* Edit */}
+                                        X
+                                    </button>
+                                    <button className="w-full text-left text-black hover:bg-gray-300">
                                         {/* <span className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-black"></span> */}
-                                        Report
+                                        {/* Report */}
+                                        X
                                     </button>
                                 </div>
                             </div>
                             }
                         </footer>
                     
-                        <p className="text-gray-500 dark:text-gray-400">{comment.message}.</p>
+                        <p className="text-gray-500 hover:text-gray-400 bg-gray-100/50">{comment.message}.</p>
                         
                         <div className="flex items-center mt-4 space-x-4">
                             <button type="button"

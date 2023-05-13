@@ -11,6 +11,7 @@ const Context = createContext({
     register: async()=>0,
     logout : async()=>0,
     update: async()=>0,
+    invokeUser: async()=>0,
     createEvent: async()=>0,
     updateEvent: async()=>0,
     deleteEvent: async()=>0,
@@ -185,6 +186,16 @@ export function UserProvider (props){
                 await Axios.post('http://127.0.0.1:5000/user/logout')
                 setUser(null)
                 setLoggedIn(false)
+            },
+
+            invokeUser: async()=>{
+                await  Axios.get(`http://127.0.0.1:5000/user`,
+                {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
+            )
+                .then(async (res) =>{
+                    setUser(res.data)
+                })
+                .catch(err=> console.log(err))
             },
 
             createEvent: async (body) => {

@@ -30,7 +30,7 @@ export default function Events(){
                         
                         <div className="px-6 py-0">
                             <div className="font-bold text-xl mb-2">
-                                {e.title}
+                                {e.title.length>20? e.title.slice(0,22)+'..': e.title}
                             </div>
                             <p className="text-red-700 text-base">
                                 {e.date}

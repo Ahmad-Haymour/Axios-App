@@ -80,7 +80,7 @@ export default function Event(){
             </div>
 
             {user.data?._id === event.user?._id && 
-                <div className="block flex justify-between pt-10 sm:relative right-0 sm:right-0 top-10 text-right px-16 ">
+                <div className="block flex justify-between mt-4 py-5 sm:relative right-0 top-10 text-right px-16 bg-gray-300/50">
                     <button onClick={()=> {
                         setNewUpdate(false)
                         setShowEventOptions(true)

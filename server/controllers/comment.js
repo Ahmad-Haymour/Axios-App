@@ -36,20 +36,33 @@ exports.createComment = async(req, res, next)=>{
 
 exports.deleteComment = async(req, res, next)=>{
 
-    const comment = await Comment.findById(req.body.id).populate('user', '-token -password -__v')
-    
-    const event = await Event.findById(req.body.event).populate('user', '-token -password -__v').populate('comments').populate('team', '-token -password -__v')
+    const {commentID, eventID} = req.body
 
-    if( !(comment.user._id.toString() === req.user._id.toString())){  
+    console.log('REQ BODY  => ', req.body);
+    console.log('Event ID => ', eventID);
+
+    const comment = await Comment.findById(commentID).populate('user', '-token -password -__v')
+    
+    const event = await Event.findById(eventID).populate('user', '-token -password -__v').populate('comments').populate('team', '-token -password -__v')
+
+    console.log(req.user?._id);
+    console.log(comment._id);
+
+    if( !(comment.user?._id.toString() === req.user?._id.toString())){  
         return res.status(201).json('Its not your comment')
     } 
     
-    event.comments.filter( e => e !== req.body.id )
+    event.comments.filter( e => e !== commentID )
     await Promise.all( event.comments.map((e)=>e.populate('user', '-token -password -__v')) )
 
-    await comment.remove()
+    // await comment.remove()
+    await Comment.deleteOne().where('_id').equals(commentID)
+    
+    
+    // event.comments.remove(req.body.id)
+    // await Comment.deleteOne().where('_id').equals(commentID)
+    event.comments = event.comments.filter(e => e._id !== commentID)
 
-    event.comments.remove(req.body.id)
     await event.save()
 
     res.status(200).send(event)

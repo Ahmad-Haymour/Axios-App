@@ -33,7 +33,9 @@ exports.register = async(req, res, next)=>{
 
 exports.login = async(req, res, next) =>{
     const {email, password} = req.body
-    const user = await User.findOne().where('email').equals(email)
+    const user = await User.findOne().where('email').equals(email).populate('events').populate('eventslist')
+    await Promise.all( user.events.map((e)=>e.populate('user', '-token -password -__v')) )
+
 
     if(!user){
         const error = new Error('Wrong E-Mail address !')
@@ -105,7 +107,7 @@ exports.getCurrentUser = async(req, res, next)=>{
         return res.status(200).json(null)
     }
 
-    const user = await User.findOne({token:token}).populate('events').populate('eventslist')
+    const user = await User.findOne({token:token}).populate('events').populate('eventslist').populate('messenger')
     // const user = await User.findOne().where('token').equals(token)
     await Promise.all( user.events.map((e)=>e.populate('user', '-token -password -__v')) )
 

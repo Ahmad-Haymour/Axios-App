@@ -6,6 +6,7 @@ import Account from "../pages/Account";
 import Events from "../pages/Events";
 import useUser from "../hooks/useUser";
 import Event from "../pages/Event";
+import Messenger from "../pages/Messenger";
 
 export default function Navigation() {
 
@@ -82,10 +83,14 @@ export default function Navigation() {
                     <Link to={"/account"} className="text-blue-100 block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700" >
                       Account
                     </Link>
-
-                    <button onClick={handleLogout} className="text-blue-100 block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700" >
-                      Logout
-                    </button>
+                    <Link to={"/messenger"} className="text-blue-100 block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700" >
+                      Messenger
+                    </Link>
+                    <div onClick={handleLogout} >
+                      <Link  to={"/login"} className="text-blue-100 block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700" >
+                        Logout
+                      </Link>
+                    </div>
                     </>
                   }
                 </nav>
@@ -110,14 +115,20 @@ export default function Navigation() {
                 <Link to={"/events"} onClick={() => setOpen(false)} className="block py-2.5 px-4 hover:bg-gray-700 rounded transition duration-200">
                   Events
                 </Link>
+
                 { user?.data && <> 
 
                 <Link to={"/account"} onClick={() => setOpen(false)} className="block py-2.5 px-4 hover:bg-gray-700 rounded transition duration-200">
                   Account
                 </Link>
-                <button onClick={handleLogout} className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700" >
+                <Link to={"/messenger"} onClick={() => setOpen(false)} className="block py-2.5 px-4 hover:bg-gray-700 rounded transition duration-200">
+                  Messenger
+                </Link>
+                <div onClick={handleLogout} >
+                  <Link to={"/login"} className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700" >
                   Logout
-                </button>
+                </Link>
+                </div>
                 </>}
               </nav>
             )}
@@ -130,6 +141,7 @@ export default function Navigation() {
               <Route path="/account" element={<Account/>} />
               <Route path="/events" element={<Events/>} />
               <Route path="/events/:id" element={<Event/>} />
+              <Route path="/messenger" element={<Messenger/>} />
             </Routes>
           </div>
       </div>

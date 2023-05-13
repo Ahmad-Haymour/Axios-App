@@ -22,6 +22,11 @@ const userSchema = Schema({
         ref: 'Event'
     }],
     token: {type: String},
+
+    messenger: [{
+        type: SchemaTypes.ObjectId,
+        ref: 'Chat'
+    }],
 })
 
 // userSchema.methods.toJSON = function(){
