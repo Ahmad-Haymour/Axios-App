@@ -53,6 +53,7 @@ exports.setChat = async (req, res, next)=>{
     console.log("Chat 1 :: ", chat);
     console.log("Chat 1 bool :: ", Boolean(chat === []));
     console.log("Chat 1 Length :: ", (chat.length === 0));
+    console.log("Chat 1 Length :: ", (chat.length));
 
     if( chat.length === 0){
         chat = await new Chat({})

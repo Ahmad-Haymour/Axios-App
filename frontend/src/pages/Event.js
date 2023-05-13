@@ -40,7 +40,8 @@ export default function Event(){
         console.log('Join EVENT');
         try{
             await user.joinEvent({id})
-            // navigate('/account')
+            // navigate('/account')     user.eventslist.find(u=> u._id === event._id  )
+            // navigate('/account')     user.eventslist.includes( event._id  )
             setNewUpdate(!newUpdate)
         }
         catch (error){
@@ -64,6 +65,8 @@ export default function Event(){
                     console.log('Event Effect: ', res.data);
                     setEvent(res.data)
                     checkIsUserInTeam(res.data.team)
+
+                    // await user.invokeUser()
                 })
         } catch (error) {
             console.log(error);
@@ -80,7 +83,7 @@ export default function Event(){
             </div>
 
             {user.data?._id === event.user?._id && 
-                <div className="block flex justify-between mt-4 py-5 sm:relative right-0 top-10 text-right px-16 bg-gray-300/50">
+                <div className="block flex justify-between md:mx-8 mt-4 py-5 sm:relative right-0 top-10 text-right shadow-xl px-16 bg-gray-200/50 rounded-xl">
                     <button onClick={()=> {
                         setNewUpdate(false)
                         setShowEventOptions(true)
@@ -102,12 +105,11 @@ export default function Event(){
                     <p className="text-gray-700 text-base">{event.address}</p>
                     <p className="text-gray-700 text-base">{event.description}</p>
                 </div>
-                {user.data && user.data.eventslist.length >= 0 &&
+                {user.data && 
                     <div className="flex justify-between align-center gap-6 my-8 rounded-xl p-3 sm:p-6 bg-gray-200">
                         <p className="inline-block align-bottom mt-2">From open airs & indoor raves</p>
                         <button onClick={handleJoinEvent} className="cursor-pointer border-transparent rounded-xl bg-blue-700 py-2 px-6 font-semibold text-white">
-                            {/* { !isUserJoined || event.team.length === 0 ? 'Join' : 'Leave!'} */}
-                            { !isUserJoined && user.data.eventslist.find(el=>el._id !== event._id) ? 'Join' : 'Leave!'}
+                            { !isUserJoined ? 'Join' : 'Leave!'}
                         </button>
                     </div>
                 }
@@ -121,18 +123,15 @@ export default function Event(){
                             <span key={member._id} className="text-md py-1 px-2 m-2 bg-gray-300 rounded-xl">{member.lastname}</span>
                     ))}
                 </div>
-
                 
-                    <Comments event={event} handleCloseOptoins={handleCloseOptoins} />
+                <Comments event={event} handleCloseOptoins={handleCloseOptoins} />
                 
-
                 <div>
-                    <p className="text-black-700 font-bold text-xl mb-6">Tags</p>
+                    <p className="text-black-700 font-bold text-xl my-6">Tags</p>
                     <span className="text-xs py-1 px-2 m-2 bg-gray-300 rounded-xl">#winter</span>
                     <span className="text-xs py-1 px-2 m-2 bg-gray-300 rounded-xl">#sport</span>
                     <span className="text-xs py-1 px-2 m-2 bg-gray-300 rounded-xl">#hamburg</span>
                 </div>
-
             </div>
         </div>
     )
