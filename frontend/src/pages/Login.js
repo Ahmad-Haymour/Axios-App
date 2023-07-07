@@ -1,21 +1,21 @@
-import React, { useState } from 'react'
 import {Link, useNavigate} from 'react-router-dom';
-// import Axios from "axios";
+import React, { useState } from 'react';
 import useUser from '../hooks/useUser';
 
 export default function Login() {
 
-  const user = useUser()
-  const navigate = useNavigate()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const user = useUser(),
+  navigate = useNavigate(),
+  [email, setEmail] = useState(''),
+  [password, setPassword] = useState(''),
 
-  const handleSubmit = async(e)=>{
+  handleSubmit = async(e)=>{
     e.preventDefault()
+
     try{
       await user.login({email, password})
-      console.log('Fine');
       navigate('/account')
+      window.location.reload()
     }
     catch{
       console.log("error");

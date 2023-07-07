@@ -4,18 +4,16 @@ const Event = require('../models/Event')
 exports.createComment = async(req, res, next)=>{
 
     console.log(req.body);
-    const comment = await new Comment(req.body).populate('user', '-token -password -__v')
+    const comment = await new Comment(req.body)
     comment.user = req.user
     
-    // console.log(comment);
-
+    await comment.populate('user', '-token -password -__v')
+    
     if(!comment.user){
         const error = new Error('user not found!')
         error.status = 400
         return next(error)
     }
-
-    // console.log(comment);
     
     const event = await Event.findById(comment.event).populate('comments').populate('user', '-token -password -__v')
 

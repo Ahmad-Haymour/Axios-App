@@ -1,19 +1,15 @@
-import Axios  from "axios";
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import useUser from "../hooks/useUser";
+import Axios  from "axios";
 
 export default function Events(){
 
-    const user = useUser()
     const [events, setEvents] = useState([])
 
     useEffect(()=>{
-
         try {
             Axios.get('http://127.0.0.1:5000/event')
                 .then((res)=>{
-                    console.log('All Events: ', res.data);
                     setEvents(res.data)
                 })
         } catch (error) {

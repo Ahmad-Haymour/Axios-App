@@ -12,7 +12,7 @@ exports.readChat = async (req, res, next)=>{
         res.status(201).send(null)
     }
 
-    const chat = await Chat.findById(chatID).populate('participants').populate('messages.user')
+    const chat = await Chat.findById(chatID).populate('participants').populate('messages.user', '-token -password')
 
     if(!chat ){
         res.status(201).send(null)
@@ -42,7 +42,7 @@ exports.setChat = async (req, res, next)=>{
                                             {_id: friend._id},
                                             {_id: user._id.toString()}
                                         ] }
-                                    ]}).populate('participants').populate('messages.user')
+                                    ]}).populate('participants', '-token -password').populate('messages.user', '-token -password')
 
     // await Promise.all( event.comments.map((e)=>e.populate('user', '-token -password -__v')) )
     
@@ -59,8 +59,11 @@ exports.setChat = async (req, res, next)=>{
         chat = await new Chat({})
         chat.participants = [friendID, user._id.toString()]
         chat.messages.push({message:'Chat Started', user: user._id.toString()})
-        console.log('look here', chat);
+        
+        await chat.populate('participants', '-token -password')
 
+        console.log('look here', chat);
+        
         await chat.save()
     }
 
@@ -82,8 +85,6 @@ exports.setChat = async (req, res, next)=>{
 }
 
 
-
-
 exports.sendMessage = async(req,res,next) =>{
 
     const { chatID, message} = req.body
@@ -91,7 +92,7 @@ exports.sendMessage = async(req,res,next) =>{
     console.log('REQ Body send Message: ', req.body);
     const user = await User.findById(req.user._id)
 
-    const chat = await Chat.findById(chatID).populate('participants').populate('messages.user')
+    const chat = await Chat.findById(chatID).populate('participants', '-token -password').populate('messages.user', '-token -password')
 
     if(!chat){
         const error = new Error('Chat went wrong!')

@@ -8,6 +8,7 @@ const path = require('path')
 
 exports.register = async(req, res, next)=>{
     const user = new User(req.body)
+    // .select({"password": 0, "token":0}),  ("-token -password") 
     
     const salt = await bcrypt.genSalt(10)
     user.password = await bcrypt.hash(user.password, salt)
@@ -22,9 +23,6 @@ exports.register = async(req, res, next)=>{
         await fs.unlink(filename);
     }
 
-
-    console.log('Register ', user);
-    console.log('Avatar: ', user.avatar);
     await user.save()
     res.cookie('user-token', user.token, {maxAge: 999999999999, sameSite: 'strict', httpOnly: true})
 
@@ -33,9 +31,8 @@ exports.register = async(req, res, next)=>{
 
 exports.login = async(req, res, next) =>{
     const {email, password} = req.body
-    const user = await User.findOne().where('email').equals(email).populate('events').populate('eventslist')
+    const user = await User.findOne({'email':email}).populate('events').populate('eventslist')
     await Promise.all( user.events.map((e)=>e.populate('user', '-token -password -__v')) )
-
 
     if(!user){
         const error = new Error('Wrong E-Mail address !')
@@ -56,37 +53,35 @@ exports.login = async(req, res, next) =>{
 
     res.cookie('user-token', user.token, {maxAge:99999999999, sameSite: 'strict', httpOnly: true} )
 
+    delete user.password
+
     res.status(200).send(user)
 }
 
 exports.getUsers = async(req, res, next) =>{
-    // const users = await User.find( {}, 'email token -_id')
-    const users = await User.find()
+    const users = await User.find({}, '-token -password -__v')
+    console.log(users);
     res.status(200).send(users)
 }
 
 exports.getSingleUser = async (req, res, next)=>{
     const {id} = req.params
-    const user = await User.findById(id)
-    // const user = await User.findById(id).populate('events').populate('eventslist').populate('messenger').populate('chatting')
+    const user = await User.findById(id, '-token -password -__v')
+
     if(!user){
         const error = new Error('User not found')
         error.status = 400
         return next(error)
     }
 
-    // await Promise.all(user.events.map((e)=>e.populate('events')))
     res.status(200).send(user)
 }
 
 exports.logout = async(req, res, next)=>{
     const token = req.cookies['user-token']
-    // const user = await User.findOne().where('token').equals(token)
+
     const user = await User.findOne({token:token})
 
-    console.log('LOGOUT TOKEN => ', token);
-
-    console.log('LOGOUT USER => ', user);
     if(!token){
         return res.status(200).send('Token not found')
     }
@@ -95,6 +90,7 @@ exports.logout = async(req, res, next)=>{
         await user.save()
     }
     res.cookie('user-token', user.token, {minAge: 1, sameSite: 'strict', httpOnly: true})
+
     res.status(200).send('Logout Success')
 }
 
@@ -107,7 +103,7 @@ exports.getCurrentUser = async(req, res, next)=>{
         return res.status(200).json(null)
     }
 
-    const user = await User.findOne({token:token}).populate('events').populate('eventslist').populate('messenger')
+    const user = await User.findOne({token:token}, '-token -password -__v').populate('events').populate('eventslist').populate('messenger')
     // const user = await User.findOne().where('token').equals(token)
     await Promise.all( user.events.map((e)=>e.populate('user', '-token -password -__v')) )
 
@@ -125,7 +121,7 @@ exports.updateUser = async(req, res, next)=>{
     console.log('REQ USSER: ', requestUser);
 
     const token = req.cookies['user-token']
-    const user = await User.findOne({token:token}).populate('events')
+    const user = await User.findOne({token:token}, '-token -password').populate('events')
     await Promise.all( user.events.map((e)=>e.populate('user', '-token -password -__v')) )
 
     // const user = await User.findOne({_id: requestUser._id})
@@ -170,15 +166,3 @@ exports.updateUser = async(req, res, next)=>{
 
     res.status(200).send(user)
 }
-
-// exports.notification = async (req,res, next)=>{
-
-//     const user = await User.findById(req.user._id)
-
-//     user.notification = false
-//     console.log(user);
-
-//     await user.save()
-
-//     res.status(200).send(user)
-// }

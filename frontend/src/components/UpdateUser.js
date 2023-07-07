@@ -1,18 +1,15 @@
-import { useState } from "react"
-import useUser from "../hooks/useUser"
-
+import { useState } from "react";
+import useUser from "../hooks/useUser";
 
 export default function UpdateUser({handleCloseOptoins}){
 
     const user = useUser(),
-
     [firstname, setFirstname] = useState(''),
     [lastname, setLastname] = useState(''),
     [gender, setGender] = useState(''),
     [age, setAge] = useState(''),
     [avatar, setAvatar] = useState(''),
         
-    
     handleUpdate = async(e)=>{
         e.preventDefault()
 
@@ -24,14 +21,6 @@ export default function UpdateUser({handleCloseOptoins}){
             console.log(error);
         }
     }
-
-    // const handleCloseOptoins = async(e)=>{
-    //     e.preventDefault()
-    //     setShowEditOptions(false)
-    //     console.log('Update');
-
-    //     // await user.update({email, password, firstname, lastname, age, gender, avatar})
-    // }
 
     return (
         <form className="w-full max-w-lg mx-auto">
@@ -53,15 +42,6 @@ export default function UpdateUser({handleCloseOptoins}){
                     onChange={(e)=> setLastname(e.target.value)} value={lastname}/>
                 </div>
             </div>
-            {/* <div className="flex flex-wrap -mx-3 mb-6">
-                <div className="w-full px-3">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-password">
-                        Password
-                    </label>
-                    <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="password" placeholder="******************"/>
-                    <p className="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p>
-                </div>
-            </div> */}
             <div className="flex flex-wrap -mx-3 mb-2">
                 <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                     <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-city">

@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react"
-import useUser from "../hooks/useUser"
+import { useEffect, useState } from "react";
+import useUser from "../hooks/useUser";
 import Axios from "axios";
-
 
 export default function Messenger(){
 
@@ -25,11 +24,8 @@ export default function Messenger(){
                 if(chatID) await Axios.get("http://127.0.0.1:5000/messenger?chatID="+chatID)
                     .then(async(response)=>{
                         console.log( 'Read Chat Response => ', response.data);
-                        // if(response.data) setChat(response.data)
-                        // if(response.data) setChatID(response.data._id)
                     })
                 else console.log('CHAT ID NULLL: ', chatID);
-
             })
             .catch(err=>console.log(err))
     },
@@ -37,6 +33,8 @@ export default function Messenger(){
     handleSendMessage = async(e)=>{
         e.preventDefault()
 
+        if(!message) return
+        
         await Axios.post("http://127.0.0.1:5000/messenger", 
         {
             chatID: chatID ,
@@ -61,25 +59,14 @@ export default function Messenger(){
             .catch (err=> console.log(err))
     }, [] )
 
-    // useEffect( ()=>{
-    //     Axios.get("http://127.0.0.1:5000/messenger?chatID="+chatID)
-    //     .then(async(res)=>{
-    //         console.log( 'Read Chat => ', res.data);
-    //         setChat(res.data)
-    //         setChatID(res.data._id)
-    //     })
-    //     .catch (err=> console.log(err) )
-    // }, [chatID] )
-
     return (
 
-        <div className="container mx-auto shadow-lg rounded-lg lg:min-w-[750px]">
+        <div className="container mx-auto shadow-lg rounded-lg lg:min-w-[750px] min-h-[87vh] sm:h-[70vh] lg:h-[90vh]">
               
-                {/* <!-- Chatting container -->  */}
-            <div className="flex flex-row justify-between bg-white max-h-full">
+            <div className="sm:flex flex-row justify-between bg-white sm:h-[85vh] lg:h-[95vh] my-4">
                 {/* <!-- chat list --> */}
 
-                <div className="flex flex-col w-2/5 border-r-2 overflow-y-auto">
+                <div className="flex flex-col sm:w-2/5 border-r-2 overflow-y-auto h-[170px] sm:h-full border-2 border-sky-400 sm:border-gray-500/50">
                         {/* <!-- search compt --> */}
                     <div className="border-b-2 py-4 px-2">
                         <input
@@ -93,12 +80,12 @@ export default function Messenger(){
                         <!-- user list --> */}
                     { user.data && users.filter(element=>element._id !== user.data?._id).map((u)=>( 
 
-                        <div onClick={(e)=>handleSetChat(e, u._id)} key={u._id} className="flex flex-row py-4 px-2 justify-center items-center border-b-2">
-                            <div className="w-1/4">
+                        <div onClick={(e)=>handleSetChat(e, u._id)} key={u._id} className="flex flex-row py-4 px-2 justify-between items-center border-b-2">
+                            <div className="w-2/4">
                                 <img
                                 src={u.avatar}
                                 className="object-cover h-12 w-12 rounded-full"
-                                alt=""
+                                alt="Participant avatar"
                                 />
                             </div>
                             <div className="w-full">
@@ -113,7 +100,7 @@ export default function Messenger(){
                 {/* <!-- end chat list --> */}
 
                 {/* <!-- Participant -->  */}
-                <div className="flex-1 p:2 sm:p-6 justify-between flex flex-col h-screen">
+                <div className="flex sm:p-2 justify-between flex-col w-full h-[66vh] sm:h-full">
                     <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
                         { chat?.participants && 
 
@@ -173,7 +160,7 @@ export default function Messenger(){
                                                 </span>
                                             </div>
                                         </div>
-                                        <img src={mes.user.avatar} className="w-6 h-6 rounded-full order-2"/>
+                                        <img src={mes.user.avatar} className="w-6 h-6 rounded-full order-2" alt="user avatar"/>
                                     </div>
                                 </div>
                                 }
@@ -183,7 +170,7 @@ export default function Messenger(){
 
                     {/* Chat Messages ends here => */}
 
-                    <div className="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
+                    <div className="border-t-2 border-gray-200 px-4 pt-4 sm:mb-0">
                         <div className="relative flex">
                             <span className="absolute inset-y-0 flex items-center">
                                 <button type="button" className="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
@@ -194,7 +181,7 @@ export default function Messenger(){
                             </span>
                             <input onChange={(e)=>setMessage(e.target.value)} value={message} type="text" placeholder="Write your message!" className="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-12 bg-gray-200 rounded-md py-3"/>
 
-                            <div className="absolute right-0 items-center inset-y-0 hidden sm:flex">
+                            <div className="absolute right-0 items-center inset-y-0 flex">
                                 <button type="button" className="inline-flex items-center justify-center rounded-lg px-4 py-3 transition duration-500 ease-in-out text-white bg-blue-500 hover:bg-blue-400 focus:outline-none"
                                 onClick={handleSendMessage}>
                                     <span className="font-bold">Send</span>

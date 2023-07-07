@@ -1,5 +1,5 @@
 import React , {useState , useEffect , createContext } from "react";
-import Axios from "axios"
+import Axios from "axios";
 
 const Context = createContext({
     data : null ,
@@ -26,6 +26,8 @@ export function UserProvider (props){
     const [ready , setReady] = useState(false)
     const [loggedIn , setLoggedIn] = useState(Boolean)
 
+    const [refreshUser, setRefreshUser] = useState(false)
+
     useEffect(()=>{
 
         Axios.get(`http://127.0.0.1:5000/user`,
@@ -39,7 +41,7 @@ export function UserProvider (props){
             .finally(()=>{
                 setReady(true)
             })
-    }, [])
+    }, [refreshUser])
 
         const data = {
             data: user,
@@ -47,6 +49,7 @@ export function UserProvider (props){
             errors : errors,
             isFetching: isFetching,
             loggedIn: loggedIn,
+
             login : async(body)=>{
                 setError('')
                 setErrors([])
@@ -55,34 +58,13 @@ export function UserProvider (props){
                 await Axios.post("http://127.0.0.1:5000/user/login", {email:body.email, password:body.password},  {headers: { 'Content-Type': 'application/json;charset=UTF-8',
                 }})
                     .then(res=> {
-                        setUser(res.data)
+                        // setUser(res.data)
+                        setRefreshUser(state=>!state)
                     })
                     .catch(err=>{
                         console.log(err)
                         setError(err.response.data.error)
                     })
-
-                // const result = await res.json()
-                // if(res.status === 200){
-                //     setUser(result)
-                //     setLoggedIn(true)
-                // }
-                // else if(result.errors){
-                //     setErrors(result.errors)
-                //     setTimeout(() => {
-                //         setErrors('')
-                //     }, 2000);
-                // }
-                // else if (result.error){
-                //     setError(result.error)
-                //     setTimeout(() => {
-                //         setError('')
-                //     }, 2000);
-                // }
-                // setIsFetching(false)
-
-                // console.log('Result by useUser:',result);
-                // return result
             },
 
             register: async(body)=>{
@@ -101,43 +83,14 @@ export function UserProvider (props){
 
                 await Axios.post("http://127.0.0.1:5000/user/register", formData, {headers: {'Content-Type': 'multipart/form-data'}})
                     .then(res=> {
-                        console.log(res)
-                        setUser(res.data)
+                        setRefreshUser(state=>!state)
                     })
                     .catch(err=>{
                         console.log(err)
                         setError(err.response.data.error)
-                    })
-
-                // const res = await fetch('http://127.0.0.1:5000/user/register', {
-                //     method : "POST",
-                //     credentials : 'include',
-                //     body : formData
-                // })
-
-                // const result = await res.json()
-                // if(res.status === 200){
-                //     setUser(result)
-                //     setLoggedIn(true)
-
-                //     console.log(result);
-                // }
-                // else if(result.errors){
-                //     setErrors(result.errors)
-                //     setTimeout(() => {
-                //         setErrors("")
-                //     }, 2000);
-                // }
-                // else if (result.error){
-                //     setError(result.error)
-                //     setTimeout(() => {
-                //         setError('')
-                //     }, 2000);
-                // }
-                // setIsFetching(false)
-
-                // return result                
+                    })              
             },
+
             update: async (body) => {
                 setError('')
                 setIsFetching(true)
@@ -152,34 +105,12 @@ export function UserProvider (props){
                 await Axios.patch("http://127.0.0.1:5000/user", formData, {headers: {'Content-Type': 'multipart/form-data'}})
                     .then(res=> {
                         console.log(res)
-                        setUser(res.data)
+                        setRefreshUser(state=>!state)
                     })
                     .catch(err=>{
                         console.log(err)
                         setError(err.response.data.error)
                     })
-          
-                // const res = await fetch('http://localhost:4000/user', {
-                //   method: 'PATCH',
-                //   credentials: 'include',
-                //   body: formData
-                // })
-          
-                // const result = await res.json()
-          
-                // if(res.status === 200) {
-                //   setUser(result)
-                // }
-                // else if (result.errors) {
-                //   setError(result.errors[0].msg)
-                // }
-                // else if (result.error) {
-                //   setError(result.error)
-                // }
-          
-                // setIsFetching(false)
-          
-                // return res.status
               },
 
             logout: async()=>{
@@ -215,12 +146,7 @@ export function UserProvider (props){
                 await Axios.post("http://127.0.0.1:5000/event", formData, {headers: {'Content-Type': 'multipart/form-data'}})
                     .then(async(res)=> {
                         eventID = res.data._id
-                        await Axios.get(`http://127.0.0.1:5000/user`,
-                        {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
-                        )
-                            .then(response=>{
-                                setUser(response.data)
-                            })  
+                        setRefreshUser(state=>!state)  
                     })
                     .catch(err=>{
                         console.log(err)
@@ -243,12 +169,7 @@ export function UserProvider (props){
 
                 await Axios.patch("http://127.0.0.1:5000/event/"+body.id , formData, {headers: {'Content-Type': 'multipart/form-data'}})
                     .then(async()=> {
-                        await Axios.get(`http://127.0.0.1:5000/user`,
-                        {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
-                        )
-                            .then(response=>{
-                                setUser(response.data)
-                            })                    
+                        setRefreshUser(state=>!state)                 
                     })
                     .catch(err=>{
                         console.log(err)
@@ -260,12 +181,7 @@ export function UserProvider (props){
                 console.log(body);
                 await Axios.delete("http://127.0.0.1:5000/event/"+body.id, {id: body.id}, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}} )
                     .then(async()=> {
-                        await Axios.get(`http://127.0.0.1:5000/user`,
-                        {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
-                        )
-                            .then(response=>{
-                                setUser(response.data)
-                            }) 
+                        setRefreshUser(state=>!state)
                     })
                     .catch(error =>{
                         console.log(error);
@@ -273,7 +189,6 @@ export function UserProvider (props){
             },
 
             joinEvent: async (body) => {
-                console.log(body);
                 await Axios.post("http://127.0.0.1:5000/event/join", {id: body.id}, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}} )
                     .then(async(res)=> {
                         console.log('Join Res:  ',res);

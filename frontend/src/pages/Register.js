@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
 import Axios from 'axios';
 import useUser from '../hooks/useUser';
+import React, { useState } from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 
 Axios.defaults.withCredentials = true;
@@ -23,8 +23,8 @@ export default function Register() {
     e.preventDefault()
     try{
         await user.register({email, password, firstname, lastname, age, gender, avatar})
-        console.log('Fine');
         navigate('/account')
+        window.location.reload()
     }
     catch{
       console.log("error");

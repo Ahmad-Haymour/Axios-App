@@ -1,11 +1,8 @@
-// import Axios  from "axios";
-import { useState } from "react"
-import useUser from "../hooks/useUser"
-import UpdateUser from "../components/UpdateUser"
-import CreateEvent from "../components/CreateEvent"
-import { Link } from "react-router-dom"
-// import { useEffect } from "react";
-
+import { useState } from "react";
+import useUser from "../hooks/useUser";
+import UpdateUser from "../components/UpdateUser";
+import CreateEvent from "../components/CreateEvent";
+import { Link } from "react-router-dom";
 
 export default function Account(){
 
@@ -15,22 +12,11 @@ export default function Account(){
     [showEventOptions, setShowEventOptions] = useState(false),
 
     handleCloseOptoins =(e)=>{
-        // e.preventDefault()
         setShowUserOptions(false)
         setShowEventOptions(false)
     }
 
-    // useEffect(()=>{
-    //     try{
-    //     Axios.get(`http://127.0.0.1:5000/user`,
-    //         {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
-    //     )
-    //     } catch (error){
-    //         console.log("error", error);
-    //     }
-    // }, [])
-
-    if(!user) return <h1>You must login or Register</h1>
+    if(!user) return <h1>Loading ...</h1>
 
     return (
         <main className="profile-page mt-52">
@@ -38,7 +24,7 @@ export default function Account(){
                 {showUserOptions && <UpdateUser handleCloseOptoins={handleCloseOptoins}/>}
                 {showEventOptions && <CreateEvent handleCloseOptoins={handleCloseOptoins}/>}
             </section>
-        { !showUserOptions && !showEventOptions &&  <>
+            { !showUserOptions && !showEventOptions &&  <>
             <section className="relative block h-500-px">
                 <div className="absolute top-50 w-full h-full bg-center bg-cover" style={{backgroundImage:" url('https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=2710&amp;q=80')"}}>
                     <span id="blackOverlay" className="w-full h-full absolute opacity-50 bg-black"></span>
@@ -61,10 +47,10 @@ export default function Account(){
                                 </div>
                                 <div className="w-full md:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center lg:min-w-[290px]">
                                     <div className="flex justify-between pt-16 sm:py-12 px-3 lg:mt-0  sm:mt-0">
-                                        <button  onClick={()=>setShowEventOptions(true)}  className="bg-pink-600 sm:min-w-[115px] active:bg-pink-600 text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150" type="button">
+                                        <button  onClick={()=>setShowEventOptions(true)}  className="bg-blue-600 sm:min-w-[115px] hover:bg-blue-400 text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150" type="button">
                                             Creat an Event
                                         </button>
-                                        <button onClick={()=>setShowUserOptions(true)} className="bg-pink-600 sm:min-w-[115px] active:bg-pink-600 text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150" type="button">
+                                        <button onClick={()=>setShowUserOptions(true)} className="bg-blue-600 sm:min-w-[115px] hover:bg-blue-400 text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150" type="button">
                                             Edit Profile
                                         </button>
                                     </div>
@@ -78,13 +64,13 @@ export default function Account(){
                                             <span className="text-md font-bold block uppercase tracking-wide text-blueGray-600">10</span><span className="text-sm text-blueGray-400">Photos</span>
                                         </div>
                                         <div className="lg:mr-4 p-3 text-center">
-                                            <span className="text-md font-bold block uppercase tracking-wide text-blueGray-600">89</span><span className="text-sm text-blueGray-400">Comments</span>
+                                            <span className="text-md font-bold block uppercase tracking-wide text-blueGray-600">{user.events.length}</span><span className="text-sm text-blueGray-400">Events</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div className="text-center lg:mt-8">
-                                <h3 className="text-2xl sm:text-4xl font-semibold leading-normal m-4 text-blue-700">
+                                <h3 className="text-2xl sm:text-4xl font-semibold leading-normal my-4 pb-4 text-blue-700">
                                     {user?.firstname + ' ' + user?.lastname}
                                 </h3>
                                 <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
@@ -102,27 +88,21 @@ export default function Account(){
                                 <div className="flex flex-wrap justify-center">
                                     <div className="w-full lg:w-9/12 px-4">
                                         <p className="mb-4 text-lg leading-relaxed text-blueGray-700">
-                                            An artist of considerable range, Jenna the name taken by
-                                            Melbourne-raised, Brooklyn-based Nick Murphy writes,
-                                            performs and records all of his own music, giving it a
-                                            warm, intimate feel with a solid groove structure. An
-                                            artist of considerable range.
                                             {/* {user.about} */}
                                         </p>
-                                        <a href="#pablo" className="font-normal text-pink-500">Show more</a>
+                                        {/* <a href="#" className="font-normal text-pink-500">Show more</a> */}
                                     </div>
                                 </div>
                             </div>
                             { user.events.length > 0 && <div className="text-center text-2xl font-bold py-8 text-blue-700 border-t border-blueGray-200">
                                 Events
-                            
                                 <div className="p-10 flex flex-wrap justify-center gap-5">
                                     {user.events.map(e=>(
                                         <Link to={'/events/'+e._id} key={e._id} className="rounded bg-white overflow-hidden shadow-md hover:shadow-xl w-[280px] h-[375px]">
                                             <img className="w-full h-[150px]" src={e.img?.replace("uploads\\", "http://127.0.0.1:5000/")} alt="Event bg"/>
                                             
                                             <div className="px-6 py-2 text-left">
-                                                <p className="font-bold text-lg text-black min-h-[48px] ">
+                                                <p className="font-bold text-lg text-black sm:min-h-[48px] ">
                                                     {e.title}
                                                 </p>
                                                 <p className="text-red-700 text-base py-2">
@@ -131,10 +111,10 @@ export default function Account(){
                                                 <p className="text-gray-500 text-base text-sm">
                                                     {e.address}
                                                 </p>
-                                                <p className="text-gray-500 text-base text-sm">
+                                                <p className="text-gray-500 text-sm">
                                                     {e.category}
                                                 </p>
-                                                <p className="text-sm text-black text-base pt-2">
+                                                <p className="text-sm text-black pt-2">
                                                     <span className="text-blue-700">By: </span> {e.user?.lastname && e.user.lastname}
                                                 </p>
                                             </div>
