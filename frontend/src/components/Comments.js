@@ -21,6 +21,7 @@ export default function Comments({event, handleCloseOptoins}){
             .then(async(res)=>{
                 setComment('')
                 handleCloseOptoins()
+                user.invokeUser()
             })
             .catch (err=> console.log(err))
     },

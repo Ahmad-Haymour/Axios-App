@@ -75,8 +75,8 @@ export default function Event(){
 
     return (
         <div className="flex flex-col bg-gray-100 sm:p-8 lg:min-w-[700px] xl:min-w-[1000px]">
-            <div className="md:px-14 bg-gray-200/50 rounded-2xl w-100 min-h-[30vh] max-h-[60vh]">
-                <img className="w-full h-full rounded-b-2xl" src={event.img?.replace("uploads\\", "http://127.0.0.1:5000/")} alt="Event bg" />
+            <div className="md:px-14 bg-gray-200/50 rounded-2xl w-100 min-h-[30vh] max-h-[500px]">
+                <img className="w-full h-full max-h-[450px] rounded-b-2xl" src={event.img?.replace("uploads\\", "http://127.0.0.1:5000/")} alt="Event bg" />
             </div>
 
             {user.data?._id === event.user?._id && 
@@ -104,7 +104,7 @@ export default function Event(){
                     <div className="flex justify-between align-center gap-6 my-8 rounded-xl p-3 sm:p-6 bg-gray-200">
                         <p className="inline-block align-bottom mt-2">From open airs & indoor raves</p>
                         <button onClick={handleJoinEvent} className="cursor-pointer border-transparent rounded-xl bg-blue-700 py-2 px-6 font-semibold text-white">
-                            { !isUserJoined ? 'Join' : 'Leave!'}
+                            { !isUserJoined ? 'Reserve a spot' : 'Cancel reservation'}
                         </button>
                     </div>
                 }

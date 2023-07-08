@@ -20,7 +20,7 @@ export default function Account(){
 
     return (
         <main className="profile-page mt-52">
-            <section className="p-6">
+            <section className="p-2">
                 {showUserOptions && <UpdateUser handleCloseOptoins={handleCloseOptoins}/>}
                 {showEventOptions && <CreateEvent handleCloseOptoins={handleCloseOptoins}/>}
             </section>
@@ -38,15 +38,16 @@ export default function Account(){
             <section className="relative py-16 bg-blueGray-200">
                 <div className="container mx-auto px-4 mt-28">
                     <div className="relative flex flex-col break-words bg-white w-full mb-6 shadow-xl rounded-lg -mt-80">
-                        <div className="px-6">
+
+                        <div className="mx-10">
                             <div className="flex flex-wrap justify-between ">
                                 <div className="w-full  flex justify-center">
-                                    <div className="absolute -top-16 z-90">
-                                        <img src={user?.avatar} alt="UserAvatar" className="shadow-xl rounded-full h-auto align-middle border-none max-w-[100px] sm:max-w-[150px]"/>
+                                    <div className="absolute -top-16">
+                                        <img src={user?.avatar} alt="UserAvatar" className="shadow-xl rounded-full align-middle border-none w-[100px] h-[100px] md:w-[150px] md:h-[150px] lg:-mt-2"/>
                                     </div>
                                 </div>
                                 <div className="w-full md:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center lg:min-w-[290px]">
-                                    <div className="flex justify-between pt-16 sm:py-12 px-3 lg:mt-0  sm:mt-0">
+                                    <div className="flex justify-between pt-16 sm:py-12 lg:mt-0 sm:mt-0 lg:px-8">
                                         <button  onClick={()=>setShowEventOptions(true)}  className="bg-blue-600 sm:min-w-[115px] hover:bg-blue-400 text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150" type="button">
                                             Creat an Event
                                         </button>
@@ -57,14 +58,17 @@ export default function Account(){
                                 </div>
                                 <div className="flex justify-center align-center w-full md:pt-3 md:w-4/12 px-4 lg:order-1">
                                     <div className="flex justify-center md:py-4 lg:pt-4 pt-8">
-                                        <div className="mr-4 p-3 text-center">
-                                            <span className="text-md font-bold block uppercase tracking-wide text-blueGray-600">22</span><span className="text-sm text-blueGray-400">Friends</span>
-                                        </div>
-                                        <div className="mr-4 p-3 text-center">
-                                            <span className="text-md font-bold block uppercase tracking-wide text-blueGray-600">10</span><span className="text-sm text-blueGray-400">Photos</span>
-                                        </div>
                                         <div className="lg:mr-4 p-3 text-center">
-                                            <span className="text-md font-bold block uppercase tracking-wide text-blueGray-600">{user.events.length}</span><span className="text-sm text-blueGray-400">Events</span>
+                                            <span className="text-md font-bold block uppercase tracking-wide text-blueGray-600">{user.events.length}</span>
+                                            <span className="text-sm text-blueGray-400">Events</span>
+                                        </div>
+                                        <div className="mr-4 p-3 text-center">
+                                            <span className="text-md font-bold block uppercase tracking-wide text-blueGray-600">{user?.comments?.length}</span><span className="text-sm text-blueGray-400">Comments</span>
+                                        </div>
+                                        <div className="mr-4 p-3 text-center">
+                                            <span className="text-md font-bold block uppercase tracking-wide text-blueGray-600">1</span><span className="text-sm text-blueGray-400">
+                                                Photos
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -75,25 +79,16 @@ export default function Account(){
                                 </h3>
                                 <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
                                     <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
-                                    Los Angeles, California {user?.age}
-                                </div>
-                                <div className="mb-2 text-blueGray-600 mt-10">
-                                    <i className="fas fa-briefcase mr-2 text-lg text-blue-400"></i>Solution Manager - Creative Tim Officer {user?.gender}
+                                    Los Angeles, California 
                                 </div>
                                 <div className="mb-2 text-blueGray-600">
                                     <i className="fas fa-university mr-2 text-lg text-blue-400"></i>University of Computer Science
                                 </div>
-                            </div>
-                            <div className="mt-10 py-10 border-t border-blueGray-200 text-center">
-                                <div className="flex flex-wrap justify-center">
-                                    <div className="w-full lg:w-9/12 px-4">
-                                        <p className="mb-4 text-lg leading-relaxed text-blueGray-700">
-                                            {/* {user.about} */}
-                                        </p>
-                                        {/* <a href="#" className="font-normal text-pink-500">Show more</a> */}
-                                    </div>
+                                <div className="mb-2 text-blueGray-600 mt-10">
+                                    <i className="fas fa-briefcase mr-2 text-lg text-blue-400"></i>{user?.gender} {user?.age} years old
                                 </div>
                             </div>
+                            
                             { user.events.length > 0 && <div className="text-center text-2xl font-bold py-8 text-blue-700 border-t border-blueGray-200">
                                 Events
                                 <div className="p-10 flex flex-wrap justify-center gap-5">
@@ -108,7 +103,7 @@ export default function Account(){
                                                 <p className="text-red-700 text-base py-2">
                                                     {e.date}
                                                 </p>
-                                                <p className="text-gray-500 text-base text-sm">
+                                                <p className="text-gray-500 text-base">
                                                     {e.address}
                                                 </p>
                                                 <p className="text-gray-500 text-sm">
@@ -121,7 +116,6 @@ export default function Account(){
                                             <div className="px-6 pb-2">
                                                 <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#photography</span>
                                                 <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#travel</span>
-                                                <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#winter</span>
                                             </div>
                                         </Link>
                                     ))}

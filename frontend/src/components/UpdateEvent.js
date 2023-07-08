@@ -83,7 +83,7 @@ export default function UpdateEvent({handleCloseOptoins}){
                                 </label>
                             </div> 
         </div>
-        <button onClick={updateEvent} className="cursor-pointer rounded-xl bg-white py-2 px-6 font-semibold">Update</button>
+        <button onClick={updateEvent} className="py-2 px-4 bg-gray-400 hover:text-white hover:bg-blue-600 rounded-xl">Update</button>
     </form>
     )
 }

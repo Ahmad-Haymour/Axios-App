@@ -23,8 +23,10 @@ export default function UpdateUser({handleCloseOptoins}){
     }
 
     return (
-        <form className="w-full max-w-lg mx-auto">
-            <div className="flex flex-wrap -mx-3 mb-6">
+        <form className="w-full max-w-lg rounded-lg mx-auto bg-gray-200/50 shadow-2xl p-8   ">
+
+        {/* <form className="w-full max-w-lg mx-auto bg-smokewhite"> */}
+            <div className="flex flex-wrap -mt-12 -mx-3 mb-6">
                 <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                     <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">
                         First Name
@@ -43,33 +45,28 @@ export default function UpdateUser({handleCloseOptoins}){
                 </div>
             </div>
             <div className="flex flex-wrap -mx-3 mb-2">
-                <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                     <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-city">
                         Age
                     </label>
-                    <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-city" type="text" placeholder="Albuquerque"
+                    <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-city" type="text" placeholder=""
                     value={age} onChange={(e)=> setAge(e.target.value)}/>
                 </div>
-                {/* <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                         <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-state">
-                            State
+                            Gender
                         </label>
                         <div className="relative">
-                            <select className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
-                                <option>New Mexico</option>
-                                <option>Missouri</option>
-                                <option>Texas</option>
+                            <select className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" onSelect={(e)=>setGender(e.target.value)}>
+                                <option value={"Male"}>Male</option>
+                                <option value={"Female"}>Female</option>
+                                <option value={"Other"}>Other</option>
                             </select>
                             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                         </div>
                     </div>  
-                </div> */}
-                <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-zip">
-                        Zip
-                    </label>
-                    <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="90210"/>
                 </div>
+              
                 <div className="flex items-center justify-center w-full py-5">
                         <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-34 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-200 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                             <div className="flex flex-col items-center justify-center pt-5 pb-6">
@@ -81,7 +78,7 @@ export default function UpdateUser({handleCloseOptoins}){
                         </label>
                 </div> 
             </div>
-            <button onClick={handleUpdate}>Update</button>
+            <button className="py-2 px-4 bg-gray-400 hover:text-white hover:bg-blue-600 rounded-xl" onClick={handleUpdate}>Update</button>
         </form>
     )
 }

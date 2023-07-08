@@ -1,9 +1,9 @@
 const Comment = require('../models/Comment')
 const Event = require('../models/Event')
+const User = require('../models/User')
 
 exports.createComment = async(req, res, next)=>{
 
-    console.log(req.body);
     const comment = await new Comment(req.body)
     comment.user = req.user
     
@@ -25,8 +25,13 @@ exports.createComment = async(req, res, next)=>{
     
     event.comments.push(comment.id)
 
+    const user = await User.findById(comment.user)
+    user.comments.push(comment)
+    console.log("## =>> **Look Here", user.comments);
+
     await comment.save()
     await event.save()
+    await user.save()
 
     res.status(200).send(comment)
 }

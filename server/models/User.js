@@ -12,14 +12,20 @@ const userSchema = Schema({
     },
     age: {type: String, required: true},
     avatar: {type: String},
+    // Created events
     events: [{
         type: SchemaTypes.ObjectId,
         ref: 'Event'
     }],
-    // Joined Events in list
+    // Joined events in list
     eventslist:[{
         type: SchemaTypes.ObjectId,
         ref: 'Event'
+    }],
+    // Created comments
+    comments: [{
+        type: SchemaTypes.ObjectId,
+        ref: 'Comment'
     }],
     token: {type: String},
 
