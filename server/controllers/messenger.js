@@ -28,8 +28,6 @@ exports.setChat = async (req, res, next)=>{
     const user = await User.findById(req.user?._id.toString())
     const friend = await User.findById(friendID)
 
-    // let chat = await Chat.findOne({ $or: [ { participants: {$elemMatch:{$eq: friendID}} } , { participants: {$elemMatch:{$eq: user._id.toString()}}} ] }).populate('messages.user').populate('participants')
-
     console.log('friendID: ', friendID);
     console.log('UserID: ', user._id);
 
@@ -42,17 +40,10 @@ exports.setChat = async (req, res, next)=>{
                                             {_id: friend._id},
                                             {_id: user._id.toString()}
                                         ] }
-                                    ]}).populate('participants', '-token -password').populate('messages.user', '-token -password')
+                                    ]})
+                                    .populate('participants', '-token -password').populate('messages.user', '-token -password')
 
-    // await Promise.all( event.comments.map((e)=>e.populate('user', '-token -password -__v')) )
-    
-    // await Promise.all( chat.messages.map((e)=>e.populate('user')) ) 
-                 
-    // let chat = await Chat.findOne({participants: { $all: [friend, user._id.toString()] } }).populate('messages.user').populate('participants')
-
-    console.log("Chat 1 :: ", chat);
-    console.log("Chat 1 bool :: ", Boolean(chat === []));
-    console.log("Chat 1 Length :: ", (chat.length === 0));
+    console.log("Chat 1 Length = 0 :: ", (chat.length === 0));
     console.log("Chat 1 Length :: ", (chat.length));
 
     if( chat.length === 0){
@@ -62,7 +53,7 @@ exports.setChat = async (req, res, next)=>{
         
         await chat.populate('participants', '-token -password')
 
-        console.log('look here', chat);
+        console.log('look here, new CHAT result: ', chat);
         
         await chat.save()
     }
@@ -77,7 +68,7 @@ exports.setChat = async (req, res, next)=>{
     
     console.log("Chat:: 2 =>  ", chat);
 
-    // await chat.save()
+    await chat.save()
     await user.save()
     await friend.save()
 

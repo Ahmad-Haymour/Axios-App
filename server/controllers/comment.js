@@ -48,9 +48,6 @@ exports.deleteComment = async(req, res, next)=>{
     
     const event = await Event.findById(eventID).populate('user', '-token -password -__v').populate('comments').populate('team', '-token -password -__v')
 
-    console.log(req.user?._id);
-    console.log(comment._id);
-
     if( !(comment.user?._id.toString() === req.user?._id.toString())){  
         return res.status(201).json('Its not your comment')
     } 
@@ -58,12 +55,8 @@ exports.deleteComment = async(req, res, next)=>{
     event.comments.filter( e => e !== commentID )
     await Promise.all( event.comments.map((e)=>e.populate('user', '-token -password -__v')) )
 
-    // await comment.remove()
     await Comment.deleteOne().where('_id').equals(commentID)
     
-    
-    // event.comments.remove(req.body.id)
-    // await Comment.deleteOne().where('_id').equals(commentID)
     event.comments = event.comments.filter(e => e._id !== commentID)
 
     await event.save()

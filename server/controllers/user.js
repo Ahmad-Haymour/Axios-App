@@ -7,9 +7,7 @@ const path = require('path')
 
 
 exports.register = async(req, res, next)=>{
-    const user = new User(req.body)
-    // .select({"password": 0, "token":0}),  ("-token -password") 
-    
+    const user = new User(req.body)    
     const salt = await bcrypt.genSalt(10)
     user.password = await bcrypt.hash(user.password, salt)
 
@@ -104,7 +102,6 @@ exports.getCurrentUser = async(req, res, next)=>{
     }
 
     const user = await User.findOne({token:token}, '-token -password -__v').populate('events').populate('eventslist').populate('messenger')
-    // const user = await User.findOne().where('token').equals(token)
     await Promise.all( user.events.map((e)=>e.populate('user', '-token -password -__v')) )
 
     if(!user){
@@ -124,34 +121,12 @@ exports.updateUser = async(req, res, next)=>{
     const user = await User.findOne({token:token}, '-token -password').populate('events')
     await Promise.all( user.events.map((e)=>e.populate('user', '-token -password -__v')) )
 
-    // const user = await User.findOne({_id: requestUser._id})
- 
-    // const user = await User.findOneAndUpdate(
-    //     {email: req.user.email},
-    //     {
-    //         firstname: firstname? firstname:null,
-    //         lastname: lastname? lastname:null,
-    //         age: age? age:null,
-    //         gender: gender? gender:null,
-         
-    //     },
-    //     {new: true}
-    //     )   
-
     console.log('USER is: ', user);
-    // console.log('lastname is: ', lastname);
-    // console.log('GENDER is: ', gender);  
 
     user.firstname = firstname ? firstname : user.firstname
     user.lastname = lastname ?lastname: user.lastname
     user.age = age ? age : user.age
     user.gender = gender ? gender : user.gender
-
-    console.log('firstname is: ', user.firstname);
-    console.log('lastname is: ', user.lastname);
-    console.log('GENDER is: ', user.gender);
-    console.log('GENDER is: ', user.age);
-
 
     console.log('REQ FILE: ', req.file);
     if(req.file){

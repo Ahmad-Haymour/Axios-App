@@ -69,7 +69,7 @@ export default function Event(){
         } catch (error) {
             console.log(error);
         }
-    }, [ newUpdate, user.data])
+    }, [newUpdate, user.data])
 
     if(showEventOptions && user.data ) return <UpdateEvent handleCloseOptoins={handleCloseOptoins}/>
 
