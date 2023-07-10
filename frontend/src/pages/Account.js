@@ -73,7 +73,7 @@ export default function Account(){
                                     </div>
                                 </div>
                             </div>
-                            <div className="text-center lg:mt-8">
+                            <div className="text-center lg:mt-8 pb-4">
                                 <h3 className="text-2xl sm:text-4xl font-semibold leading-normal my-4 pb-4 text-blue-700">
                                     {user?.firstname + ' ' + user?.lastname}
                                 </h3>
@@ -85,7 +85,7 @@ export default function Account(){
                                     <i className="fas fa-university mr-2 text-lg text-blue-400"></i>University of Computer Science
                                 </div>
                                 <div className="mb-2 text-blueGray-600 mt-10">
-                                    <i className="fas fa-briefcase mr-2 text-lg text-blue-400"></i>{user?.gender} {user?.age} years old
+                                    <i className="fas fa-briefcase mr-2 text-lg text-blue-400"></i>{user?.gender}, {user?.age} years old
                                 </div>
                             </div>
                             

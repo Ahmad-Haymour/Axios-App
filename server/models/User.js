@@ -33,6 +33,19 @@ const userSchema = Schema({
         type: SchemaTypes.ObjectId,
         ref: 'Chat'
     }],
+
+    // notifications: [{
+    //     sender: {
+    //         type: SchemaTypes.ObjectId,
+    //         ref: 'User',
+    //     },
+    //     messages:[{
+    //         user: {type: SchemaTypes.ObjectId, ref: 'User'},
+    //         message: { type: String},
+    //         createdAt: {type: Date, default: () => new Date(+new Date() + 7*24*60*60*1000)
+    //         }
+    //     }]
+    // }]
 })
 
 // userSchema.methods.toJSON = function(){

@@ -57,7 +57,7 @@ exports.login = async(req, res, next) =>{
 }
 
 exports.getUsers = async(req, res, next) =>{
-    const users = await User.find({}, '-token -password -__v')
+    const users = await User.find({}, '-token -password -__v').populate('messenger')
     console.log(users);
     res.status(200).send(users)
 }

@@ -27,7 +27,6 @@ exports.createComment = async(req, res, next)=>{
 
     const user = await User.findById(comment.user)
     user.comments.push(comment)
-    console.log("## =>> **Look Here", user.comments);
 
     await comment.save()
     await event.save()

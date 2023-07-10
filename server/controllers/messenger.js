@@ -49,12 +49,11 @@ exports.setChat = async (req, res, next)=>{
     if( chat.length === 0){
         chat = await new Chat({})
         chat.participants = [friendID, user._id.toString()]
-        chat.messages.push({message:'Chat Started', user: user._id.toString()})
+        chat.messages.push({message:'Hello there!', user: user._id.toString(), seen: false})
         
         await chat.populate('participants', '-token -password')
 
         console.log('look here, new CHAT result: ', chat);
-        
         await chat.save()
     }
 
@@ -68,7 +67,7 @@ exports.setChat = async (req, res, next)=>{
     
     console.log("Chat:: 2 =>  ", chat);
 
-    await chat.save()
+    // await chat.save()
     await user.save()
     await friend.save()
 
@@ -101,8 +100,10 @@ exports.sendMessage = async(req,res,next) =>{
         return next(error)
     }
 
-    if(message) chat.messages.push({user:user, message: message})
-
+    if(message){
+        
+        chat.messages.push({user:user, message: message, seen: false})
+    } 
     
     console.log('Haupt USER', user._id);
 
@@ -118,7 +119,7 @@ exports.sendMessage = async(req,res,next) =>{
 
     // friend.messenger.push(chat._id)
     if(!friend.messenger.includes(chat._id)){
-        friend.messenger.push(chat._id)                                                         
+        friend.messenger.push(chat._id)    
     }
     await friend.save()
 

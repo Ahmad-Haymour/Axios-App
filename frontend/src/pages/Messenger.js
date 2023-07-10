@@ -48,6 +48,13 @@ export default function Messenger(){
                 setMessage('')
             })
             .catch(err=>console.log(err))
+    },
+
+    messageTimeFormatter = (msg)=>{
+
+        const time = msg.createdAt.slice(11,16),
+        date = msg.createdAt.slice(0,10)
+        return [time, date]
     }
 
     useEffect( ()=>{
@@ -58,6 +65,8 @@ export default function Messenger(){
             })
             .catch (err=> console.log(err))
     }, [] )
+
+
 
     return (
 
@@ -139,28 +148,30 @@ export default function Messenger(){
                             
                                 { (mes.user._id !== user?.data?._id) ? 
                                 <div className="chat-message">
-                                    <div className="flex items-end">
-                                        <div className="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
+                                    <div className="flex items-start cursor-pointer" title={messageTimeFormatter(mes)[1]}>
+                                        <div className="flex flex-col space-y-2 text-lg max-w-xs mx-2 order-2 items-start">
                                             <div>
                                                 <span className="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">
                                                     {mes.message}
                                                 </span>
+                                                <span className="text-sm block">{messageTimeFormatter(mes)[0]}</span>
                                             </div>
                                         </div>
-                                        <img src={mes.user.avatar} alt="My profile" className="w-6 h-6 rounded-full order-1"/>
+                                        <img src={mes.user.avatar} alt="My profile" className="w-12 h-12 rounded-full order-1"/>
                                     </div>
                                 </div>
                                 :
                                 <div className="chat-message">
-                                    <div className="flex items-end justify-end">
-                                        <div className="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-1 items-end">
+                                    <div className="flex items-start justify-end start cursor-pointer" title={messageTimeFormatter(mes)[1]}>
+                                        <div className="flex flex-col space-y-2 text-lg max-w-xs mx-2 order-1 items-end">
                                             <div>
                                                 <span className="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white ">
                                                     {mes.message}
                                                 </span>
+                                                <span className="text-sm block text-right">{messageTimeFormatter(mes)[0]}</span>
                                             </div>
                                         </div>
-                                        <img src={mes.user.avatar} className="w-6 h-6 rounded-full order-2" alt="user avatar"/>
+                                        <img src={mes.user.avatar} className="w-10 h-10 rounded-full order-2" alt="user avatar"/>
                                     </div>
                                 </div>
                                 }
