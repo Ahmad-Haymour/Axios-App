@@ -67,7 +67,6 @@ export default function Messenger(){
     }, [] )
 
 
-
     return (
 
         <div className="container mx-auto shadow-lg rounded-lg lg:min-w-[750px] min-h-[87vh] sm:h-[70vh] lg:h-[90vh]">
@@ -146,7 +145,7 @@ export default function Messenger(){
 
                             <div key={mes.createdAt} id="messages">
                             
-                                { (mes.user._id !== user?.data?._id) ? 
+                                { (mes.user?._id !== user?.data?._id) ? 
                                 <div className="chat-message">
                                     <div className="flex items-start cursor-pointer" title={messageTimeFormatter(mes)[1]}>
                                         <div className="flex flex-col space-y-2 text-lg max-w-xs mx-2 order-2 items-start">
