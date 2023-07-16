@@ -5,7 +5,8 @@ const chatSchema = Schema({
     participants: [{type: SchemaTypes.ObjectId, ref: 'User'}],
 
     messages:[{
-        msg: {type: SchemaTypes.ObjectId, ref: 'Msg'},
+       type: SchemaTypes.ObjectId, 
+       ref: 'Msg'
     }]
 })
 

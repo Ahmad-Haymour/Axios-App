@@ -11,19 +11,22 @@ export default function Messenger(){
     [ friend, setFriend] = useState(''),
     [ message, setMessage] = useState(''),
 
+    // Set a new connection between two users to start chatting
     handleSetChat = async(e, participantID)=>{
         e.preventDefault()
 
         await Axios.post("http://127.0.0.1:5000/messenger/set", {friendID: participantID})
             .then(async(res)=>{
                 console.log('Handle Set Chat => ', res.data);
-                setChat(res.data[0])
+                console.log('Handle Set Chat ID => ', res.data[0]?._id);
+                // setChat(res.data[0])
                 setFriend(participantID)
-                setChatID(res.data[0]._id)
+                setChatID(res.data[0]?._id)
 
-                if(chatID) await Axios.get("http://127.0.0.1:5000/messenger?chatID="+chatID)
+                if(res.data[0]?._id) await Axios.get("http://127.0.0.1:5000/messenger?chatID="+res.data[0]?._id)
                     .then(async(response)=>{
                         console.log( 'Read Chat Response => ', response.data);
+                        setChat(response.data)
                     })
                 else console.log('CHAT ID NULLL: ', chatID);
             })
@@ -41,19 +44,24 @@ export default function Messenger(){
             friend: friend,
             message: message
         })
-            .then((res)=>{
+            .then(async (res)=>{
                 console.log('Handle Send Message => ', res.data);
-                setChat(res.data)
-                setChatID(res.data._id)
-                setMessage('')
+
+                await Axios.get("http://127.0.0.1:5000/messenger?chatID="+res.data._id)
+                    .then(async(response)=>{
+                        console.log( 'Read Chat Response => ', response.data);
+                        setChat(response.data)
+                        setChatID(response.data._id)
+                        setMessage('')
+                    })                
             })
             .catch(err=>console.log(err))
     },
 
     messageTimeFormatter = (msg)=>{
 
-        const time = msg.createdAt.slice(11,16),
-        date = msg.createdAt.slice(0,10)
+        const time = msg.createdAt?.slice(11,16),
+        date = msg.createdAt?.slice(0,10)
         return [time, date]
     }
 
@@ -147,8 +155,8 @@ export default function Messenger(){
                             
                                 { (mes.user?._id !== user?.data?._id) ? 
                                 <div className="chat-message">
-                                    <div className="flex items-start cursor-pointer" title={messageTimeFormatter(mes)[1]}>
-                                        <div className="flex flex-col space-y-2 text-lg max-w-xs mx-2 order-2 items-start">
+                                    <div className="flex items-start cursor-pointer" >
+                                        <div className="flex flex-col space-y-2 text-lg max-w-xs mx-2 order-2 items-start" title={messageTimeFormatter(mes)[1]}>
                                             <div>
                                                 <span className="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">
                                                     {mes.message}
@@ -156,13 +164,13 @@ export default function Messenger(){
                                                 <span className="text-sm block">{messageTimeFormatter(mes)[0]}</span>
                                             </div>
                                         </div>
-                                        <img src={mes.user.avatar} alt="My profile" className="w-12 h-12 rounded-full order-1"/>
+                                        <img src={mes.user?.avatar} alt="My profile" className="w-12 h-12 rounded-full order-1"/>
                                     </div>
                                 </div>
                                 :
                                 <div className="chat-message">
-                                    <div className="flex items-start justify-end start cursor-pointer" title={messageTimeFormatter(mes)[1]}>
-                                        <div className="flex flex-col space-y-2 text-lg max-w-xs mx-2 order-1 items-end">
+                                    <div className="flex items-start justify-end start cursor-pointer" >
+                                        <div className="flex flex-col space-y-2 text-lg max-w-xs mx-2 order-1 items-end" title={messageTimeFormatter(mes)[1]}>
                                             <div>
                                                 <span className="px-4 py-2 rounded-lg inline-block rounded-br-none bg-blue-600 text-white ">
                                                     {mes.message}
@@ -170,7 +178,7 @@ export default function Messenger(){
                                                 <span className="text-sm block text-right">{messageTimeFormatter(mes)[0]}</span>
                                             </div>
                                         </div>
-                                        <img src={mes.user.avatar} className="w-10 h-10 rounded-full order-2" alt="user avatar"/>
+                                        <img src={mes.user?.avatar} className="w-10 h-10 rounded-full order-2" alt="user avatar"/>
                                     </div>
                                 </div>
                                 }

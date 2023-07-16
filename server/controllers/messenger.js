@@ -1,9 +1,9 @@
 
 const Chat = require('../models/Messenger')
 const User = require('../models/User')
+const Message = require('../models/Message')
 
 require('express-async-errors')
-
 
 exports.readChat = async (req, res, next)=>{
     const {chatID} = req.query
@@ -14,13 +14,17 @@ exports.readChat = async (req, res, next)=>{
     }
 
     const chat = await Chat.findById(chatID).populate('participants')
-    //.populate('messages.user', '-token -password')
+                                            .populate({
+                                                path: "messages", // populate messages
+                                                populate: {
+                                                    path: "user" // in messages, populate users
+                                                }
+                                            })
 
     if(!chat ){
         res.status(201).send(null)
     }
 
-    console.log('Check Read Chat: ',chat);
     res.status(200).send(chat)
 }
 
@@ -44,20 +48,25 @@ exports.setChat = async (req, res, next)=>{
                                         ] }
                                     ]})
                                     .populate('participants', '-token -password')
+                                    .populate({
+                                        path: "messages", // populate messages
+                                        populate: {
+                                           path: "user" // in messages, populate users
+                                        }
+                                     })
                                     // .populate('messages.user', '-token -password')
 
-    console.log("Chat 1 Length = 0 :: ", (chat.length === 0));
-    console.log("Chat 1 Length :: ", (chat.length));
+    if( chat.length === 0 ){
 
-    if( chat.length === 0){
         chat = await new Chat({})
         chat.participants = [friendID, user._id.toString()]
-        chat.messages.push({message:'Hello there!', user: user._id.toString()})
         
-        await chat.populate('participants', '-token -password')
+        const message = await new Message({message:'Hello there!', user: user._id.toString(), seen:false})
+        chat.messages.push(message)
+        friend.notification.push(message._id)
 
-        console.log('look here, new CHAT result: ', chat);
         await chat.save()
+        await message.save()
     }
 
     if(!user.messenger.includes(chat._id)){
@@ -68,9 +77,6 @@ exports.setChat = async (req, res, next)=>{
         friend.messenger.push(chat._id)
     }
     
-    console.log("Chat:: 2 =>  ", chat);
-
-    // await chat.save()
     await user.save()
     await friend.save()
 
@@ -86,9 +92,14 @@ exports.sendMessage = async(req,res,next) =>{
     const user = await User.findById(req.user?._id)
 
     const chat = await Chat.findById(chatID).populate('participants', '-token -password')
-    // .populate('messages.user', '-token -password')
+                            .populate({
+                                path: "messages", // populate messages
+                                populate: {
+                                    path: "user" // in messages, populate user
+                                }
+                            })
 
-    // create message = await Message ................
+    const newMessage = await new Message({message: message, user: user._id.toString(), seen:false})
 
     if(!chat){
         const error = new Error('Chat went wrong!')
@@ -107,31 +118,25 @@ exports.sendMessage = async(req,res,next) =>{
     }
 
     if(message){
-        
-        chat.messages.push({user:user, message: message })
+        console.log('New Message ID:  ', newMessage._id);
+        chat.messages.push(newMessage)
     } 
-    
-    console.log('Haupt USER', user._id);
 
     const receiver = chat.participants.filter(p => p._id !== user._id.toString())[0];
-    console.log('Rreceiver', receiver);
-
+    // friend is who recieve the message
     const friend = await User.findById(receiver._id.toString());
 
-    // friend.notification = true
-    
-    // Message From =>
-    // friend.chatting = user._id
+    friend.notification.push(newMessage._id)
 
-    // friend.messenger.push(chat._id)
     if(!friend.messenger.includes(chat._id)){
         friend.messenger.push(chat._id)    
     }
     await friend.save()
 
-    console.log('Friend User Receiver: ===> ', friend);
-    // console.log('START CHAT Result=> ',chat);
+    console.log('Friend Receiver User: ===> ', friend);
 
     await chat.save()
+    await newMessage.save()
+
     res.status(200).json(chat)
 }
