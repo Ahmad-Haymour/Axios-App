@@ -18,7 +18,7 @@ exports.readChat = async (req, res, next)=>{
                                                 path: "messages", // populate messages
                                                 populate: {
                                                     path: "user", // in messages, populate users
-                                                    select: "token password" // private path
+                                                    select: "-token -password" // private path
                                                 }
                                             })
 
@@ -53,7 +53,7 @@ exports.setChat = async (req, res, next)=>{
                                         path: "messages", // populate messages
                                         populate: {
                                             path: "user", // in messages, populate users
-                                            select: "token password" // private path
+                                            select: "-token -password" // private path
                                         }
                                      })
 
@@ -103,7 +103,7 @@ exports.sendMessage = async(req,res,next) =>{
                                 path: "messages", // populate messages
                                 populate: {
                                     path: "user", // in messages, populate user
-                                    select: "token password"
+                                    select: "-token -password"
                                 }
                             })
 

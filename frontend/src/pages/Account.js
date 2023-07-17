@@ -10,6 +10,7 @@ export default function Account(){
     
     [showUserOptions, setShowUserOptions] = useState(false),
     [showEventOptions, setShowEventOptions] = useState(false),
+    [showNotifications, setShowNotifications] = useState(true),
 
     handleCloseOptoins =(e)=>{
         setShowUserOptions(false)
@@ -19,10 +20,63 @@ export default function Account(){
     if(!user) return <h1>Loading ...</h1>
 
     return (
-        <main className="profile-page mt-52">
+        <main className="profile-page relative mt-52">
+             
+            <div className="absolute -top-52 bottom-auto left-auto right-0 m-3 inline-flex w-fit ">
+              
+                <div
+                    className="absolute bottom-0 left-0 right-auto top-auto z-20 inline-block -translate-x-2/4 translate-y-1/2 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-red-600/75 px-2 text-lg text-white"
+                    onClick={(e)=>setShowNotifications(!showNotifications)}>
+                        {user.notification?.length}
+                        
+                    </div>
+                <div
+                    className="flex items-center justify-center rounded-lg bg-blue-600 px-2 py-1 text-center shadow-lg z-10">
+                    <div>
+                    <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        data-prefix="fas"
+                        data-icon="bell"
+                        className="mx-auto w-10 text-white"
+                        role="img"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 448 512">
+                        <path
+                        fill="currentColor"
+                        d="M224 512c35.32 0 63.97-28.65 63.97-64H160.03c0 35.35 28.65 64 63.97 64zm215.39-149.71c-19.32-20.76-55.47-51.99-55.47-154.29 0-77.7-54.48-139.9-127.94-155.16V32c0-17.67-14.32-32-31.98-32s-31.98 14.33-31.98 32v20.84C118.56 68.1 64.08 130.3 64.08 208c0 102.3-36.15 133.53-55.47 154.29-6 6.45-8.66 14.16-8.61 21.71.11 16.4 12.98 32 32.1 32h383.8c19.12 0 32-15.6 32.1-32 .05-7.55-2.61-15.27-8.61-21.71z"></path>
+                    </svg>
+                    </div>
+                </div>
+            </div>
             <section className="p-2">
                 {showUserOptions && <UpdateUser handleCloseOptoins={handleCloseOptoins}/>}
                 {showEventOptions && <CreateEvent handleCloseOptoins={handleCloseOptoins}/>}
+
+                {/* Notifications section */}
+                { showNotifications && user.notification.length > 0 &&
+                    <section className="absolute bg-gray-600 z-50 w-full">
+                        <h3>You have got {user.notification.length} unread messages</h3>
+                        {user.notification?.map(n=> (
+                            <div key={n._id} className="flex justify-between">
+                                <span
+                                    tabIndex="0"
+                                    className="block rounded bg-red z-100 px-7 pb-2.5 text-lg font-medium uppercase leading-normal text-black shadow-[0_4px_9px_-4px_#dc4c64] transition duration-150 ease-in-out hover:bg-red-600 focus:bg-red-600 focus:outline-none focus:ring-0 active:bg-red-700 "
+                                    data-te-toggle="popover"
+                                    data-te-trigger="focus"
+                                    title="Dismissible popover"
+                                    data-te-content="And here's some amazing content. It's very engaging. Right?"
+                                    data-te-ripple-init
+                                    data-te-ripple-color="light">
+                                    {n.message}
+                                </span>
+                                <span className="inline-block shadow-[0_4px_9px_-4px_#dc4c64]">
+                                    {n.user.firstname+' '+n.user.lastname}
+                                </span>
+                            </div>
+                        ))}
+                    </section>
+                }
             </section>
             { !showUserOptions && !showEventOptions &&  <>
             <section className="relative block h-500-px">

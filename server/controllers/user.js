@@ -101,7 +101,13 @@ exports.getCurrentUser = async(req, res, next)=>{
         return res.status(200).json(null)
     }
 
-    const user = await User.findOne({token:token}, '-token -password -__v').populate('events').populate('eventslist').populate('messenger')
+    const user = await User.findOne({token:token}, '-token -password -__v').populate('events').populate('eventslist').populate('messenger').populate({
+        path: 'notification',
+        populate: {
+            path:'user',
+            select:'-token -password'
+        }
+    })
     await Promise.all( user.events.map((e)=>e.populate('user', '-token -password -__v')) )
 
     if(!user){
