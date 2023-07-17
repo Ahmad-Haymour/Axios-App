@@ -26,9 +26,6 @@ const eventSchema = Schema({
         type: SchemaTypes.ObjectId,
         ref: 'Comment',
     }],
-
-    // exist: {type: Boolean}
-
 })
 
 module.exports = model('Event', eventSchema)

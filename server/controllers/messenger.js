@@ -17,7 +17,8 @@ exports.readChat = async (req, res, next)=>{
                                             .populate({
                                                 path: "messages", // populate messages
                                                 populate: {
-                                                    path: "user" // in messages, populate users
+                                                    path: "user", // in messages, populate users
+                                                    select: "token password" // private path
                                                 }
                                             })
 
@@ -51,10 +52,12 @@ exports.setChat = async (req, res, next)=>{
                                     .populate({
                                         path: "messages", // populate messages
                                         populate: {
-                                           path: "user" // in messages, populate users
+                                            path: "user", // in messages, populate users
+                                            select: "token password" // private path
                                         }
                                      })
-                                    // .populate('messages.user', '-token -password')
+
+    console.log('Chat::==> ', chat);
 
     if( chat.length === 0 ){
 
@@ -65,9 +68,13 @@ exports.setChat = async (req, res, next)=>{
         chat.messages.push(message)
         friend.notification.push(message._id)
 
+        console.log('New Chat::==> ', chat);
+
         await chat.save()
         await message.save()
     }
+
+    console.log('ChatID ::==> ', chat._id);
 
     if(!user.messenger.includes(chat._id)){
         user.messenger.push(chat._id)
@@ -95,7 +102,8 @@ exports.sendMessage = async(req,res,next) =>{
                             .populate({
                                 path: "messages", // populate messages
                                 populate: {
-                                    path: "user" // in messages, populate user
+                                    path: "user", // in messages, populate user
+                                    select: "token password"
                                 }
                             })
 
@@ -131,10 +139,10 @@ exports.sendMessage = async(req,res,next) =>{
     if(!friend.messenger.includes(chat._id)){
         friend.messenger.push(chat._id)    
     }
-    await friend.save()
-
+    
     console.log('Friend Receiver User: ===> ', friend);
-
+    
+    await friend.save()
     await chat.save()
     await newMessage.save()
 

@@ -6,7 +6,8 @@ const chatSchema = Schema({
 
     messages:[{
        type: SchemaTypes.ObjectId, 
-       ref: 'Msg'
+       ref: 'Msg',
+       unique: true
     }]
 })
 
