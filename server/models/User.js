@@ -34,9 +34,9 @@ const userSchema = Schema({
         ref: 'Chat'
     }],
 
-    notification:[{
+    notifications:[{
         type: SchemaTypes.ObjectId,
-        ref: 'Msg'
+        ref: 'Msg' 
     }]
 })
 

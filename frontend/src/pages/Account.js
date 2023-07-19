@@ -3,6 +3,7 @@ import useUser from "../hooks/useUser";
 import UpdateUser from "../components/UpdateUser";
 import CreateEvent from "../components/CreateEvent";
 import { Link } from "react-router-dom";
+import Axios from "axios";
 
 export default function Account(){
 
@@ -11,10 +12,22 @@ export default function Account(){
     [showUserOptions, setShowUserOptions] = useState(false),
     [showEventOptions, setShowEventOptions] = useState(false),
     [showNotifications, setShowNotifications] = useState(true),
+    [messageID, setMessageID] = useState(''),
 
-    handleCloseOptoins =(e)=>{
+    handleCloseOptoins =()=>{
         setShowUserOptions(false)
         setShowEventOptions(false)
+    },
+
+    handleReadMessage = async (e, id)=>{
+
+        e.preventDefault()
+        console.log('THE ID::: ',id);
+
+        await Axios.delete("http://127.0.0.1:5000/messenger",{ data: { messageID: id} })
+        .then(async res=>{
+            console.log(res.data);
+        })
     }
 
     if(!user) return <h1>Loading ...</h1>
@@ -27,18 +40,18 @@ export default function Account(){
                 <div
                     className="absolute bottom-0 left-0 right-auto top-auto z-20 inline-block -translate-x-2/4 translate-y-1/2 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-red-600/75 px-2 text-lg text-white"
                     onClick={(e)=>setShowNotifications(!showNotifications)}>
-                        {user.notification?.length}
+                        {user.notifications?.length}
                         
                     </div>
                 <div
-                    className="flex items-center justify-center rounded-lg bg-blue-600 px-2 py-1 text-center shadow-lg z-10">
+                    className="flex items-center justify-center rounded-lg bg-blue-600 px-2 py-1.5 text-center shadow-lg z-10">
                     <div>
                     <svg
                         aria-hidden="true"
                         focusable="false"
                         data-prefix="fas"
                         data-icon="bell"
-                        className="mx-auto w-10 text-white"
+                        className="mx-auto w-6 text-white"
                         role="img"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 448 512">
@@ -54,14 +67,15 @@ export default function Account(){
                 {showEventOptions && <CreateEvent handleCloseOptoins={handleCloseOptoins}/>}
 
                 {/* Notifications section */}
-                { showNotifications && user.notification.length > 0 &&
-                    <section className="absolute bg-gray-600 z-50 w-full">
-                        <h3>You have got {user.notification.length} unread messages</h3>
-                        {user.notification?.map(n=> (
-                            <div key={n._id} className="flex justify-between">
+                { showNotifications && user.notifications.length > 0 &&
+                    <section className="absolute bg-black/90 z-50 w-full mx-auto pb-12 text-center">
+                        <h3 className="text-2xl text-white p-4">You have got {user.notifications.length} unread messages!</h3>
+                        {user.notifications?.map(n=> (
+                            <div key={n._id} className="flex justify-between cursor-pointer bg-gray-600 mx-32 bg-red z-100 px-7 pb-2.5 text-lg font-medium uppercase leading-normal text-black shadow-[0_4px_9px_-4px_#dc4c64] transition duration-150 ease-in-out hover:bg-red-600 focus:bg-red-600 focus:outline-none focus:ring-0 active:bg-red-700" 
+                                onClick={(e)=>handleReadMessage(e, n._id)}>
                                 <span
                                     tabIndex="0"
-                                    className="block rounded bg-red z-100 px-7 pb-2.5 text-lg font-medium uppercase leading-normal text-black shadow-[0_4px_9px_-4px_#dc4c64] transition duration-150 ease-in-out hover:bg-red-600 focus:bg-red-600 focus:outline-none focus:ring-0 active:bg-red-700 "
+                                    className="block rounded bg-red z-100 px-7 pb-2.5 text-lg font-medium uppercase leading-normal text-black shadow-[0_4px_9px_-4px_#dc4c64] transition duration-150 ease-in-out hover:bg-red-600 focus:bg-red-600 focus:outline-none focus:ring-0 active:bg-red-700 p-5"
                                     data-te-toggle="popover"
                                     data-te-trigger="focus"
                                     title="Dismissible popover"
@@ -70,7 +84,8 @@ export default function Account(){
                                     data-te-ripple-color="light">
                                     {n.message}
                                 </span>
-                                <span className="inline-block shadow-[0_4px_9px_-4px_#dc4c64]">
+                                <span className="p-5 text-xl text-gray-300">From</span>
+                                <span className="inline-block shadow-[0_4px_9px_-4px_#dc4c64] p-5">
                                     {n.user.firstname+' '+n.user.lastname}
                                 </span>
                             </div>

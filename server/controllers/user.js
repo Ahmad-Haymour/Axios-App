@@ -57,7 +57,7 @@ exports.login = async(req, res, next) =>{
 }
 
 exports.getUsers = async(req, res, next) =>{
-    const users = await User.find({}, '-token -password -__v').populate('messenger').populate('notification')
+    const users = await User.find({}, '-token -password -__v').populate('messenger').populate('notifications')
     console.log(users);
     res.status(200).send(users)
 }
@@ -102,7 +102,7 @@ exports.getCurrentUser = async(req, res, next)=>{
     }
 
     const user = await User.findOne({token:token}, '-token -password -__v').populate('events').populate('eventslist').populate('messenger').populate({
-        path: 'notification',
+        path: 'notifications',
         populate: {
             path:'user',
             select:'-token -password'

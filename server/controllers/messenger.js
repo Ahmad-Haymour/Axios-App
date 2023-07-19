@@ -66,7 +66,7 @@ exports.setChat = async (req, res, next)=>{
         
         const message = await new Message({message:'Hello there!', user: user._id.toString(), seen:false})
         chat.messages.push(message)
-        friend.notification.push(message._id)
+        friend.notifications.push(message._id)
 
         console.log('New Chat::==> ', chat);
 
@@ -93,10 +93,10 @@ exports.setChat = async (req, res, next)=>{
 
 exports.sendMessage = async(req,res,next) =>{
 
-    const { chatID, message} = req.body
+    const { friend, chatID, message} = req.body
 
     console.log('REQ Body send Message: ', req.body);
-    const user = await User.findById(req.user?._id)
+    const user = await User.findById(req.user._id)
 
     const chat = await Chat.findById(chatID).populate('participants', '-token -password')
                             .populate({
@@ -130,21 +130,76 @@ exports.sendMessage = async(req,res,next) =>{
         chat.messages.push(newMessage)
     } 
 
-    const receiver = chat.participants.filter(p => p._id !== user._id.toString())[0];
+    // const receiver = chat.participants.filter(p => p._id !== user._id)[0];
     // friend is who recieve the message
-    const friend = await User.findById(receiver._id.toString());
+    const friendUser = await User.findById(friend);
+    // const friend = await User.findById(receiver._id?.toString());
 
-    friend.notification.push(newMessage._id)
 
-    if(!friend.messenger.includes(chat._id)){
-        friend.messenger.push(chat._id)    
+    if(!friendUser.messenger.includes(chat._id)){
+        friendUser.messenger.push(chat._id)    
     }
     
-    console.log('Friend Receiver User: ===> ', friend);
+    console.log('Friend name : ===> ', friendUser.firstname);
+    console.log('User name : ===> ', user.firstname);
+
+    friendUser.notifications.push(newMessage._id)
+
+    console.log('Friend Receiver User: ===> ', friendUser);
     
-    await friend.save()
+    await friendUser.save()
     await chat.save()
     await newMessage.save()
 
     res.status(200).json(chat)
+}
+
+exports.deleteMessageNotification = async(req, res, next)=>{
+
+        const {messageID}  = req.body
+        // const user = await User.findById(req.user?._id)
+
+        const message = await Message.findById(messageID)
+
+        // console.log('THE USER:::: ', user.firstname);
+        console.log('MESSAGE ID:::: ', messageID);
+        console.log('MESSAGE is :::: ', message);
+
+        if(!message){
+            const error = new Error('Message not found!')
+            error.status = 400
+            return next(error)
+        }
+
+        
+        // user.notifications.filter(e=>{
+        //     console.log('here::: ', e._id != messageID);
+        //      e._id !== messageID  
+        //     } 
+        // )
+        // user.notifications.filter(e=> e._id.toString() != messageID )
+
+
+        await User.updateOne({ _id: req.user?._id },
+                	{ $pull: { notifications: { $in: messageID } } }, { new: true }
+            )
+    // user.events = user.events.filter(e => e !== id)
+    // user.eventslist = user.eventslist.filter(e => e !== id)
+
+    // await Event.deleteOne().where('_id').equals(id)
+
+    // await user.save()
+
+    
+        // const x = user.notifications.filter(e=> e._id.toString() !== messageID)
+
+        // user.notifications = x
+        // await user.notifications.map(e=> console.log(e._id.toString() ))
+
+        // console.log('X ==  ', x);
+        // console.log('Notifications:  ', user.notifications);
+
+        // await user.save()
+
+        res.send(message)
 }

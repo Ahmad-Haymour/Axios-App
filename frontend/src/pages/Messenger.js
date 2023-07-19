@@ -18,8 +18,6 @@ export default function Messenger(){
         await Axios.post("http://127.0.0.1:5000/messenger/set", {friendID: participantID})
             .then(async(res)=>{
                 console.log('Handle Set Chat => ', res.data);
-                console.log('Handle Set Chat ID => ', res.data[0]?._id);
-                // setChat(res.data[0])
                 setFriend(participantID)
                 setChatID(res.data[0]?._id)
 
@@ -45,8 +43,6 @@ export default function Messenger(){
             message: message
         })
             .then(async (res)=>{
-                console.log('Handle Send Message => ', res.data);
-
                 await Axios.get("http://127.0.0.1:5000/messenger?chatID="+res.data._id)
                     .then(async(response)=>{
                         console.log( 'Read Chat Response => ', response.data);
@@ -59,7 +55,6 @@ export default function Messenger(){
     },
 
     messageTimeFormatter = (msg)=>{
-
         const time = msg.createdAt?.slice(11,16),
         date = msg.createdAt?.slice(0,10)
         return [time, date]
