@@ -28,7 +28,7 @@ export default function Account(){
         })
     }
 
-    if(!user) return <h1>Loading ...</h1>
+    if(!user) return <h1 className="animate-bounce mt-40 text-4xl">Loading ...</h1>
 
     return (
         <main className="profile-page relative mt-52">
@@ -60,8 +60,10 @@ export default function Account(){
                     </div>
                 </div>
             </div>
-            <section className="relative p-2">
-                                
+
+            {/* Options components - Display */}
+
+            <section className="relative p-2">           
                 {/* Edit user page*/}
                 {showUserOptions && <UpdateUser handleCloseOptoins={handleCloseOptoins}/>}
 
@@ -81,6 +83,9 @@ export default function Account(){
                         {user.notifications?.map(n=> (
                             <div key={n._id} className="flex justify-between cursor-pointer rounded-lg  z-100 px-7 pb-2.5 m-6 text-xs md:text-lg font-medium uppercase leading-normal text-black shadow-[0_4px_9px_-4px_#dc4c64] transition duration-150 ease-in-out hover:bg-gray-600/50 focus:bg-red-600 focus:outline-none focus:ring-0 active:bg-red-700"  title="Delete notification!"
                                 onClick={(e)=>handleReadMessage(e, n._id)}>
+                                <span className="inline-block shadow-[0_4px_9px_-4px_#dc4c64] p-5 text-gray-300">
+                                    {n.user.firstname+' '+n.user.lastname}
+                                </span>
                                 <span
                                     tabIndex="0"
                                     className="block rounded bg-red z-100 px-7 pb-2.5 md:text-lg font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#dc4c64] transition duration-150 ease-in-out focus:bg-red-600 focus:outline-none focus:ring-0 active:bg-red-700 p-5"
@@ -92,14 +97,13 @@ export default function Account(){
                                     data-te-ripple-color="light">
                                     {n.message}
                                 </span>
-                                <span className="inline-block shadow-[0_4px_9px_-4px_#dc4c64] p-5 text-gray-300">
-                                    {n.user.firstname+' '+n.user.lastname}
-                                </span>
                             </div>
                         ))}
                     </section>
                 }
             </section>
+
+            {/* User Details */}
             { !showUserOptions && !showEventOptions &&  <>
             <section className="relative block h-500-px">
                 <div className="absolute top-50 w-full h-full bg-center bg-cover" style={{backgroundImage:" url('https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=2710&amp;q=80')"}}>
@@ -111,6 +115,7 @@ export default function Account(){
                     </svg>
                 </div>
             </section>
+
             <section className="relative py-16 bg-blueGray-200">
                 <div className="container mx-auto px-4 mt-28">
                     <div className="relative flex flex-col break-words bg-white w-full mb-6 shadow-xl rounded-lg -mt-80">
@@ -154,10 +159,10 @@ export default function Account(){
                                 </h3>
                                 <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
                                     <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
-                                    Los Angeles, California 
+                                    { !user.address ? "Los Angeles, California" : user.address.toUpperCase() }
                                 </div>
                                 <div className="mb-2 text-blueGray-600">
-                                    <i className="fas fa-university mr-2 text-lg text-blue-400"></i>University of Computer Science
+                                    <i className="fas fa-university mr-2 text-lg text-blue-400"></i>{!user.bio ? "University of Computer Science" : user.bio}
                                 </div>
                                 <div className="mb-2 text-blueGray-600 mt-10">
                                     <i className="fas fa-briefcase mr-2 text-lg text-blue-400"></i>{user?.gender}, {user?.age} years old

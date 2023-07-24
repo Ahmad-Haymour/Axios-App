@@ -11,7 +11,10 @@ const userSchema = Schema({
         required: false
     },
     age: {type: String, required: true},
+    address: {type: String},
+    bio: {type: String},
     avatar: {type: String},
+    
     // Created events
     events: [{
         type: SchemaTypes.ObjectId,
@@ -39,10 +42,5 @@ const userSchema = Schema({
         ref: 'Msg' 
     }]
 })
-
-// userSchema.methods.toJSON = function(){
-//     const result = {firstname: this.firstname, lastname: this.lastname, email: this.email, avatar: this.avatar, age: this.age, _id: this._id}
-//     return result
-// }
 
 module.exports = model('User', userSchema)

@@ -58,7 +58,6 @@ exports.login = async(req, res, next) =>{
 
 exports.getUsers = async(req, res, next) =>{
     const users = await User.find({}, '-token -password -__v').populate('messenger').populate('notifications')
-    console.log(users);
     res.status(200).send(users)
 }
 
@@ -119,22 +118,20 @@ exports.getCurrentUser = async(req, res, next)=>{
 }
 
 exports.updateUser = async(req, res, next)=>{
-    const {firstname, lastname, age, gender} = req.body
+    const {firstname, lastname, age, gender, address, bio} = req.body
     const requestUser = req.user
-    console.log('REQ USSER: ', requestUser);
 
     const token = req.cookies['user-token']
     const user = await User.findOne({token:token}, '-token -password').populate('events')
     await Promise.all( user.events.map((e)=>e.populate('user', '-token -password -__v')) )
 
-    console.log('USER is: ', user);
-
     user.firstname = firstname ? firstname : user.firstname
     user.lastname = lastname ?lastname: user.lastname
     user.age = age ? age : user.age
     user.gender = gender ? gender : user.gender
+    user.address = address ? address : user.address
+    user.bio = bio ? bio : user.bio
 
-    console.log('REQ FILE: ', req.file);
     if(req.file){
         const filename = path.join(process.cwd(), req.file.path)
         const buffer = await fs.readFile(filename);

@@ -40,9 +40,6 @@ exports.deleteComment = async(req, res, next)=>{
 
     const {commentID, eventID} = req.body
 
-    console.log('REQ BODY  => ', req.body);
-    console.log('Event ID => ', eventID);
-
     const comment = await Comment.findById(commentID).populate('user', '-token -password -__v')
     
     const event = await Event.findById(eventID).populate('user', '-token -password -__v').populate('comments').populate('team', '-token -password -__v')

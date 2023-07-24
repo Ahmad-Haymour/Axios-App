@@ -30,31 +30,10 @@ const mongoDB = `mongodb://${DB_URL}:${DB_PORT}/${DB_NAME}`
         process.exit(1);
       });
 
-// app.use(express.json())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-// const bodyparser = require("body-parser");
-// app.use(bodyparser.urlencoded({ extended: true }));
-// app.use(bodyparser.json());
-
 app.use(cookieParser())
-
-
-// const corsOpts = {
-//     origin: '*',
-  
-//     methods: [
-//       'GET',
-//       'POST',
-//     ],
-  
-//     allowedHeaders: [
-//       'Content-Type',
-//     ],
-//   };
-  
-//   app.use(cors(corsOpts));
 
 const corsConfig = {
     origin: 'http://127.0.0.1:3000',

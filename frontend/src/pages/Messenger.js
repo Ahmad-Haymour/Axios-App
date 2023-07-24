@@ -11,6 +11,7 @@ export default function Messenger(){
     [ chatID, setChatID] = useState(''),
     [ friend, setFriend] = useState(''),
     [ message, setMessage] = useState(''),
+    [ ready, setReady] = useState(false),
 
     // Set a new connection between two users to start chatting
     handleSetChat = async(e, participantID)=>{
@@ -25,7 +26,6 @@ export default function Messenger(){
                     .then(async(response)=>{
                         setChat(response.data)
                     })
-                else console.log('CHAT ID NULLL: ', chatID);
             })
             .catch(err=>console.log(err))
     },
@@ -64,14 +64,17 @@ export default function Messenger(){
     }
 
     useEffect( ()=>{
+        setReady(false)
         Axios.get("http://127.0.0.1:5000/user/all")
             .then(async(res)=>{
-                console.log( 'All Users => ', res.data);
                 setUsers(res.data)
                 setFilterUsers(res.data)
             })
             .catch (err=> console.log(err))
+            .finally( ()=> setReady(true))
     }, [] )
+
+    if(!ready) return <h1 className="animate-bounce h-[80vh] text-center mt-40 text-4xl">Loading ...</h1>
 
     return (
 

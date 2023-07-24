@@ -8,14 +8,15 @@ export default function UpdateUser({handleCloseOptoins}){
     [lastname, setLastname] = useState(''),
     [gender, setGender] = useState(''),
     [age, setAge] = useState(''),
+    [address, setAddress] = useState(''),
+    [bio, setBio] = useState(''),
     [avatar, setAvatar] = useState(''),
         
     handleUpdate = async(e)=>{
         e.preventDefault()
 
         try {
-            await user.update({ firstname, lastname, age, gender, avatar})
-            console.log('Update');
+            await user.update({ firstname, lastname, age, gender, address, bio, avatar})
             handleCloseOptoins()
         } catch (error) {
             console.log(error);
@@ -23,7 +24,7 @@ export default function UpdateUser({handleCloseOptoins}){
     }
 
     return (
-        <form className="w-full max-w-lg rounded-lg mx-auto bg-gray-200/50 shadow-2xl p-8   ">
+        <form className="w-full max-w-lg rounded-lg mx-auto bg-gray-200/50 shadow-2xl p-8 mb-10  ">
 
         {/* <form className="w-full max-w-lg mx-auto bg-smokewhite"> */}
             <div className="flex flex-wrap -mt-12 -mx-3 mb-6">
@@ -34,7 +35,6 @@ export default function UpdateUser({handleCloseOptoins}){
                     <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text"
                     value={firstname}
                     onChange={(e)=>setFirstname(e.target.value)}/>
-                    <p className="text-red-500 text-xs italic">Please fill out this field.</p>
                 </div>
                 <div className="w-full md:w-1/2 px-3">
                     <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-last-name">
@@ -44,6 +44,24 @@ export default function UpdateUser({handleCloseOptoins}){
                     onChange={(e)=> setLastname(e.target.value)} value={lastname}/>
                 </div>
             </div>
+            <div className="flex flex-wrap -mx-3 mb-6">
+                <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-address">
+                        Address
+                    </label>
+                    <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-address" type="text"
+                    value={address}
+                    onChange={(e)=>setAddress(e.target.value)}/>
+                </div>
+                <div className="w-full md:w-1/2 px-3">
+                    <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-bio">
+                        Bio
+                    </label>
+                    <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-bio" type="text"
+                    onChange={(e)=> setBio(e.target.value)} value={bio}/>
+                </div>
+            </div>
+
             <div className="flex flex-wrap -mx-3 mb-2">
                 <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                     <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-city">

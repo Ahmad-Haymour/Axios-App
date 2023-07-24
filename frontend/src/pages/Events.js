@@ -6,17 +6,20 @@ export default function Events(){
 
     const [events, setEvents] = useState([])
     const [filterEvents, setFilterEvents] = useState([])
+    const [ready, setReady] = useState(false)
 
     useEffect(()=>{
+        setReady(false)
         try {
             Axios.get('http://127.0.0.1:5000/event')
                 .then((res)=>{
                     setEvents(res.data)
                     setFilterEvents(res.data)
                 })
+                .finally( ()=> setReady(true))
         } catch (error) {
             console.log(error);
-        }
+        } 
     }, [])
 
     const filterFunction = (cat)=>{
@@ -28,6 +31,8 @@ export default function Events(){
         const searchResult = events.filter(e=>e.title.toLowerCase().includes(value.toLowerCase()) || e.address.toLowerCase().includes(value.toLowerCase()))
         setFilterEvents(searchResult)
     }
+
+    if(!ready) return <h1 className="animate-bounce h-[80vh] text-center mt-40 text-4xl">Loading ...</h1>
 
     return (
         <div className="bg-white-400 min-w-[74.8vw]">
@@ -47,28 +52,28 @@ export default function Events(){
                     placeholder="Search by title or address.." /> 
                 </div>
 
-                <div className="py-12 flex justify-center">
+                <div className="py-12 flex justify-center gap-8">
                     <button
                         type="button"
-                        className="inline-block rounded-l bg-blue px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-blue-600 focus:bg-blue-600 focus:outline-none focus:ring-0 active:bg-blue-700 bg-blue-500"
+                        className="inline-block rounded-l px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-indigo-600 focus:bg-indigo-600 focus:outline-none focus:ring-0 active:bg-indigo-700 bg-indigo-950"
                         onClick={()=>filterFunction(events)}>
                         All 
                     </button>
                     <button
                         type="button"
-                        className="inline-block bg-blue px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-blue-600 focus:bg-blue-600 focus:outline-none focus:ring-0 active:bg-blue-700 bg-blue-500"
+                        className="inline-block px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-indigo-600 focus:bg-indigo-600 focus:outline-none focus:ring-0 active:bg-indigo-700 bg-indigo-950"
                         onClick={()=>filterFunction("Public")}>
                         Public
                     </button>
                     <button
                         type="button"
-                        className="inline-block rounded-r bg-blue px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-blue-600 focus:bg-blue-600 focus:outline-none focus:ring-0 active:bg-blue-700 bg-blue-500"
+                        className="inline-block rounded-r px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-indigo-600 focus:bg-indigo-600 focus:outline-none focus:ring-0 active:bg-indigo-700 bg-indigo-950"
                         onClick={()=>filterFunction("Kids")}>
                         Kids
                     </button>
                     <button
                         type="button"
-                        className="inline-block rounded-r bg-blue px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-blue-600 focus:bg-blue-600 focus:outline-none focus:ring-0 active:bg-blue-700 bg-blue-500"
+                        className="inline-block rounded-r px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-indigo-600 focus:bg-indigo-600 focus:outline-none focus:ring-0 active:bg-indigo-700 bg-indigo-950"
                         onClick={()=>filterFunction("Adults")}>
                         Adults
                     </button>
@@ -97,7 +102,7 @@ export default function Events(){
                                     {e.category}
                                 </p>
                                 <div className="font-bold text-md">
-                                    {e.user.lastname}
+                                    By {e.user.lastname}
                                 </div>
                             </div>
                             <div className="px-6 pt-4 pb-2">

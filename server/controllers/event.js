@@ -1,6 +1,5 @@
 const Event = require("../models/Event")
 const User = require("../models/User")
-// const Comment = require('../models/Comment')
 require('express-async-errors')
 
 exports.getEvents = async(req, res, next) =>{
@@ -72,7 +71,6 @@ exports.joinEvent = async(req,res,next)=>{
     }
 
     const eventID = req.body.id
-    console.log('Start With =>> eventID:  ', eventID);
 
     const event = await Event.findById(eventID).populate('team', '-token -password -__v').populate('user', '-token -password -__v')
 
@@ -84,22 +82,13 @@ exports.joinEvent = async(req,res,next)=>{
 
     const isInTeam = Boolean(event.team.find(member=> member._id.toString() === userID.toString()))
 
-    console.log('IS In TEAM => ', isInTeam);
     
     if(!isInTeam){
-        console.log('Danke für die Teilnahme');
         event.team.push(user)
-        console.log('EVENT TEAM => ', event.team);
-
         user.eventslist.push(eventID)
-        // event.exist = false
     } else if(isInTeam) {
-        console.log('you are already in team!!');
-
         event.team = event.team.filter((member )=> member._id.toString() !== userID.toString())
         user.eventslist = user.eventslist.filter(joinedEvent => joinedEvent._id.toString() !== eventID)
-        // event.exist = true        
-        console.log('You left the Event!');
     }
 
     await user.save()
@@ -110,8 +99,6 @@ exports.joinEvent = async(req,res,next)=>{
 
 exports.deleteEvent = async (req,res,next)=>{
     const {id} = req.params
-
-    // const event = await Event.findById(id)
 
     const user = await User.findById(req.user._id).populate('events')
 
@@ -146,8 +133,6 @@ exports.updateEvent = async(req,res,next)=>{
     if(req.file?.path ){
         event.img = req.file?.path
     }
-
-    // await Promise.all( event.comments.map((e)=>e.populate('user', '-token -password -__v')) )
 
     await event.save()
 

@@ -23,7 +23,6 @@ export function UserProvider (props){
     const [error , setError] = useState('')
     const [errors , setErrors] = useState([])
     const [isFetching, setIsFetching] = useState(false)
-    const [ready , setReady] = useState(false)
     const [loggedIn , setLoggedIn] = useState(Boolean)
 
     const [refreshUser, setRefreshUser] = useState(false)
@@ -35,12 +34,8 @@ export function UserProvider (props){
         )
             .then(async (res) =>{
                 setUser(res.data)
-                console.log('Use Effect NEW User: ', res.data);
             })
             .catch(err=> console.log(err))
-            .finally(()=>{
-                setReady(true)
-            })
     }, [refreshUser])
 
         const data = {
@@ -62,7 +57,6 @@ export function UserProvider (props){
                         setRefreshUser(state=>!state)
                     })
                     .catch(err=>{
-                        console.log(err)
                         setError(err.response.data.error)
                     })
             },
@@ -79,6 +73,8 @@ export function UserProvider (props){
                 formData.append("lastname", body.lastname)
                 formData.append("gender", body.gender)
                 formData.append("age", body.age)
+                formData.append("address", body.address)
+                formData.append("bio", body.bio)
                 formData.append("avatar", body.avatar)
 
                 await Axios.post("http://127.0.0.1:5000/user/register", formData, {headers: {'Content-Type': 'multipart/form-data'}})
@@ -86,7 +82,6 @@ export function UserProvider (props){
                         setRefreshUser(state=>!state)
                     })
                     .catch(err=>{
-                        console.log(err)
                         setError(err.response.data.error)
                     })              
             },
@@ -100,15 +95,15 @@ export function UserProvider (props){
                 formData.append("lastname", body.lastname)
                 formData.append("age", body.age)        
                 formData.append("gender", body.gender)
+                formData.append("address", body.address)
+                formData.append("bio", body.bio)
                 formData.append("avatar", body.avatar)
 
                 await Axios.patch("http://127.0.0.1:5000/user", formData, {headers: {'Content-Type': 'multipart/form-data'}})
                     .then(res=> {
-                        console.log(res)
                         setRefreshUser(state=>!state)
                     })
                     .catch(err=>{
-                        console.log(err)
                         setError(err.response.data.error)
                     })
               },
@@ -149,9 +144,9 @@ export function UserProvider (props){
                         setRefreshUser(state=>!state)  
                     })
                     .catch(err=>{
-                        console.log(err)
                         setError(err.response.data.error)
                     })
+                    
                 return eventID
             },
 
@@ -172,13 +167,11 @@ export function UserProvider (props){
                         setRefreshUser(state=>!state)                 
                     })
                     .catch(err=>{
-                        console.log(err)
                         setError(err.response.data.error)
                     })
             },
 
             deleteEvent: async (body) => {
-                console.log(body);
                 await Axios.delete("http://127.0.0.1:5000/event/"+body.id, {id: body.id}, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}} )
                     .then(async()=> {
                         setRefreshUser(state=>!state)
@@ -191,7 +184,7 @@ export function UserProvider (props){
             joinEvent: async (body) => {
                 await Axios.post("http://127.0.0.1:5000/event/join", {id: body.id}, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}} )
                     .then(async(res)=> {
-                        console.log('Join Res:  ',res);
+                        console.log('Join Res:  ',res.data);
                     })
                     .catch(error =>{
                         console.log(error);

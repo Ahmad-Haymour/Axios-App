@@ -17,6 +17,8 @@ export default function Register() {
   const [lastname, setLastname] = useState('');
   const [gender, setGender] = useState('Male');
   const [age, setAge] = useState('');
+  const [address, setAddress] = useState('');
+  const [bio, setBio] = useState('');
   const [avatar, setAvatar] = useState('');
 
   const handleSubmit = async(e)=>{
@@ -53,6 +55,18 @@ export default function Register() {
                                         <input autoComplete="off" id="lastname" name="lastname" type="text" className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Lastname"
                                         onChange={(e)=> setLastname(e.target.value)} value={lastname} required />
                                         <label htmlFor="lastname" className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Last Name</label>
+                                    </div>
+                                </div>
+                                <div className="flex gap-2">
+                                    <div className="relative">
+                                        <input autoComplete="off" id="address" name="address" type="text" className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Address"
+                                        onChange={(e)=> setAddress(e.target.value)} value={address} required />
+                                        <label htmlFor="address" className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Address</label>
+                                    </div>
+                                    <div className="relative">
+                                        <input autoComplete="off" id="bio" name="bio" type="text" className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Bio"
+                                        onChange={(e)=> setBio(e.target.value)} value={bio} required />
+                                        <label htmlFor="bio" className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Bio</label>
                                     </div>
                                 </div>
                                 <div className="flex gap-2">

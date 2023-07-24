@@ -30,7 +30,7 @@ export default function Home() {
         
         <div  className='h-[5px] w-full bg-gray-400/50 px-8'/>
 
-        <section className='py-6 px-10' >
+        <section className='p-10' >
             <div className='text-lg'>
               <h3 className='text-3xl font-bold'>NEWS & TRENDS</h3>
               <p className='text-2xl py-8'>Stay up-to-date on the latest in live events with our exclusive insights, trends, surveys, and reports.</p>
@@ -97,7 +97,7 @@ export default function Home() {
         </section>
         <div  className='h-[5px] w-full bg-gray-400/50 px-8'/>
 
-        <section className='py-6 px-10'>
+        <section className='py-12 px-10'>
           <h3 className='text-2xl font-bold pb-8'>TRENDING</h3>
           <div className='flex gap-6 flex-wrap md:flex-nowrap '>
 
@@ -138,9 +138,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-
-        <div  className='h-[5px] w-full bg-gray-400/50 px-8'/>
-
     </div>
   )
 }
