@@ -1,6 +1,7 @@
 import React from 'react'
 
 export default function Footer() {
+
   return (
     <div className='bg-indigo-950 text-white p-10'>
         <div className='flex flex-wrap justify-around gap-8 cursor-pointer'>
@@ -50,7 +51,7 @@ export default function Footer() {
                 <div>
                     <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5"
+                    className="h-5 w-5"
                     fill="currentColor"
                     viewBox="0 0 24 24">
                     <path
@@ -60,7 +61,7 @@ export default function Footer() {
                 <div>
                     <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5"
+                    className="h-5 w-5"
                     fill="currentColor"
                     viewBox="0 0 24 24">
                     <path
@@ -70,7 +71,7 @@ export default function Footer() {
                 <div>
                     <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5"
+                    className="h-5 w-5"
                     fill="currentColor"
                     viewBox="0 0 24 24">
                     <path
@@ -80,7 +81,7 @@ export default function Footer() {
                 <div>
                     <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5"
+                    className="h-5 w-5"
                     fill="currentColor"
                     viewBox="0 0 24 24">
                     <path
@@ -90,7 +91,7 @@ export default function Footer() {
                 <div>
                     <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5"
+                    className="h-5 w-5"
                     fill="currentColor"
                     viewBox="0 0 24 24">
                     <path

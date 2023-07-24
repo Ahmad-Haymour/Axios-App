@@ -69,6 +69,7 @@ export default function Event(){
         } catch (error) {
             console.log(error);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [newUpdate, user.data])
 
     if(showEventOptions && user.data ) return <UpdateEvent handleCloseOptoins={handleCloseOptoins}/>

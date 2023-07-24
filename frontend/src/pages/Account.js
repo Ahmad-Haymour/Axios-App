@@ -72,11 +72,11 @@ export default function Account(){
 
                 {/* Notifications section */}
                 { showNotifications && user.notifications.length > 0 &&
-                    <section className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 bg-gray-900/90 w-[80%] mt-10 pb-12 text-center rounded-lg" >
+                    <section className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 bg-gray-900/90 w-[80%] mt-10 pb-12 text-center rounded-lg max-h-96 overflow-auto" >
                         <button type="button" className=" rounded-md p-2 absolute right-0 text-gray-400 hover:text-red-500 hover:bg-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" onClick={()=>setShowNotifications(false)}>
                             <span className="sr-only">Close menu</span>
                             <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         </button>
                         <h3 className="md:text-2xl text-white p-4">You have {user.notifications.length} new messages!</h3>
@@ -105,16 +105,6 @@ export default function Account(){
 
             {/* User Details */}
             { !showUserOptions && !showEventOptions &&  <>
-            <section className="relative block h-500-px">
-                <div className="absolute top-50 w-full h-full bg-center bg-cover" style={{backgroundImage:" url('https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=2710&amp;q=80')"}}>
-                    <span id="blackOverlay" className="w-full h-full absolute opacity-50 bg-black"></span>
-                </div>
-                <div className="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden h-70-px" style={{transform: "translateZ(0px)"}}>
-                    <svg className="absolute bottom-0 overflow-hidden" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" version="1.1" viewBox="0 0 2560 100" x="0" y="0">
-                        <polygon className="text-blueGray-200 fill-current" points="2560 0 2560 100 0 100"></polygon>
-                    </svg>
-                </div>
-            </section>
 
             <section className="relative py-16 bg-blueGray-200">
                 <div className="container mx-auto px-4 mt-28">

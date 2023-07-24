@@ -7,7 +7,6 @@ require('express-async-errors')
 
 exports.readChat = async (req, res, next)=>{
     const {chatID} = req.query
-    console.log('QUERY => ',chatID);
 
     if(!chatID ){
         res.status(201).send(null)

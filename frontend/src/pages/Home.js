@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 import img2 from '../images/img2.jpg'
 
@@ -14,8 +14,9 @@ import img_9 from '../images/img_9.png'
 import img_10 from '../images/img_10.png'
 
 export default function Home() {
+  
   return (
-    <div>
+    <div className='pt-80'>
         <section className='py-6 px-10'>
             <img src={img2} alt="Home" className='rounded-xl' />
 
