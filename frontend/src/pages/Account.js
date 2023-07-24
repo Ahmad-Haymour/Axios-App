@@ -8,11 +8,11 @@ import Axios from "axios";
 export default function Account(){
 
     const user = useUser().data,
+    userMethods = useUser(),
     
     [showUserOptions, setShowUserOptions] = useState(false),
     [showEventOptions, setShowEventOptions] = useState(false),
-    [showNotifications, setShowNotifications] = useState(true),
-    [messageID, setMessageID] = useState(''),
+    [showNotifications, setShowNotifications] = useState(false),
 
     handleCloseOptoins =()=>{
         setShowUserOptions(false)
@@ -20,13 +20,11 @@ export default function Account(){
     },
 
     handleReadMessage = async (e, id)=>{
-
         e.preventDefault()
-        console.log('THE ID::: ',id);
 
         await Axios.delete("http://127.0.0.1:5000/messenger",{ data: { messageID: id} })
-        .then(async res=>{
-            console.log(res.data);
+        .then(async (res)=>{
+            await userMethods.invokeUser()
         })
     }
 
@@ -35,16 +33,16 @@ export default function Account(){
     return (
         <main className="profile-page relative mt-52">
              
-            <div className="absolute -top-52 bottom-auto left-auto right-0 m-3 inline-flex w-fit ">
+            <div className="absolute -top-52 bottom-auto left-auto right-0 m-3 inline-flex w-fit cursor-pointer"
+                 onClick={(e)=>setShowNotifications(!showNotifications)}
+            >
               
-                <div
-                    className="absolute bottom-0 left-0 right-auto top-auto z-20 inline-block -translate-x-2/4 translate-y-1/2 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-red-600/75 px-2 text-lg text-white"
-                    onClick={(e)=>setShowNotifications(!showNotifications)}>
-                        {user.notifications?.length}
+                <div className="absolute bottom-0 left-0 right-auto top-auto z-20 inline-block -translate-x-2/4 translate-y-1/2 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-red-600/75 px-2 text-lg text-white"
+                >
+                    {user.notifications?.length}
                         
-                    </div>
-                <div
-                    className="flex items-center justify-center rounded-lg bg-blue-600 px-2 py-1.5 text-center shadow-lg z-10">
+                </div>
+                <div className="flex items-center justify-center rounded-lg bg-blue-600 px-2 py-1.5 text-center shadow-lg z-10">
                     <div>
                     <svg
                         aria-hidden="true"
@@ -62,30 +60,39 @@ export default function Account(){
                     </div>
                 </div>
             </div>
-            <section className="p-2">
+            <section className="relative p-2">
+                                
+                {/* Edit user page*/}
                 {showUserOptions && <UpdateUser handleCloseOptoins={handleCloseOptoins}/>}
+
+                {/*Create an Event page*/}
                 {showEventOptions && <CreateEvent handleCloseOptoins={handleCloseOptoins}/>}
 
                 {/* Notifications section */}
                 { showNotifications && user.notifications.length > 0 &&
-                    <section className="absolute bg-black/90 z-50 w-full mx-auto pb-12 text-center">
-                        <h3 className="text-2xl text-white p-4">You have got {user.notifications.length} unread messages!</h3>
+                    <section className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 bg-gray-900/90 w-[80%] mt-10 pb-12 text-center rounded-lg" >
+                        <button type="button" className=" rounded-md p-2 absolute right-0 text-gray-400 hover:text-red-500 hover:bg-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" onClick={()=>setShowNotifications(false)}>
+                            <span className="sr-only">Close menu</span>
+                            <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                        <h3 className="md:text-2xl text-white p-4">You have {user.notifications.length} new messages!</h3>
                         {user.notifications?.map(n=> (
-                            <div key={n._id} className="flex justify-between cursor-pointer bg-gray-600 mx-32 bg-red z-100 px-7 pb-2.5 text-lg font-medium uppercase leading-normal text-black shadow-[0_4px_9px_-4px_#dc4c64] transition duration-150 ease-in-out hover:bg-red-600 focus:bg-red-600 focus:outline-none focus:ring-0 active:bg-red-700" 
+                            <div key={n._id} className="flex justify-between cursor-pointer rounded-lg  z-100 px-7 pb-2.5 m-6 text-xs md:text-lg font-medium uppercase leading-normal text-black shadow-[0_4px_9px_-4px_#dc4c64] transition duration-150 ease-in-out hover:bg-gray-600/50 focus:bg-red-600 focus:outline-none focus:ring-0 active:bg-red-700"  title="Delete notification!"
                                 onClick={(e)=>handleReadMessage(e, n._id)}>
                                 <span
                                     tabIndex="0"
-                                    className="block rounded bg-red z-100 px-7 pb-2.5 text-lg font-medium uppercase leading-normal text-black shadow-[0_4px_9px_-4px_#dc4c64] transition duration-150 ease-in-out hover:bg-red-600 focus:bg-red-600 focus:outline-none focus:ring-0 active:bg-red-700 p-5"
+                                    className="block rounded bg-red z-100 px-7 pb-2.5 md:text-lg font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#dc4c64] transition duration-150 ease-in-out focus:bg-red-600 focus:outline-none focus:ring-0 active:bg-red-700 p-5"
                                     data-te-toggle="popover"
                                     data-te-trigger="focus"
-                                    title="Dismissible popover"
+                                    
                                     data-te-content="And here's some amazing content. It's very engaging. Right?"
                                     data-te-ripple-init
                                     data-te-ripple-color="light">
                                     {n.message}
                                 </span>
-                                <span className="p-5 text-xl text-gray-300">From</span>
-                                <span className="inline-block shadow-[0_4px_9px_-4px_#dc4c64] p-5">
+                                <span className="inline-block shadow-[0_4px_9px_-4px_#dc4c64] p-5 text-gray-300">
                                     {n.user.firstname+' '+n.user.lastname}
                                 </span>
                             </div>
@@ -107,7 +114,6 @@ export default function Account(){
             <section className="relative py-16 bg-blueGray-200">
                 <div className="container mx-auto px-4 mt-28">
                     <div className="relative flex flex-col break-words bg-white w-full mb-6 shadow-xl rounded-lg -mt-80">
-
                         <div className="mx-10">
                             <div className="flex flex-wrap justify-between ">
                                 <div className="w-full  flex justify-center">
@@ -142,7 +148,7 @@ export default function Account(){
                                     </div>
                                 </div>
                             </div>
-                            <div className="text-center lg:mt-8 pb-4">
+                            <div className="text-center lg:mt-8 pb-8">
                                 <h3 className="text-2xl sm:text-4xl font-semibold leading-normal my-4 pb-4 text-blue-700">
                                     {user?.firstname + ' ' + user?.lastname}
                                 </h3>

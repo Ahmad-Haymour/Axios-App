@@ -43,12 +43,11 @@ export default function Comments({event, handleCloseOptoins}){
     }
 
     return (
-        <section className="bg-white  py-8 lg:py-16">
-            <div className="max-w-2xl mx-auto px-4">
+        <section className="bg-gray-300/90 rounded-xl py-6 lg:py-16">
+            <div className="max-w-2xl mx-auto px-4 ">
                 <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-lg lg:text-2xl font-bold text-gray-900 ">Discussion ({event.comments ? event.comments.length: 0})</h2>
+                    <h2 className="text-lg lg:text-2xl font-bold text-gray-900 ">Comments ({event.comments ? event.comments.length: 0})</h2>
                 </div>
-
                 <form className="mb-6">
                     <div className="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:border-gray-700">
                         <label htmlFor="comment" className="sr-only">Your comment</label>

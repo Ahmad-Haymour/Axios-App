@@ -7,6 +7,7 @@ export default function Messenger(){
     const user = useUser(),
     [ chat, setChat] = useState({}),
     [ users, setUsers] = useState([]),
+    [ filterUsers, setFilterUsers] = useState([]),
     [ chatID, setChatID] = useState(''),
     [ friend, setFriend] = useState(''),
     [ message, setMessage] = useState(''),
@@ -17,13 +18,11 @@ export default function Messenger(){
 
         await Axios.post("http://127.0.0.1:5000/messenger/set", {friendID: participantID})
             .then(async(res)=>{
-                console.log('Handle Set Chat => ', res.data);
                 setFriend(participantID)
                 setChatID(res.data[0]?._id)
 
                 if(res.data[0]?._id) await Axios.get("http://127.0.0.1:5000/messenger?chatID="+res.data[0]?._id)
                     .then(async(response)=>{
-                        console.log( 'Read Chat Response => ', response.data);
                         setChat(response.data)
                     })
                 else console.log('CHAT ID NULLL: ', chatID);
@@ -45,7 +44,6 @@ export default function Messenger(){
             .then(async (res)=>{
                 await Axios.get("http://127.0.0.1:5000/messenger?chatID="+res.data._id)
                     .then(async(response)=>{
-                        console.log( 'Read Chat Response => ', response.data);
                         setChat(response.data)
                         setChatID(response.data._id)
                         setMessage('')
@@ -58,6 +56,11 @@ export default function Messenger(){
         const time = msg.createdAt?.slice(11,16),
         date = msg.createdAt?.slice(0,10)
         return [time, date]
+    },
+
+    searchFunction = (value)=>{
+        const searchResult = users.filter(e=>e.firstname.toLowerCase().includes(value.toLowerCase()) || e.lastname.toLowerCase().includes(value.toLowerCase()))
+        setFilterUsers(searchResult)
     }
 
     useEffect( ()=>{
@@ -65,10 +68,10 @@ export default function Messenger(){
             .then(async(res)=>{
                 console.log( 'All Users => ', res.data);
                 setUsers(res.data)
+                setFilterUsers(res.data)
             })
             .catch (err=> console.log(err))
     }, [] )
-
 
     return (
 
@@ -79,17 +82,18 @@ export default function Messenger(){
 
                 <div className="flex flex-col sm:w-2/5 border-r-2 overflow-y-auto h-[170px] sm:h-full border-2 border-sky-400 sm:border-gray-500/50">
                         {/* <!-- search compt --> */}
-                    <div className="border-b-2 py-4 px-2">
+                    <div className="border-b-2 py-6 px-2">
                         <input
                             type="text"
                             placeholder="search chatting"
                             className="py-2 px-2 border-2 border-gray-200 rounded-2xl w-full"
+                            onChange={(e)=>searchFunction(e.target.value)}
                         />
                     </div>
                         {/* <!-- end search compt -->
 
                         <!-- user list --> */}
-                    { user.data && users.filter(element=>element._id !== user.data?._id).map((u)=>( 
+                    { user.data && users && filterUsers.filter(element=>element._id !== user.data?._id).map((u)=>( 
 
                         <div onClick={(e)=>handleSetChat(e, u._id)} key={u._id} className="flex flex-row py-4 px-2 justify-between items-center border-b-2">
                             <div className="w-2/4">
@@ -113,7 +117,7 @@ export default function Messenger(){
                 {/* <!-- Participant -->  */}
                 <div className="flex sm:p-2 justify-between flex-col w-full h-[66vh] sm:h-full">
                     <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
-                        { chat?.participants && 
+                        {/* { chat?.participants &&  */}
 
                             <div className="relative flex items-center space-x-4">
                                 <div className="relative">
@@ -127,17 +131,20 @@ export default function Messenger(){
                                 
                                 <div className="flex flex-col leading-tight">
                                     <div className="text-2xl mt-1 flex items-center">
-                                        <span className="text-gray-700 mr-3">
-                                        { 
-                                            chat.participants?.filter(u=> u._id !== user.data?._id)[0].firstname  + ' ' +
-                                            chat.participants?.filter(u=> u._id !== user.data?._id)[0].lastname  
+                                        { chat.participants ? 
+                                            <span className="text-gray-700 mr-3">
+                                                { 
+                                                    chat.participants?.filter(u=> u._id !== user.data?._id)[0].firstname  + ' ' +
+                                                    chat.participants?.filter(u=> u._id !== user.data?._id)[0].lastname  
+                                                }
+                                            </span>
+                                            :
+                                            <span className="text-lg text-gray-600">Choose a friend..</span>
                                         }
-                                        </span>
                                     </div>
-                                    <span className="text-lg text-gray-600">Junior Developer</span>
                                 </div>
                             </div>
-                        }
+                        {/* } */}
                     </div>
 
                     {/* Chat Messages start here => */}

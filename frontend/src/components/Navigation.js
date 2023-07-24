@@ -7,6 +7,8 @@ import Account from "../pages/Account";
 import Events from "../pages/Events";
 import Event from "../pages/Event";
 import Messenger from "../pages/Messenger";
+import Home from "../pages/Home";
+import Footer from "./Footer";
 
 export default function Navigation() {
 
@@ -52,7 +54,7 @@ export default function Navigation() {
           </div>
 
           {/* Sidebar */}
-          <div className={`sidebar lg:min-h-screen lg:sticky lg:top-0 space-y-6  px-2 ${ width < breakpoint ? "bg-gray-600 absolute top-15 min-w-full z-[100]" : "bg-blue-800 pt-8 w-[240px]"}
+          <div className={`sidebar lg:min-h-screen lg:sticky lg:top-0 space-y-6 text-white px-2 ${ width < breakpoint ? "bg-gray-600 absolute top-15 min-w-full z-[100]" : "bg-indigo-950 text-lg pt-8 w-[240px]"}
           transform-translate-x-full lg:relative lg:translate-x-0 transition duration-200 ease-in-out`}>
             { width > breakpoint && (
               <>
@@ -132,9 +134,11 @@ export default function Navigation() {
               </nav>
             )}
           </div>
+
+          {/* Routes / Pages */}
           <div className="max-w-screen mx-auto md:my-2 lg:my-0">
             <Routes>
-              <Route path="/" element={<h1>Home</h1>} />
+              <Route path="/" element={<Home/>} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register/>} />
               <Route path="/account" element={<Account/>} />
@@ -144,6 +148,8 @@ export default function Navigation() {
             </Routes>
           </div>
       </div>
+      <div  className='h-[5px] w-full bg-gray-800/50 px-8'/>
+      <Footer/>
     </Router>
   );
 }

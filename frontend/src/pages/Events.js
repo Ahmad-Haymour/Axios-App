@@ -5,9 +5,7 @@ import Axios  from "axios";
 export default function Events(){
 
     const [events, setEvents] = useState([])
-
     const [filterEvents, setFilterEvents] = useState([])
-
 
     useEffect(()=>{
         try {
@@ -24,13 +22,12 @@ export default function Events(){
     const filterFunction = (cat)=>{
         const filterResult = events.filter(e=>e.category === cat);
         setFilterEvents(filterResult);
-      }
+    }
     
-      const searchFunction = (value)=>{
+    const searchFunction = (value)=>{
         const searchResult = events.filter(e=>e.title.toLowerCase().includes(value.toLowerCase()) || e.address.toLowerCase().includes(value.toLowerCase()))
         setFilterEvents(searchResult)
-        console.log('searchResult',searchResult);
-      }
+    }
 
     return (
         <div className="bg-white-400 min-w-[74.8vw]">
@@ -38,7 +35,7 @@ export default function Events(){
                 <div className="relative mx-auto flex items-center w-[70%] h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden">
                     <div className="grid place-items-center h-full w-12 text-gray-300">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                     </div>
 
