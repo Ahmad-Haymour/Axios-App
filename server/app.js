@@ -6,15 +6,14 @@ const cors = require('cors')
 
 const app = express()
 
-const {PORT, DB_URL, DB_PORT, DB_NAME} = process.env
+const {PORT, DB_URL, DB_PORT, DB_NAME, MongoDB_Connection} = process.env
 
 // Set `strictQuery: false` to globally opt into filtering by properties that aren't in the schema
 mongoose.set("strictQuery", false);
 
 // Define the database URL to connect to.
-const mongoDB = `mongodb://${DB_URL}:${DB_PORT}/${DB_NAME}`
-// const mongoDB = `mongodb://${DB_URL}:${DB_PORT}/${DB_NAME}` || `mongodb://0.0.0.0:27017`
-// const mongoDB = `mongodb://0.0.0.0:27017/axios-events`
+const mongoDB = MongoDB_Connection
+// const mongoDB = `mongodb://${DB_URL}:${DB_PORT}/${DB_NAME}`
 
     // Connecting to the database
     mongoose
@@ -38,7 +37,8 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 
 const corsConfig = {
-    origin: 'http://127.0.0.1:3000',
+    // origin: 'http://127.0.0.1:3000',
+    origin: '*',
     credentials: true
 }
 
