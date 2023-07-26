@@ -12,9 +12,9 @@ const {PORT, DB_URL, DB_PORT, DB_NAME} = process.env
 mongoose.set("strictQuery", false);
 
 // Define the database URL to connect to.
-const mongoDB = `mongodb://${DB_URL}:${DB_PORT}/${DB_NAME}`
+// const mongoDB = `mongodb://${DB_URL}:${DB_PORT}/${DB_NAME}`
 // const mongoDB = `mongodb://${DB_URL}:${DB_PORT}/${DB_NAME}` || `mongodb://0.0.0.0:27017`
-// const mongoDB = `mongodb://0.0.0.0:27017/axios-events`
+const mongoDB = `mongodb://0.0.0.0:27017/axios-events`
 
     // Connecting to the database
     mongoose
