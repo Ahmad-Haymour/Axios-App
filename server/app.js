@@ -36,24 +36,25 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use(cookieParser())
 
-app.use(cors());
-app.use((req,res,next)=>{
-    res.header('Access-Control-Allow-Headers, *, Access-Control-Allow-Origin', 'Origin, X-Requested-with, Content_Type,Accept,Authorization','http://127.0.0.1:3000');
-    if(req.method === 'OPTIONS') {
-        res.header('Access-Control-Allow-Methods','PUT,POST,PATCH,DELETE,GET');
-        return res.status(200).json({});
-    }
-    next();
-});
+// app.use(cors());
+// app.use((req,res,next)=>{
+//     res.header('Access-Control-Allow-Headers, *, Access-Control-Allow-Origin', 'Origin, X-Requested-with, Content_Type,Accept,Authorization','http://127.0.0.1:3000');
+//     if(req.method === 'OPTIONS') {
+//         res.header('Access-Control-Allow-Methods','PUT,POST,PATCH,DELETE,GET');
+//         return res.status(200).json({});
+//     }
+//     next();
+// });
 
-// const corsConfig = {
-//     // origin: 'http://127.0.0.1:3000',
-//     origin: '*',
-//     credentials: 'true'
-// }
+const corsConfig = {
+    // origin: 'http://127.0.0.1:3000',
+    origin: "*",
+    // credentials: 'true'
+    methods: ["GET", "POST", "PUT", "DELETE"]
+}
 
-// app.use(cors(corsConfig))
-// app.options('*', cors(corsConfig))
+app.use(cors(corsConfig))
+app.options('*', cors(corsConfig))
 
 app.use('/user', require('./routes/user'))
 app.use('/event', require('./routes/event') )
