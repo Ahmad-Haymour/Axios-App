@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Axios  from "axios";
 
 export default function Events(){
+    const url = 'https://axios-app.onrender.com/'
 
     const [events, setEvents] = useState([])
     const [filterEvents, setFilterEvents] = useState([])
@@ -11,7 +12,7 @@ export default function Events(){
     useEffect(()=>{
         setReady(false)
         try {
-            Axios.get('http://127.0.0.1:5000/event')
+            Axios.get(`${url}event`)
                 .then((res)=>{
                     setEvents(res.data)
                     setFilterEvents(res.data)
@@ -86,7 +87,7 @@ export default function Events(){
                 {   events.length > 0 &&
                     filterEvents?.map((e)=>(
                         <Link to={'/events/'+e._id} key={e._id} className="rounded bg-white overflow-hidden shadow-md hover:shadow-xl w-[270px] h-[380px]">
-                            <img className="w-full h-[150px]" src={e.img?.replace("uploads\\", "http://127.0.0.1:5000/")} alt="Event bg"/>
+                            <img className="w-full h-[150px]" src={e.img?.replace("uploads\\", `${url}`)} alt="Event bg"/>
                             
                             <div className="px-4 py-0 min-h-[160px]">
                                 <div className="font-bold text-xl mb-2">

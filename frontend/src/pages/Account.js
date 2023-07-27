@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import Axios from "axios";
 
 export default function Account(){
+    
+    const url = 'https://axios-app.onrender.com/'
 
     const user = useUser().data,
     userMethods = useUser(),
@@ -22,7 +24,7 @@ export default function Account(){
     handleReadMessage = async (e, id)=>{
         e.preventDefault()
 
-        await Axios.delete("http://127.0.0.1:5000/messenger",{ data: { messageID: id} })
+        await Axios.delete(`${url}messenger`,{ data: { messageID: id} })
         .then(async (res)=>{
             await userMethods.invokeUser()
         })
@@ -164,7 +166,7 @@ export default function Account(){
                                 <div className="p-10 flex flex-wrap justify-center gap-5">
                                     {user.events.map(e=>(
                                         <Link to={'/events/'+e._id} key={e._id} className="rounded bg-white overflow-hidden shadow-md hover:shadow-xl w-[280px] h-[375px]">
-                                            <img className="w-full h-[150px]" src={e.img?.replace("uploads\\", "http://127.0.0.1:5000/")} alt="Event bg"/>
+                                            <img className="w-full h-[150px]" src={e.img?.replace("uploads\\", `${url}`)} alt="Event bg"/>
                                             
                                             <div className="px-6 py-2 text-left">
                                                 <p className="font-bold text-lg text-black sm:min-h-[48px] ">

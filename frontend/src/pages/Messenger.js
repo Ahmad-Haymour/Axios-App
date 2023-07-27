@@ -4,6 +4,7 @@ import Axios from "axios";
 import InputEmoji from 'react-input-emoji';
 
 export default function Messenger(){
+    const url = 'https://axios-app.onrender.com/'
 
     const user = useUser(),
     [ chat, setChat] = useState({}),
@@ -18,12 +19,12 @@ export default function Messenger(){
     handleSetChat = async(e, participantID)=>{
         e.preventDefault()
 
-        await Axios.post("http://127.0.0.1:5000/messenger/set", {friendID: participantID})
+        await Axios.post(`${url}messenger/set`, {friendID: participantID})
             .then(async(res)=>{
                 setFriend(participantID)
                 setChatID(res.data[0]?._id)
 
-                if(res.data[0]?._id) await Axios.get("http://127.0.0.1:5000/messenger?chatID="+res.data[0]?._id)
+                if(res.data[0]?._id) await Axios.get(`${url}messenger?chatID=`+res.data[0]?._id)
                     .then(async(response)=>{
                         setChat(response.data)
                     })
@@ -37,14 +38,14 @@ export default function Messenger(){
         if(!message) return
         
         // setMessage(text)
-        await Axios.post("http://127.0.0.1:5000/messenger", 
+        await Axios.post(`${url}messenger`, 
         {
             chatID: chatID ,
             friend: friend,
             message: message
         })
             .then(async (res)=>{
-                await Axios.get("http://127.0.0.1:5000/messenger?chatID="+res.data._id)
+                await Axios.get(`${url}messenger?chatID=`+res.data._id)
                     .then(async(response)=>{
                         setChat(response.data)
                         setChatID(response.data._id)
@@ -67,7 +68,7 @@ export default function Messenger(){
 
     useEffect( ()=>{
         setReady(false)
-        Axios.get("http://127.0.0.1:5000/user/all")
+        Axios.get(`${url}user/all`)
             .then(async(res)=>{
                 setUsers(res.data)
                 setFilterUsers(res.data)
@@ -81,13 +82,6 @@ export default function Messenger(){
     useEffect(()=>{
         setMessage(text)
     }, [text])
-    // function handleOnEnter (e) {
-    //     e.preventDefault()
-    //     console.log('enter', text)
-    //     setMessage(text)
-
-    //     // handleSendMessage()
-    // }
 
     if(!ready) return <h1 className="animate-bounce h-[80vh] text-center mt-40 text-4xl">Loading ...</h1>
 

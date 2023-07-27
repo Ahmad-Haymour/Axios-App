@@ -4,6 +4,7 @@ import useUser from "../hooks/useUser";
 import { useParams } from "react-router-dom";
 
 export default function Comments({event, handleCloseOptoins}){
+    const url = 'https://axios-app.onrender.com/'
 
     const user = useUser()
     const {id} = useParams(),
@@ -14,7 +15,7 @@ export default function Comments({event, handleCloseOptoins}){
     handleAddComment = async(e)=>{
         e.preventDefault()
 
-        await Axios.post("http://127.0.0.1:5000/comment", {
+        await Axios.post(`${url}comment`, {
             message: comment,
             event: id
         })
@@ -29,7 +30,7 @@ export default function Comments({event, handleCloseOptoins}){
     handleDeleteComment = async(e, commentID)=>{
         e.preventDefault()
 
-        await Axios.delete("http://127.0.0.1:5000/comment", {
+        await Axios.delete(`${url}comment`, {
             data:  {
                 commentID: commentID,
                 eventID: id

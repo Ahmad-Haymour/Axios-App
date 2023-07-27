@@ -27,9 +27,11 @@ export function UserProvider (props){
 
     const [refreshUser, setRefreshUser] = useState(false)
 
+    const url = 'https://axios-app.onrender.com/'
+
     useEffect(()=>{
 
-        Axios.get(`http://127.0.0.1:5000/user`,
+        Axios.get(`${url}user`,
             {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
         )
             .then(async (res) =>{
@@ -50,7 +52,7 @@ export function UserProvider (props){
                 setErrors([])
                 setIsFetching(true)
 
-                await Axios.post("http://127.0.0.1:5000/user/login", {email:body.email, password:body.password},  {headers: { 'Content-Type': 'application/json;charset=UTF-8',
+                await Axios.post(`${url}user/login`, {email:body.email, password:body.password},  {headers: { 'Content-Type': 'application/json;charset=UTF-8',
                 }})
                     .then(res=> {
                         // setUser(res.data)
@@ -77,7 +79,7 @@ export function UserProvider (props){
                 formData.append("bio", body.bio)
                 formData.append("avatar", body.avatar)
 
-                await Axios.post("http://127.0.0.1:5000/user/register", formData, {headers: {'Content-Type': 'multipart/form-data'}})
+                await Axios.post(`${url}user/register`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
                     .then(res=> {
                         setRefreshUser(state=>!state)
                     })
@@ -99,7 +101,7 @@ export function UserProvider (props){
                 formData.append("bio", body.bio)
                 formData.append("avatar", body.avatar)
 
-                await Axios.patch("http://127.0.0.1:5000/user", formData, {headers: {'Content-Type': 'multipart/form-data'}})
+                await Axios.patch(`${url}user`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
                     .then(res=> {
                         setRefreshUser(state=>!state)
                     })
@@ -109,13 +111,13 @@ export function UserProvider (props){
               },
 
             logout: async()=>{
-                await Axios.post('http://127.0.0.1:5000/user/logout')
+                await Axios.post(`${url}user/logout`)
                 setUser(null)
                 setLoggedIn(false)
             },
 
             invokeUser: async()=>{
-                await  Axios.get(`http://127.0.0.1:5000/user`,
+                await  Axios.get(`${url}user`,
                 {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
             )
                 .then(async (res) =>{
@@ -138,7 +140,7 @@ export function UserProvider (props){
                 formData.append("category", body.category)
                 formData.append("eventBild", body.eventBild)
 
-                await Axios.post("http://127.0.0.1:5000/event", formData, {headers: {'Content-Type': 'multipart/form-data'}})
+                await Axios.post(`${url}event`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
                     .then(async(res)=> {
                         eventID = res.data._id
                         setRefreshUser(state=>!state)  
@@ -162,7 +164,7 @@ export function UserProvider (props){
                 formData.append("category", body.category)
                 formData.append("eventBild", body.eventBild)
 
-                await Axios.patch("http://127.0.0.1:5000/event/"+body.id , formData, {headers: {'Content-Type': 'multipart/form-data'}})
+                await Axios.patch(`${url}event/`+body.id , formData, {headers: {'Content-Type': 'multipart/form-data'}})
                     .then(async()=> {
                         setRefreshUser(state=>!state)                 
                     })
@@ -172,7 +174,7 @@ export function UserProvider (props){
             },
 
             deleteEvent: async (body) => {
-                await Axios.delete("http://127.0.0.1:5000/event/"+body.id, {id: body.id}, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}} )
+                await Axios.delete(`${url}event`+body.id, {id: body.id}, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}} )
                     .then(async()=> {
                         setRefreshUser(state=>!state)
                     })
@@ -182,7 +184,7 @@ export function UserProvider (props){
             },
 
             joinEvent: async (body) => {
-                await Axios.post("http://127.0.0.1:5000/event/join", {id: body.id}, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}} )
+                await Axios.post(`${url}event/join`, {id: body.id}, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}} )
                     .then(async(res)=> {
                         console.log('Join Res:  ',res.data);
                     })
