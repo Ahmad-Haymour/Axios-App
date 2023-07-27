@@ -47,8 +47,8 @@ app.use(cookieParser())
 // });
 
 const corsConfig = {
-    // origin: 'http://127.0.0.1:3000',
-    origin: "*",
+    origin: 'http://127.0.0.1:3000',
+    // origin: "*",
     // credentials: 'true'
     methods: ["GET", "POST", "PUT", "DELETE"]
 }
