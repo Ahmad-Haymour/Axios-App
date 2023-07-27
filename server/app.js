@@ -43,6 +43,7 @@ mongoose
 // app.options('*', cors(corsConfig))
 
 app.use(cors({
+  credentials: true,
   allowedHeaders: "*",
   allowMethods: "*",
   origin: "*"
