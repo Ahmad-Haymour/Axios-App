@@ -16,20 +16,31 @@ const mongoDB = MongoDB_Connection
 // const mongoDB = `mongodb://${DB_URL}:${DB_PORT}/${DB_NAME}`
 
     // Connecting to the database
-    mongoose
-      .connect(mongoDB, {
+mongoose
+    .connect(mongoDB, {
         useNewUrlParser: true,
         useUnifiedTopology: true
 
-      })
-      .then(() => {
+    })
+    .then(() => {
         console.log("Successfully connected to database");
-      })
-      .catch((error) => {
+    })
+    .catch((error) => {
         console.log("database connection failed. exiting now...");
         console.error(error);
         process.exit(1);
-      });
+});
+
+const corsConfig = {
+  origin: 'http://127.0.0.1:3000',
+  // origin: "*",
+  credentials: true,
+  // withCredentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE"]
+}
+
+app.use(cors(corsConfig))
+app.options('*', cors(corsConfig))
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -46,15 +57,7 @@ app.use(cookieParser())
 //     next();
 // });
 
-const corsConfig = {
-    origin: 'http://127.0.0.1:3000',
-    // origin: "*",
-    // credentials: 'true'
-    methods: ["GET", "POST", "PUT", "DELETE"]
-}
 
-app.use(cors(corsConfig))
-app.options('*', cors(corsConfig))
 
 app.use('/user', require('./routes/user'))
 app.use('/event', require('./routes/event') )
