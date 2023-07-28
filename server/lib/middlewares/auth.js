@@ -2,7 +2,7 @@ const User = require("../../models/User")
 
 
 module.exports = async(req, res, next)=>{
-    const token = req.cookies['user-token']
+    const token = await req.cookies['user-token']
 
     if(!token){
         const error = new Error('Du musst dich einloggen!')
