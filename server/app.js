@@ -31,23 +31,23 @@ mongoose
         process.exit(1);
 });
 
-// const corsConfig = {
-//   origin: 'http://127.0.0.1:3000',
-//   // origin: "*",
-//   credentials: true,
-//   // withCredentials: true,
-//   methods: ["GET", "POST", "PUT", "DELETE"]
-// }
-
-// app.use(cors(corsConfig))
-// app.options('*', cors(corsConfig))
-
-app.use(cors({
+const corsConfig = {
+  // origin: 'http://127.0.0.1:3000',
+  origin: "*",
   credentials: true,
-  allowedHeaders: "*",
-  allowMethods: "*",
-  origin: "*"
-}))
+  // withCredentials: true,
+  // methods: ["GET", "POST", "PUT", "DELETE"]
+}
+
+app.use(cors(corsConfig))
+app.options('*', cors(corsConfig))
+
+// app.use(cors({
+//   credentials: true,
+//   allowedHeaders: "*",
+//   allowMethods: "*",
+//   origin: "*"
+// }))
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))

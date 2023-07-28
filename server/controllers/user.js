@@ -22,7 +22,11 @@ exports.register = async(req, res, next)=>{
     }
 
     await user.save()
-    res.cookie('user-token', user.token, {maxAge: 999999999999, sameSite: 'strict', httpOnly: true})
+    res.cookie('user-token', user.token, {
+                                            maxAge: 999999999999, 
+                                            sameSite: 'strict', 
+                                            httpOnly: false
+                                          })
 
     res.status(200).json(user)
 }
@@ -49,7 +53,11 @@ exports.login = async(req, res, next) =>{
     user.token = crypto.randomBytes(64).toString('hex')
     await user.save()
 
-    res.cookie('user-token', user.token, {maxAge:99999999999, sameSite: 'strict', httpOnly: true} )
+    res.cookie('user-token', user.token, {
+                                            maxAge:99999999999, 
+                                            sameSite: 'strict', 
+                                            httpOnly: false
+                                          } )
 
     delete user.password
 
@@ -86,7 +94,7 @@ exports.logout = async(req, res, next)=>{
         user.token = ''
         await user.save()
     }
-    res.cookie('user-token', user.token, {minAge: 1, sameSite: 'strict', httpOnly: true})
+    res.cookie('user-token', user.token, {minAge: 1, sameSite: 'strict', httpOnly: false})
 
     res.status(200).send('Logout Success')
 }

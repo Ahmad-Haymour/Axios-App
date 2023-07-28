@@ -32,7 +32,7 @@ export function UserProvider (props){
     useEffect(()=>{
 
         Axios.get(`${url}user`,
-            {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
+            {headers: {'Access-Control-Allow-Origin': '*','Content-Type': 'application/x-www-form-urlencoded'}}
         )
             .then(async (res) =>{
                 setUser(res.data)
@@ -79,7 +79,7 @@ export function UserProvider (props){
                 formData.append("bio", body.bio)
                 formData.append("avatar", body.avatar)
 
-                await Axios.post(`${url}user/register`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+                await Axios.post(`${url}user/register`, formData, {headers: {'Access-Control-Allow-Origin': '*','Content-Type': 'multipart/form-data'}})
                     .then(res=> {
                         setRefreshUser(state=>!state)
                     })
