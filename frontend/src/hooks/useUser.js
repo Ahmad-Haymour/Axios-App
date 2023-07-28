@@ -28,6 +28,8 @@ export function UserProvider (props){
     const [refreshUser, setRefreshUser] = useState(false)
 
     const url = 'https://axios-app.onrender.com/'
+    Axios.defaults.withCredentials = true;
+
 
     useEffect(()=>{
 
@@ -36,6 +38,8 @@ export function UserProvider (props){
         )
             .then(async (res) =>{
                 setUser(res.data)
+                console.log("Use Effect:  ", res);
+
             })
             .catch(err=> console.log(err))
     }, [refreshUser])

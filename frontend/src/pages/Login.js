@@ -15,7 +15,6 @@ export default function Login() {
     try{
       await user.login({email, password})
       navigate('/account')
-      window.location.reload()
     }
     catch{
       console.log("error");
