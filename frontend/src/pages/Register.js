@@ -24,7 +24,7 @@ export default function Register() {
   const handleSubmit = async(e)=>{
     e.preventDefault()
     try{
-        await user.register({email, password, firstname, lastname, age, gender, avatar})
+        await user.register({email, password, firstname, lastname, age, gender, bio, address, avatar})
         navigate('/account')
         window.location.reload()
     }

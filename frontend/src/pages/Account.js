@@ -151,10 +151,10 @@ export default function Account(){
                                 </h3>
                                 <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
                                     <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
-                                    { !user.address ? "Los Angeles, California" : user.address.toUpperCase() }
+                                    { user?.address.length >0 ? user.address.toUpperCase() : "Los Angeles, California" }
                                 </div>
                                 <div className="mb-2 text-blueGray-600">
-                                    <i className="fas fa-university mr-2 text-lg text-blue-400"></i>{!user.bio ? "University of Computer Science" : user.bio}
+                                    <i className="fas fa-university mr-2 text-lg text-blue-400"></i>{ ! user?.bio.length>0 ? user.bio : "University of Computer Science" }
                                 </div>
                                 <div className="mb-2 text-blueGray-600 mt-10">
                                     <i className="fas fa-briefcase mr-2 text-lg text-blue-400"></i>{user?.gender}, {user?.age} years old

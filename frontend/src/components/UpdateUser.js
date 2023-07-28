@@ -92,7 +92,7 @@ export default function UpdateUser({handleCloseOptoins}){
                                 <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload avatar</span> </p>
                                 <p className="text-xs text-gray-500 dark:text-gray-400">or drag and drop: SVG, PNG, JPG or GIF.</p> 
                             </div>
-                            <input  accept='image/*' onChange={(e)=> setAvatar(e.target.files[0])} id="dropzone-file" type="file" className="hidden" />
+                            <input accept='image/*' onChange={(e)=> setAvatar(e.target.files[0])} id="dropzone-file" type="file" className="hidden" />
                         </label>
                 </div> 
             </div>
