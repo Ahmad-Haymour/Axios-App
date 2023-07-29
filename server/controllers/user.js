@@ -25,7 +25,7 @@ exports.register = async(req, res, next)=>{
     res.cookie('user-token', user.token, {
                                             maxAge: 60 * 60 * 24,
                                             sameSite: "Lax",
-                                            secure: true,
+                                            secure: false,
                                             httpOnly: true
                                           })
 
@@ -57,7 +57,7 @@ exports.login = async(req, res, next) =>{
     res.cookie('user-token', user.token, {
                                             maxAge: 60 * 60 * 24, 
                                             sameSite: "Lax",
-                                            secure: true,
+                                            secure: false,
                                             httpOnly: true
                                           } )
 
@@ -96,7 +96,7 @@ exports.logout = async(req, res, next)=>{
         user.token = ''
         await user.save()
     }
-    res.cookie('user-token', user.token, {maxAge: 1, sameSite:"Lax", secure: true, httpOnly: true})
+    res.cookie('user-token', user.token, {maxAge: 1, sameSite:"Lax", secure: false, httpOnly: true})
 
     res.status(200).send('Logout Success')
 }
