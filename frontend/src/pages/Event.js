@@ -62,7 +62,7 @@ export default function Event(){
 
     useEffect(()=>{
         try {
-            Axios.get(`${url}event`+id)
+            Axios.get(`${url}event/`+id)
             .then(async(res)=>{
                     setEvent(res.data)
                     checkIsUserInTeam(res.data.team)
