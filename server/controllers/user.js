@@ -22,13 +22,23 @@ exports.register = async(req, res, next)=>{
     }
 
     await user.save()
-    res.cookie('user-token', user.token, {
-                                            maxAge: 60 * 60 * 24,
-                                            sameSite: "none",
-                                            secure: true,
-                                            httpOnly: true,
-                                            crossSiteCookiesAllowed: true
-                                          })
+
+    const cookieOptions = {
+        maxAge: 60 * 60 * 24, // Expires in 1 day (in seconds)
+        httpOnly: true, // Cookie cannot be accessed through client-side JavaScript
+        secure: true, // Cookie will only be sent over HTTPS
+        sameSite: 'none', // Allow cross-site requests
+      };
+    
+      // Set the cookie
+      res.setHeader('Set-Cookie', cookie.serialize('user-token', user.token, cookieOptions));
+    // res.cookie('user-token', user.token, {
+    //                                         maxAge: 60 * 60 * 24,
+    //                                         sameSite: "none",
+    //                                         secure: true,
+    //                                         httpOnly: true,
+    //                                         crossSiteCookiesAllowed: true
+    //                                       })
 
     res.status(200).json(user)
 }
@@ -55,13 +65,24 @@ exports.login = async(req, res, next) =>{
     user.token = crypto.randomBytes(64).toString('hex')
     await user.save()
 
-    res.cookie('user-token', user.token, {
-                                            maxAge: 60 * 60 * 24, 
-                                            sameSite: "none",
-                                            secure: true,
-                                            httpOnly: true,
-                                            crossSiteCookiesAllowed: true
-                                          } )
+      // Set your cookie options
+  const cookieOptions = {
+    maxAge: 60 * 60 * 24, // Expires in 1 day (in seconds)
+    httpOnly: true, // Cookie cannot be accessed through client-side JavaScript
+    secure: true, // Cookie will only be sent over HTTPS
+    sameSite: 'none', // Allow cross-site requests
+  };
+
+  // Set the cookie
+  res.setHeader('Set-Cookie', cookie.serialize('user-token', user.token, cookieOptions));
+
+    // res.cookie('user-token', user.token, {
+    //                                         maxAge: 60 * 60 * 24, 
+    //                                         sameSite: "none",
+    //                                         secure: true,
+    //                                         httpOnly: true,
+    //                                         crossSiteCookiesAllowed: true
+    //                                       } )
 
     delete user.password
 
@@ -98,7 +119,17 @@ exports.logout = async(req, res, next)=>{
         user.token = ''
         await user.save()
     }
-    res.cookie('user-token', user.token, {maxAge: 1, sameSite:"none", secure: true, httpOnly: true,   crossSiteCookiesAllowed: true})
+
+    const cookieOptions = {
+        maxAge: 1, // Expires in 1 day (in seconds)
+        httpOnly: true, // Cookie cannot be accessed through client-side JavaScript
+        secure: true, // Cookie will only be sent over HTTPS
+        sameSite: 'none', // Allow cross-site requests
+      };
+    
+      // Set the cookie
+      res.setHeader('Set-Cookie', cookie.serialize('user-token', user.token, cookieOptions));
+    // res.cookie('user-token', user.token, { maxAge: 1, sameSite:"none", secure: true, httpOnly: true,   crossSiteCookiesAllowed: true})
 
     res.status(200).send('Logout Success')
 }
