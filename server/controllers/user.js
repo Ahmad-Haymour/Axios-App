@@ -28,6 +28,7 @@ exports.register = async(req, res, next)=>{
         httpOnly: true, // Cookie cannot be accessed through client-side JavaScript
         secure: true, // Cookie will only be sent over HTTPS
         sameSite: 'none', // Allow cross-site requests
+        crossSiteCookiesAllowed: true
       };
     
       // Set the cookie
@@ -71,6 +72,7 @@ exports.login = async(req, res, next) =>{
     httpOnly: true, // Cookie cannot be accessed through client-side JavaScript
     secure: true, // Cookie will only be sent over HTTPS
     sameSite: 'none', // Allow cross-site requests
+    crossSiteCookiesAllowed: true
   };
 
   // Set the cookie
@@ -125,6 +127,7 @@ exports.logout = async(req, res, next)=>{
         httpOnly: true, // Cookie cannot be accessed through client-side JavaScript
         secure: true, // Cookie will only be sent over HTTPS
         sameSite: 'none', // Allow cross-site requests
+        crossSiteCookiesAllowed: true
       };
     
       // Set the cookie
