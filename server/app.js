@@ -13,14 +13,15 @@ mongoose.set("strictQuery", false);
 
 // Define the database URL to connect to.
 const mongoDB = MongoDB_Connection
+
+// Previos server
 // const mongoDB = `mongodb://${DB_URL}:${DB_PORT}/${DB_NAME}`
 
-    // Connecting to the database
+// Connecting to the database
 mongoose
     .connect(mongoDB, {
         useNewUrlParser: true,
         useUnifiedTopology: true
-
     })
     .then(() => {
         console.log("Successfully connected to database");
@@ -35,36 +36,15 @@ const corsConfig = {
   origin: 'http://127.0.0.1:3000',
   // origin: "*",
   credentials: true,
-  // withCredentials: true,
-  // methods: ["GET", "POST", "PUT", "DELETE"]
 }
 
 app.use(cors(corsConfig))
 app.options('*', cors(corsConfig))
 
-// app.use(cors({
-//   credentials: true,
-//   allowedHeaders: "*",
-//   allowMethods: "*",
-//   origin: "*"
-// }))
-
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 app.use(cookieParser())
-
-// app.use(cors());
-// app.use((req,res,next)=>{
-//     res.header('Access-Control-Allow-Headers, *, Access-Control-Allow-Origin', 'Origin, X-Requested-with, Content_Type,Accept,Authorization','http://127.0.0.1:3000');
-//     if(req.method === 'OPTIONS') {
-//         res.header('Access-Control-Allow-Methods','PUT,POST,PATCH,DELETE,GET');
-//         return res.status(200).json({});
-//     }
-//     next();
-// });
-
-
 
 app.use('/user', require('./routes/user'))
 app.use('/event', require('./routes/event') )
