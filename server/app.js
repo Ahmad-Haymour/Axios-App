@@ -14,7 +14,7 @@ mongoose.set("strictQuery", false);
 // Define the database URL to connect to.
 const mongoDB = MongoDB_Connection
 
-// Previos server
+// Previous server
 // const mongoDB = `mongodb://${DB_URL}:${DB_PORT}/${DB_NAME}`
 
 // Connecting to the database
