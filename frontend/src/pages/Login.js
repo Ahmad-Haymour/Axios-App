@@ -14,6 +14,9 @@ export default function Login() {
 
     try{
       await user.login({email, password})
+      .then(res=>{
+        console.log('Check login: => ', res);
+      })
       navigate('/account')
     }
     catch{

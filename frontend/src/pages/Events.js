@@ -53,7 +53,7 @@ export default function Events(){
                     placeholder="Search by title or address.." /> 
                 </div>
 
-                <div className="py-12 flex justify-center gap-8">
+                <div className="py-12 flex justify-center sm:gap-4">
                     <button
                         type="button"
                         className="inline-block rounded-l px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-indigo-600 focus:bg-indigo-600 focus:outline-none focus:ring-0 active:bg-indigo-700 bg-indigo-950"

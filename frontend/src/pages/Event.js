@@ -15,6 +15,7 @@ export default function Event(){
     [showEventOptions, setShowEventOptions] = useState(false),
     [newUpdate, setNewUpdate] = useState(Boolean),
     [isUserJoined, setIsUserJoined] = useState(Boolean),
+    [loading, setLoading] = useState(false),
 
     handleCloseOptoins =()=>{
         setShowEventOptions(false)
@@ -39,6 +40,8 @@ export default function Event(){
     handleJoinEvent = async(e)=>{
         e.preventDefault()
 
+        setLoading(true)
+
         if(isUserJoined){
             const answer = window.confirm("Are you sure, you want to leave this event?")
             if(!answer) return
@@ -50,6 +53,11 @@ export default function Event(){
         }
         catch (error){
             console.log(error);
+        }
+        finally{
+            setTimeout(() => {
+                setLoading(false)
+            }, 2000);
         }
     },
 
@@ -78,7 +86,7 @@ export default function Event(){
     return (
         <div className="flex flex-col bg-gray-100 sm:p-8 lg:min-w-[700px] xl:min-w-[1000px]">
             <div className="md:px-14 bg-gray-200/50 rounded-2xl w-100 min-h-[30vh] max-h-[500px]">
-                <img className="w-full h-full max-h-[450px] rounded-b-2xl" src={event.img?.replace("uploads\\", `${url}`)} alt="Event bg" />
+                <img className="w-full h-full max-h-[450px] rounded-b-2xl" src={event.img?.replace("uploads/", `${url}`)} alt="Event bg" />
             </div>
 
             {user.data?._id === event.user?._id && 
@@ -101,13 +109,22 @@ export default function Event(){
                     <p className="text-blue-700 font-bold py-4 text-2xl sm:text-4xl">{event.title}</p>
                     <p className="text-gray-700 text-base">{event.address}</p>
                     <p className="text-gray-700 text-base">{event.description}</p>
+                    <p className="text-gray-700 text-base text-end"> By {event.user?.lastname}</p>
                 </div>
                 { user.data && 
                     <div className="flex justify-between align-center gap-6 my-8 rounded-xl p-3 sm:p-6 bg-gray-200">
                         <p className="inline-block align-bottom mt-2">From open airs & indoor raves</p>
-                        <button onClick={handleJoinEvent} className="cursor-pointer border-transparent rounded-xl bg-blue-700 py-2 px-6 font-semibold text-white">
-                            { !isUserJoined ? 'Reserve a spot' : 'Cancel reservation'}
-                        </button>
+                        {
+                            loading ? 
+
+                            <button className="cursor-pointer animate-spin border-transparent rounded-xl bg-blue-700 py-2 px-6 font-semibold text-white">
+                                Loading...
+                            </button>
+                            :
+                            <button onClick={handleJoinEvent} className="cursor-pointer border-transparent rounded-xl bg-blue-700 py-2 px-6 font-semibold text-white">
+                                { !isUserJoined ? 'Reserve a spot' : 'Cancel reservation'}
+                            </button>
+                          }
                     </div>
                 }
                 <div className="my-6">

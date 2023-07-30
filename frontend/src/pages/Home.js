@@ -16,7 +16,7 @@ import img_10 from '../images/img_10.png'
 export default function Home() {
   
   return (
-    <div className='pt-80'>
+    <div className='pt-12'>
         <section className='py-6 px-10'>
             <img src={img2} alt="Home" className='rounded-xl' />
 

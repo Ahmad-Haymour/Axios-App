@@ -4,8 +4,8 @@ export default function Footer() {
 
   return (
     <div className='bg-indigo-950 text-white p-10'>
-        <div className='flex flex-wrap justify-around gap-8 cursor-pointer'>
-            <ul className='flex flex-col gap-2 text-xs sm:text-lg'>
+        <div className='flex flex-col sm:flex-row flex-wrap justify-around items-center sm:items-start text-center sm:text-left gap-8 cursor-pointer'>
+            <ul className='flex flex-col gap-2 text-xs sm:text-sm'>
                 <li className='font-bold'>ABOUT US</li>
                 <li>Who We Are</li>
                 <li>Help Center</li>
@@ -13,7 +13,7 @@ export default function Footer() {
                 <li>Contact Support</li>
                 <li>Contact Sales</li>
             </ul>
-            <ul className='flex flex-col gap-2 text-xs sm:text-lg'>
+            <ul className='flex flex-col gap-2 text-xs sm:text-sm'>
                 <li className='font-bold'>PLAN EVENTS</li>
                 <li>Create a Workshop</li>
                 <li>Plan an Event</li>
@@ -24,7 +24,7 @@ export default function Footer() {
                 <li>Music Festivals</li>
                 <li>Professional Services</li>
             </ul>
-            <ul className='flex flex-col gap-2 text-xs sm:text-lg'>
+            <ul className='flex flex-col gap-2 text-xs sm:text-sm'>
                 <li className='font-bold'>EVENT MANAGER</li>
                 <li>Create Events</li>
                 <li>Community Engagement</li>
@@ -33,7 +33,7 @@ export default function Footer() {
                 <li>Corporate Events</li>
                 <li>Pricing</li>
             </ul>
-            <ul className='flex flex-col gap-2 text-xs sm:text-lg'>
+            <ul className='flex flex-col gap-2 text-xs sm:text-sm'>
                 <li className='font-bold'>SOLUTIONS</li>
                 <li>Sell Tickets Online</li>
                 <li>Event Registration Software</li>
