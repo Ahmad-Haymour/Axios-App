@@ -24,12 +24,11 @@ export function UserProvider (props){
     const [errors , setErrors] = useState([])
     const [isFetching, setIsFetching] = useState(false)
     const [loggedIn , setLoggedIn] = useState(Boolean)
-
     const [refreshUser, setRefreshUser] = useState(false)
 
     const url = 'https://axios-app.onrender.com/'
-    Axios.defaults.withCredentials = true;
 
+    Axios.defaults.withCredentials = true;
 
     useEffect(()=>{
 
@@ -59,8 +58,8 @@ export function UserProvider (props){
                 await Axios.post(`${url}user/login`, {email:body.email, password:body.password},  {headers: { 'Content-Type': 'application/json;charset=UTF-8',
                 }})
                     .then(res=> {
-                        // setUser(res.data)
                         setRefreshUser(state=>!state)
+                        return res.data
                     })
                     .catch(err=>{
                         setError(err.response.data.error)
