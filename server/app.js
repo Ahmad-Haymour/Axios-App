@@ -33,11 +33,9 @@ mongoose
 });
 
 const corsConfig = {
-    origin: "*",
-    // origin: 'http://127.0.0.1:3000',
-    //   origin: "https://axios-events.onrender.com",
+  origin: 'https://axios-events.onrender.com',
   credentials: true,
-}
+};
 
 app.use(cors(corsConfig))
 app.options('*', cors(corsConfig))
