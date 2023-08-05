@@ -8,38 +8,45 @@ exports.getEvents = async(req, res, next) =>{
     res.status(200).send(events)
 }
 
-exports.addEvent = async(req, res, next)=>{
+exports.addEvent = async (req, res, next) => {
     const userID = req.user._id
+    const user = await User.findById(userID).populate('events')
 
     if(!userID ){
         const error = new Error('Authorization User ID failed!!!')
         error.status = 401
         return next(error)
     }
-
-    const user = await User.findById(userID).populate('events')
-
-    await Promise.all( user.events.map((e)=>e.populate('user', '-token -password -__v')) )
-
     if(!user){
         const error = new Error('Authorization USER failed!!!')
         error.status = 401
         return next(error)
     }
 
-    const event = new Event(req.body)
-    // event.team.push(userID)
-    event.user = user
-    user.events.push(event._id)
-    // user.eventslist.push(event._id)
-
-    event.img = req.file?.path
-
-    await event.save()
-    await user.save()
+    await Promise.all( user.events.map((e)=>e.populate('user', '-token -password -__v')) )
     
-    res.status(200).send(event)
-}
+    try {
+      const event = new Event(req.body);
+      event.user = user;
+      user.events.push(event._id);
+  
+      // Check if req.file exists before accessing req.file.path
+      if (req.file) {
+        event.img = req.file.path;
+      }
+  
+      await event.save();
+      await user.save();
+  
+      res.status(200).send(event);
+    } catch (error) {
+      // Log the error for debugging purposes
+      console.error("Image Upload Error:", error);
+  
+      // Pass the error to the next middleware or error handler
+      return next(error);
+    }
+  };
 
 exports.getSingleEvent = async(req, res, next)=>{
     const {id} = req.params

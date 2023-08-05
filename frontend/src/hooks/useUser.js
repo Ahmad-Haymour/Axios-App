@@ -59,7 +59,6 @@ export function UserProvider (props){
                 }})
                     .then(res=> {
                         setRefreshUser(state=>!state)
-                        return res.data
                     })
                     .catch(err=>{
                         setError(err.response.data.error)
@@ -199,9 +198,7 @@ export function UserProvider (props){
     
     return (
         <Context.Provider value={data}>
-          {/* {ready && props.children} */}
-          { props.children}
-
+          { props.children }
         </Context.Provider>
       )
 }
