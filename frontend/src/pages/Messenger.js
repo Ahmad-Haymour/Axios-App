@@ -129,7 +129,8 @@ export default function Messenger(){
                 {/* <!-- end chat list --> */}
 
                 {/* <!-- Participant -->  */}
-               { !participantReady ? <h1 className="text-sky-700 text-xl animate-spin">LOADING...</h1> : <div className="flex sm:p-2 justify-between flex-col w-full h-[66vh] sm:h-full">
+                <div className="flex sm:p-2 justify-between flex-col w-full h-[66vh] sm:h-full">
+                { !participantReady ? <h1 className="text-sky-700 text-center text-4xl animate-spin">LOADING...</h1> : <>
                     <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
                         {/* { chat?.participants &&  */}
 
@@ -213,8 +214,9 @@ export default function Messenger(){
                             onEnter={handleSendMessage}
                             placeholder="Type a message"
                         />
-                    </div>
-                </div>}
+                    </div></>
+                }
+                </div>
             </div>
         </div>
     )
