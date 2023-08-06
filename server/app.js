@@ -8,7 +8,6 @@ const path = require('path')
 
 const app = express()
 
-
 // Define a route to serve the webpage showing the list of files
 app.get('/uploads', (req, res) => {
     const uploadDirectory = path.join(__dirname, 'uploads');

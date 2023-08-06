@@ -166,13 +166,12 @@ export function UserProvider (props){
                 formData.append("category", body.category)
                 formData.append("eventBild", body.eventBild)
 
-                await Axios.patch(`${url}event/`+body.id , formData, {headers: {'Content-Type': 'multipart/form-data'}})
-                    .then(async()=> {
-                        setRefreshUser(state=>!state)                 
-                    })
-                    .catch(err=>{
-                        setError(err.response.data.error)
-                    })
+                try {
+                    await Axios.patch(`${url}event/`+body.id , formData, {headers: {'Content-Type': 'multipart/form-data'},});
+                    setRefreshUser(state=>!state);
+                } catch (error) {
+                    setError(error.response?.data?.error || "An error occurred")
+                }
             },
 
             deleteEvent: async (body) => {

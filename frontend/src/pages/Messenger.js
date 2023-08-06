@@ -130,7 +130,7 @@ export default function Messenger(){
 
                 {/* <!-- Participant -->  */}
                 <div className="flex sm:p-2 justify-between flex-col w-full h-[66vh] sm:h-full">
-                { !participantReady ? <h1 className="text-sky-700 text-center text-4xl animate-spin">LOADING...</h1> : <>
+                { !participantReady ? <h1 className="text-sky-700 text-center text-4xl animate-bounce mt-40">LOADING...</h1> : <>
                     <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
                         {/* { chat?.participants &&  */}
 
