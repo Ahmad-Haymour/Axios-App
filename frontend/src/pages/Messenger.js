@@ -14,11 +14,12 @@ export default function Messenger(){
     [ friend, setFriend] = useState(''),
     [ message, setMessage] = useState(''),
     [ ready, setReady] = useState(false),
+    [ participantReady, setParticipantReady] = useState(false),
 
     // Set a new connection between two users to start chatting
     handleSetChat = async(e, participantID)=>{
         e.preventDefault()
-
+        setParticipantReady(false)
         await Axios.post(`${url}messenger/set`, {friendID: participantID})
             .then(async(res)=>{
                 setFriend(participantID)
@@ -30,6 +31,7 @@ export default function Messenger(){
                     })
             })
             .catch(err=>console.log(err))
+            .finally(()=> setParticipantReady(true))
     },
 
     handleSendMessage = async(e)=>{
@@ -127,7 +129,7 @@ export default function Messenger(){
                 {/* <!-- end chat list --> */}
 
                 {/* <!-- Participant -->  */}
-                <div className="flex sm:p-2 justify-between flex-col w-full h-[66vh] sm:h-full">
+               { participantReady ? <h1 className="text-sky-700 animate-spin">LOADING...</h1> : <div className="flex sm:p-2 justify-between flex-col w-full h-[66vh] sm:h-full">
                     <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
                         {/* { chat?.participants &&  */}
 
@@ -212,7 +214,7 @@ export default function Messenger(){
                             placeholder="Type a message"
                         />
                     </div>
-                </div>
+                </div>}
             </div>
         </div>
     )
