@@ -3,6 +3,7 @@ const controller = require('../controllers/event')
 const auth = require('../lib/middlewares/auth')
 // const validation = require('../lib/validators/events-list')
 const multer = require("multer")
+const path = require("path")
 require('express-async-errors')
 
 // Configure Multer to save uploaded images in the "uploads" folder
