@@ -165,14 +165,8 @@ export default function Account(){
                                 Events
                                 <div className="p-10 flex flex-wrap justify-center gap-5">
                                     {user.events.map(e=>(
-                                        <Link to={'/events/'+e._id} key={e._id} className="rounded bg-white overflow-hidden shadow-md hover:shadow-xl w-[280px] h-full">
-                                        {/* <Link to={'/events/'+e._id} key={e._id} className="rounded bg-white overflow-hidden shadow-md hover:shadow-xl w-[280px] h-[375px]"> */}
-                                            1- <img className="w-full h-[150px]" src={`/uploads/${e.img}`} alt="Event bg"/>
-                                            2- <img className="w-full h-[150px]" src={ `${url}/uploads/${e.img}` } alt="Event bg"/>
-                                            3- <img className="w-full h-[150px]" src={ `${url}/${e.img}` } alt="Event bg"/>
-                                            4- <img className="w-full h-[150px]" src={e.img?.replace("uploads/", `${url}/`)} alt="Event bg"/>
-                                            5- <img className="w-full h-[150px]" src={e.img?.replace("uploads/", `${url}`)} alt="Event bg"/>
-                                            6- <img className="w-full h-[150px]" src={`${url}uploads/${e.img}`} alt="Event bg" />
+                                        <Link to={'/events/'+e._id} key={e._id} className="rounded bg-white overflow-hidden shadow-md hover:shadow-xl w-[280px] h-[375px]">
+                                            <img className="w-full h-[150px]" src={ `${url}/${e.img}` } alt="Event bg"/>
                                             
                                             <div className="px-6 py-2 text-left">
                                                 <p className="font-bold text-lg text-black sm:min-h-[48px] ">
