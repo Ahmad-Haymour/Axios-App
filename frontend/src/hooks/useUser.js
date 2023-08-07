@@ -26,13 +26,13 @@ export function UserProvider (props){
     const [loggedIn , setLoggedIn] = useState(Boolean)
     const [refreshUser, setRefreshUser] = useState(false)
 
-    const url = 'https://axios-app.onrender.com/'
+    const url = 'https://axios-app.onrender.com'
 
     Axios.defaults.withCredentials = true;
 
     useEffect(()=>{
 
-        Axios.get(`${url}user`,
+        Axios.get(`${url}/user`,
             {headers: {'Access-Control-Allow-Origin': '*','Content-Type': 'application/x-www-form-urlencoded'}}
         )
             .then(async (res) =>{
@@ -55,7 +55,7 @@ export function UserProvider (props){
                 setErrors([])
                 setIsFetching(true)
 
-                await Axios.post(`${url}user/login`, {email:body.email, password:body.password},  {headers: { 'Content-Type': 'application/json;charset=UTF-8',
+                await Axios.post(`${url}/user/login`, {email:body.email, password:body.password},  {headers: { 'Content-Type': 'application/json;charset=UTF-8',
                 }})
                     .then(res=> {
                         setRefreshUser(state=>!state)
@@ -81,7 +81,7 @@ export function UserProvider (props){
                 formData.append("bio", body.bio)
                 formData.append("avatar", body.avatar)
 
-                await Axios.post(`${url}user/register`, formData, {headers: {'Access-Control-Allow-Origin': '*','Content-Type': 'multipart/form-data'}})
+                await Axios.post(`${url}/user/register`, formData, {headers: {'Access-Control-Allow-Origin': '*','Content-Type': 'multipart/form-data'}})
                     .then(res=> {
                         setRefreshUser(state=>!state)
                     })
@@ -103,7 +103,7 @@ export function UserProvider (props){
                 formData.append("bio", body.bio)
                 formData.append("avatar", body.avatar)
 
-                await Axios.patch(`${url}user`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+                await Axios.patch(`${url}/user`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
                     .then(res=> {
                         setRefreshUser(state=>!state)
                     })
@@ -113,13 +113,13 @@ export function UserProvider (props){
               },
 
             logout: async()=>{
-                await Axios.post(`${url}user/logout`)
+                await Axios.post(`${url}/user/logout`)
                 setUser(null)
                 setLoggedIn(false)
             },
 
             invokeUser: async()=>{
-                await  Axios.get(`${url}user`,
+                await  Axios.get(`${url}/user`,
                 {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
             )
                 .then(async (res) =>{
@@ -134,24 +134,41 @@ export function UserProvider (props){
 
                 let eventID = ""
                 
-                const formData = new FormData()
-                formData.append("title", body.title)
-                formData.append("address", body.address)
-                formData.append("date", body.date)
-                formData.append("description", body.description)
-                formData.append("category", body.category)
-                formData.append("eventBild", body.eventBild)
+                try {
+                    const formData = new FormData()
+                    formData.append("title", body.title)
+                    formData.append("address", body.address)
+                    formData.append("date", body.date)
+                    formData.append("description", body.description)
+                    formData.append("category", body.category)
+                    formData.append("eventBild", body.eventBild)
+    
+                    const response = await Axios.post(`${url}/event`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+                    eventID = response.data._id
+                    setRefreshUser(state=>!state)
+                    return eventID
 
-                await Axios.post(`${url}event`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
-                    .then(async(res)=> {
-                        eventID = res.data._id
-                        setRefreshUser(state=>!state)  
-                    })
-                    .catch(err=>{
-                        setError(err.response.data.error)
-                    })
+                } catch (error) {
+                    console.error('Error creating event:', error);
+                }
+                // const formData = new FormData()
+                // formData.append("title", body.title)
+                // formData.append("address", body.address)
+                // formData.append("date", body.date)
+                // formData.append("description", body.description)
+                // formData.append("category", body.category)
+                // formData.append("eventBild", body.eventBild)
+
+                // await Axios.post(`${url}/event`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+                //     .then(async(res)=> {
+                //         eventID = res.data._id
+                //         setRefreshUser(state=>!state)  
+                //     })
+                //     .catch(err=>{
+                //         setError(err.response.data.error)
+                //     })
                     
-                return eventID
+                // return eventID
             },
 
             updateEvent: async (body) => {
@@ -167,7 +184,7 @@ export function UserProvider (props){
                 formData.append("eventBild", body.eventBild)
 
                 try {
-                    await Axios.patch(`${url}event/`+body.id , formData, {headers: {'Content-Type': 'multipart/form-data'},});
+                    await Axios.patch(`${url}/event/`+body.id , formData, {headers: {'Content-Type': 'multipart/form-data'},});
                     setRefreshUser(state=>!state);
                 } catch (error) {
                     setError(error.response?.data?.error || "An error occurred")
@@ -175,7 +192,7 @@ export function UserProvider (props){
             },
 
             deleteEvent: async (body) => {
-                await Axios.delete(`${url}event`+body.id, {id: body.id}, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}} )
+                await Axios.delete(`${url}/event`+body.id, {id: body.id}, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}} )
                     .then(async()=> {
                         setRefreshUser(state=>!state)
                     })
@@ -185,7 +202,7 @@ export function UserProvider (props){
             },
 
             joinEvent: async (body) => {
-                await Axios.post(`${url}event/join`, {id: body.id}, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}} )
+                await Axios.post(`${url}/   event/join`, {id: body.id}, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}} )
                     .then(async(res)=> {
                         console.log('Join Res:  ',res.data);
                     })

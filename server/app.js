@@ -78,12 +78,16 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use(cookieParser())
 
+
+// app.use(express.static('uploads'))
+app.use('/uploads', express.static('uploads'));
+
 app.use('/user', require('./routes/user'))
 app.use('/event', require('./routes/event') )
 app.use('/comment', require('./routes/comment'))
 app.use('/messenger', require('./routes/messenger'))
 
-app.use(express.static('uploads'))
+
 
 app.post('/drop-database', async(req, res, next)=>{
     await mongoose.connection.db.dropDatabase()

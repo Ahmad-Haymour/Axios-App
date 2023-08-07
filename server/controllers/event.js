@@ -25,15 +25,19 @@ exports.addEvent = async (req, res, next) => {
 
     await Promise.all( user.events.map((e)=>e.populate('user', '-token -password -__v')) )
     
+
     try {
       const event = new Event(req.body);
       event.user = user;
+
+      event.img = req.file ? req.file.path : null, // Save the image file path in the "img" field
+
       user.events.push(event._id);
   
       // Check if req.file exists before accessing req.file.path
-      if (req.file) {
-        event.img = req.file.path;
-      }
+    //   if (req.file) {
+    //     event.img = req.file.path;
+    //   }
   
       await event.save();
       await user.save();
@@ -137,9 +141,11 @@ exports.updateEvent = async(req,res,next)=>{
     event.category = category ? category : event.category
     event.description = description ? description : event.description
 
-    if(req.file?.path ){
-        event.img = req.file?.path
-    }
+    event.img = req.file ? req.file.path : null // Save the image file path in the "img" field
+
+    // if(req.file?.path ){
+    //     event.img = req.file?.path
+    // }
 
     await event.save()
 
