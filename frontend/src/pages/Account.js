@@ -7,7 +7,7 @@ import Axios from "axios";
 
 export default function Account(){
     
-    const url = 'https://axios-app.onrender.com/'
+    const url = 'https://axios-app.onrender.com'
 
     const user = useUser().data,
     userMethods = useUser(),
@@ -24,7 +24,7 @@ export default function Account(){
     handleReadMessage = async (e, id)=>{
         e.preventDefault()
 
-        await Axios.delete(`${url}messenger`,{ data: { messageID: id} })
+        await Axios.delete(`${url}/messenger`,{ data: { messageID: id} })
         .then(async (res)=>{
             await userMethods.invokeUser()
         })
@@ -34,7 +34,7 @@ export default function Account(){
 
     return (
         <main className="profile-page relative mt-52">
-             
+            {/* Notification icon */}
             <div className="absolute -top-52 bottom-auto left-auto right-0 m-3 inline-flex w-fit cursor-pointer"
                  onClick={(e)=>setShowNotifications(!showNotifications)}
             >
@@ -69,7 +69,7 @@ export default function Account(){
                 {/* Edit user page*/}
                 {showUserOptions && <UpdateUser handleCloseOptoins={handleCloseOptoins}/>}
 
-                {/*Create an Event page*/}
+                {/*Create an event page*/}
                 {showEventOptions && <CreateEvent handleCloseOptoins={handleCloseOptoins}/>}
 
                 {/* Notifications section */}
@@ -105,7 +105,7 @@ export default function Account(){
                 }
             </section>
 
-            {/* User Details */}
+            {/* User details */}
             { !showUserOptions && !showEventOptions &&  <>
 
             <section className="relative py-16 bg-blueGray-200">
@@ -166,7 +166,8 @@ export default function Account(){
                                 <div className="p-10 flex flex-wrap justify-center gap-5">
                                     {user.events.map(e=>(
                                         <Link to={'/events/'+e._id} key={e._id} className="rounded bg-white overflow-hidden shadow-md hover:shadow-xl w-[280px] h-[375px]">
-                                            <img className="w-full h-[150px]" src={ `${url}${e.img}` } alt="Event bg"/>
+                                            <img className="w-full h-[150px]" src={ `${url}/uploads/${e.img}` } alt="Event bg"/>
+                                            {/* <img className="w-full h-[150px]" src={ `${url}${e.img}` } alt="Event bg"/> */}
                                             {/* <img className="w-full h-[150px]" src={e.img?.replace("uploads/", `${url}`)} alt="Event bg"/> */}
                                             
                                             <div className="px-6 py-2 text-left">

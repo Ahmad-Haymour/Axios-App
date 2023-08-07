@@ -6,7 +6,7 @@ import UpdateEvent from "../components/UpdateEvent";
 import Comments from "../components/Comments";
 
 export default function Event(){
-    const url = 'https://axios-app.onrender.com/'
+    const url = 'https://axios-app.onrender.com'
 
     const user = useUser(),
     navigate = useNavigate(),
@@ -70,7 +70,7 @@ export default function Event(){
 
     useEffect(()=>{
         try {
-            Axios.get(`${url}event/`+id)
+            Axios.get(`${url}/event/`+id)
             .then(async(res)=>{
                     setEvent(res.data)
                     checkIsUserInTeam(res.data.team)
@@ -86,7 +86,7 @@ export default function Event(){
     return (
         <div className="flex flex-col bg-gray-100 sm:p-8 lg:min-w-[700px] xl:min-w-[1000px]">
             <div className="md:px-14 bg-gray-200/50 rounded-2xl w-100 min-h-[30vh] max-h-[500px]">
-                <img className="w-full h-full max-h-[450px] rounded-b-2xl" src={event.img?.replace("uploads/", `${url}`)} alt="Event bg" />
+                <img className="w-full h-full max-h-[450px] rounded-b-2xl" src={event.img?.replace("uploads/", `${url}/`)} alt="Event bg" />
             </div>
 
             {user.data?._id === event.user?._id && 
