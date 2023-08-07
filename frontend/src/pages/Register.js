@@ -26,7 +26,6 @@ export default function Register() {
     try{
         await user.register({email, password, firstname, lastname, age, gender, bio, address, avatar})
         navigate('/account')
-        window.location.reload()
     }
     catch{
       console.log("error");
