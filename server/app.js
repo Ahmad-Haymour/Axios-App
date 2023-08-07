@@ -3,8 +3,6 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
-const fs = require('fs')
-const path = require('path')
 
 const app = express()
 
@@ -50,7 +48,7 @@ app.use('/user', require('./routes/user'))
 app.use('/event', require('./routes/event') )
 app.use('/comment', require('./routes/comment'))
 app.use('/messenger', require('./routes/messenger'))
-app.get('/uploads', require('./routes/uploads').displayImages)
+// app.get('/uploads', require('./routes/uploads').displayImages)
 
 app.post('/drop-database', async(req, res, next)=>{
     await mongoose.connection.db.dropDatabase()
