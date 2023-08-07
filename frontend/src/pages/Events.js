@@ -87,7 +87,7 @@ export default function Events(){
                 {   events.length > 0 &&
                     filterEvents?.map((e)=>(
                         <Link to={'/events/'+e._id} key={e._id} className="rounded bg-white overflow-hidden shadow-md hover:shadow-xl w-[270px] h-[380px]">
-                            <img className="w-full h-[150px]" src={e.img?.replace("uploads/", `${url}`)} alt="Event bg"/>
+                            <img className="w-full h-[150px]" src={ `${url}/${e?.img}` } alt="Event bg"/>
                             
                             <div className="px-4 py-0 min-h-[160px]">
                                 <div className="font-bold text-xl mb-2">
