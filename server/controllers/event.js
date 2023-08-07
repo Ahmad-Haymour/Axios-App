@@ -12,43 +12,38 @@ exports.addEvent = async (req, res, next) => {
     const userID = req.user._id
     const user = await User.findById(userID).populate('events')
 
-    if(!userID ){
-        const error = new Error('Authorization User ID failed!!!')
-        error.status = 401
-        return next(error)
-    }
-    if(!user){
-        const error = new Error('Authorization USER failed!!!')
-        error.status = 401
-        return next(error)
+    if (!userID || !user) {
+        const error = new Error('Authorization failed!!!');
+        error.status = 401;
+        return next(error);
     }
 
     await Promise.all( user.events.map((e)=>e.populate('user', '-token -password -__v')) )
     
 
     try {
-      const event = new Event(req.body);
-      event.user = user;
+        const event = new Event(req.body);
+        event.user = user;
 
-      event.img = req.file ? req.file.path : null, // Save the image file path in the "img" field
+        //   event.img = req.file ? req.file.path : null, // Save the image file path in the "img" field
 
-      user.events.push(event._id);
+        user.events.push(event._id);
   
-      // Check if req.file exists before accessing req.file.path
-    //   if (req.file) {
-    //     event.img = req.file.path;
-    //   }
+        // Check if req.file exists before accessing req.file.path
+        if (req.file) {
+            event.img = req.file.path;
+        }
   
-      await event.save();
-      await user.save();
+        await event.save();
+        await user.save();
   
-      res.status(200).send(event);
+        res.status(200).send(event);
     } catch (error) {
-      // Log the error for debugging purposes
-      console.error("Image Upload Error:", error);
-  
-      // Pass the error to the next middleware or error handler
-      return next(error);
+        // Log the error for debugging purposes
+        console.error("Image Upload Error:", error);
+    
+        // Pass the error to the next middleware or error handler
+        return next(error);
     }
   };
 

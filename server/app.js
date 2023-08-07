@@ -8,36 +8,7 @@ const path = require('path')
 
 const app = express()
 
-// Define a route to serve the webpage showing the list of files
-app.get('/uploads', (req, res) => {
-    const uploadDirectory = path.join(__dirname, 'uploads');
-  
-    fs.readdir(uploadDirectory, (err, files) => {
-      if (err) {
-        return res.status(500).send('Error reading the "uploads" directory.');
-      }
-  
-      const fileNames = files.filter((file) => fs.statSync(path.join(uploadDirectory, file)).isFile());
-  
-      const html = `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <title>Uploaded Files</title>
-        </head>
-        <body>
-          <h1>List of Uploaded Files</h1>
-          <ul>
-            ${fileNames.map((fileName) => `<li>${fileName}</li>`).join('')}
-          </ul>
-        </body>
-        </html>
-      `;
-  
-      res.send(html);
-    });
-  });
-  
+app.use('/uploads', express.static('uploads'));
 
 const {PORT, DB_URL, DB_PORT, DB_NAME, MongoDB_Connection} = process.env
 
@@ -46,9 +17,6 @@ mongoose.set("strictQuery", false);
 
 // Define the database URL to connect to.
 const mongoDB = MongoDB_Connection
-
-// Previous server
-// const mongoDB = `mongodb://${DB_URL}:${DB_PORT}/${DB_NAME}`
 
 // Connecting to the database
 mongoose
@@ -78,16 +46,11 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use(cookieParser())
 
-
-// app.use(express.static('uploads'))
-app.use('/uploads', express.static('uploads'));
-
 app.use('/user', require('./routes/user'))
 app.use('/event', require('./routes/event') )
 app.use('/comment', require('./routes/comment'))
 app.use('/messenger', require('./routes/messenger'))
-
-
+app.get('/uploads', require('./routes/uploads').displayImages)
 
 app.post('/drop-database', async(req, res, next)=>{
     await mongoose.connection.db.dropDatabase()
