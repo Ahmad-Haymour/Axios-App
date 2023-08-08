@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Axios  from "axios";
 
 export default function Events(){
-    const url = 'https://axios-app.onrender.com/'
+    const url = 'https://axios-app.onrender.com'
 
     const [events, setEvents] = useState([])
     const [filterEvents, setFilterEvents] = useState([])
@@ -12,7 +12,7 @@ export default function Events(){
     useEffect(()=>{
         setReady(false)
         try {
-            Axios.get(`${url}event`)
+            Axios.get(`${url}/event`)
                 .then((res)=>{
                     setEvents(res.data)
                     setFilterEvents(res.data)

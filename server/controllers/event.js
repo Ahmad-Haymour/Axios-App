@@ -36,12 +36,10 @@ exports.addEvent = async (req, res, next) => {
   
         await event.save();
         await user.save();
-  
         res.status(200).send(event);
+
     } catch (error) {
-        // Log the error for debugging purposes
         console.error("Image Upload Error:", error);
-    
         // Pass the error to the next middleware or error handler
         return next(error);
     }
@@ -51,15 +49,14 @@ exports.getSingleEvent = async(req, res, next)=>{
     const {id} = req.params
     const event = await Event.findById(id).populate('user', '-token -password -__v').populate('team', '-token -password -__v').populate('comments')
 
-    await Promise.all(event.comments.map(comment=> comment.populate('user', '-token -password -__v')))
-
     if(!event){
         const error = new Error('Event are not available anymore!!')
         error.status = 400
         return next(error)
     }
  
-    // await Promise.all( event.comments.map((e)=>e.populate('user', '-token -password -__v')) )
+    await Promise.all(event.comments.map(comment=> comment.populate('user', '-token -password -__v')))
+
     await event.save()
 
     res.status(200).send(event)
@@ -136,7 +133,8 @@ exports.updateEvent = async(req,res,next)=>{
     event.category = category ? category : event.category
     event.description = description ? description : event.description
 
-    event.img = req.file ? req.file.path : null // Save the image file path in the "img" field
+    event.img = req.file ? req.file.path : null 
+    // Save the image file path in the "img" field
 
     // if(req.file?.path ){
     //     event.img = req.file?.path
