@@ -166,7 +166,7 @@ export default function Account(){
                                 <div className="p-10 flex flex-wrap justify-center gap-5">
                                     {user.events.map(e=>(
                                         <Link to={'/events/'+e._id} key={e._id} className="rounded bg-white overflow-hidden shadow-md hover:shadow-xl w-[280px] h-[375px]">
-                                            <img className="w-full h-[150px]" src={ `${url}/${e.img}` } alt="Event bg"/>
+                                            <img className="w-full h-[150px]" src={e.img && `${url}/${e.img}` } alt="Event bg"/>
                                             
                                             <div className="px-6 py-2 text-left">
                                                 <p className="font-bold text-lg text-black sm:min-h-[48px] ">
