@@ -81,14 +81,14 @@ export default function Navigation() {
                   </>
                   }
                   { user?.data && <>
-                    <Link to={"/account"} className="text-blue-100 block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700" >
+                    <Link to={"/account"} className="text-white block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700" >
                       Account
                     </Link>
-                    <Link to={"/messenger"} className="text-blue-100 block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700" >
+                    <Link to={"/messenger"} className="text-white block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700" >
                       Messenger
                     </Link>
                     <div onClick={handleLogout} >
-                      <Link  to={"/login"} className="text-blue-100 block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700" >
+                      <Link  to={"/login"} className="text-white block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700" >
                         Logout
                       </Link>
                     </div>

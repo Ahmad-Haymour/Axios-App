@@ -202,7 +202,7 @@ export function UserProvider (props){
             },
 
             joinEvent: async (body) => {
-                await Axios.post(`${url}/   event/join`, {id: body.id}, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}} )
+                await Axios.post(`${url}/event/join`, {id: body.id}, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}} )
                     .then(async(res)=> {
                         console.log('Join Res:  ',res.data);
                     })
