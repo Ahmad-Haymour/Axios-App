@@ -56,25 +56,25 @@ export default function Events(){
                 <div className="py-12 flex justify-center sm:gap-4">
                     <button
                         type="button"
-                        className="inline-block rounded-l px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-blue-400 focus:bg-blue-400 focus:outline-none focus:ring-0 active:bg-blue-700 bg-blue-950"
+                        className="inline-block rounded-l px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-blue-400 focus:bg-blue-400 focus:outline-none focus:ring-0 active:bg-blue-700 bg-blue-600"
                         onClick={()=>filterFunction(events)}>
                         All 
                     </button>
                     <button
                         type="button"
-                        className="inline-block px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-blue-400 focus:bg-blue-400 focus:outline-none focus:ring-0 active:bg-blue-700 bg-blue-950"
+                        className="inline-block px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-blue-400 focus:bg-blue-400 focus:outline-none focus:ring-0 active:bg-blue-700 bg-blue-600"
                         onClick={()=>filterFunction("Public")}>
                         Public
                     </button>
                     <button
                         type="button"
-                        className="inline-block rounded-r px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-blue-400 focus:bg-blue-400 focus:outline-none focus:ring-0 active:bg-blue-700 bg-blue-950"
+                        className="inline-block rounded-r px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-blue-400 focus:bg-blue-400 focus:outline-none focus:ring-0 active:bg-blue-700 bg-blue-600"
                         onClick={()=>filterFunction("Kids")}>
                         Kids
                     </button>
                     <button
                         type="button"
-                        className="inline-block rounded-r px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-blue-400 focus:bg-blue-400 focus:outline-none focus:ring-0 active:bg-blue-700 bg-blue-950"
+                        className="inline-block rounded-r px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-blue-400 focus:bg-blue-400 focus:outline-none focus:ring-0 active:bg-blue-700 bg-blue-600"
                         onClick={()=>filterFunction("Adults")}>
                         Adults
                     </button>
