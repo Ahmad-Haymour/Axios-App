@@ -24,6 +24,7 @@ export default function Events(){
     }, [])
 
     const filterFunction = (cat)=>{
+        if(cat === 'All') return setFilterEvents(events)
         const filterResult = events.filter(e=>e.category === cat);
         setFilterEvents(filterResult);
     }
@@ -57,7 +58,7 @@ export default function Events(){
                     <button
                         type="button"
                         className="inline-block rounded-l px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-blue-400 focus:bg-blue-400 focus:outline-none focus:ring-0 active:bg-blue-700 bg-blue-600"
-                        onClick={()=>filterFunction(events)}>
+                        onClick={()=>filterFunction('All')}>
                         All 
                     </button>
                     <button
