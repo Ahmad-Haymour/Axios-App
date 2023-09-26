@@ -103,7 +103,7 @@ exports.deleteEvent = async (req,res,next)=>{
     const user = await User.findById(req.user._id).populate('events')
 
     if(!user){
-        const error = new Error('Authorization failed bro!')
+        const error = new Error('Authorization failed!')
         error.status = 401
         return next(error)
     }
