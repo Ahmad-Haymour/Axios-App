@@ -54,7 +54,7 @@ export default function Navigation() {
           </div>
 
           {/* Sidebar */}
-          <div className={`sidebar lg:min-h-screen lg:sticky lg:top-0 space-y-6 text-white px-2 ${ width < breakpoint ? "bg-gray-600 absolute top-15 min-w-full z-[100]" : "bg-indigo-950 text-lg pt-8 w-[240px]"}
+          <div className={`sidebar lg:min-h-screen lg:sticky lg:top-0 space-y-6 text-white px-2 ${ width < breakpoint ? "bg-gray-600 absolute top-15 min-w-full z-[100]" : "bg-blue-600 text-lg pt-8 w-[240px]"}
           transform-translate-x-full lg:relative lg:translate-x-0 transition duration-200 ease-in-out`}>
             { width > breakpoint && (
               <>
