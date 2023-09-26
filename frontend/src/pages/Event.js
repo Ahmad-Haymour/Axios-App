@@ -1,6 +1,6 @@
 import Axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import useUser from "../hooks/useUser";
 import UpdateEvent from "../components/UpdateEvent";
 import Comments from "../components/Comments";
@@ -115,6 +115,11 @@ export default function Event(){
                     <div className="flex justify-between align-center gap-6 my-8 rounded-xl p-3 sm:p-6 bg-gray-200">
                         <p className="inline-block align-bottom mt-2">From open airs & indoor raves</p>
                         {
+                            !user.data ?
+
+                            <Link to={'/login'} >Sign in to join</Link>
+                            
+                            :
                             loading ? 
 
                             <button className="cursor-pointer animate-spin border-transparent rounded-xl bg-blue-700 py-2 px-6 font-semibold text-white">
@@ -124,7 +129,8 @@ export default function Event(){
                             <button onClick={handleJoinEvent} className="cursor-pointer border-transparent rounded-xl bg-blue-700 py-2 px-6 font-semibold text-white">
                                 { !isUserJoined ? 'Reserve a spot' : 'Cancel reservation'}
                             </button>
-                          }
+                          
+                        }
                     </div>
                 }
                 <div className="my-6">
