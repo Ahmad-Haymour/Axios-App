@@ -192,7 +192,7 @@ export function UserProvider (props){
             },
 
             deleteEvent: async (body) => {
-                await Axios.delete(`${url}/event`+body.id, {id: body.id}, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}} )
+                await Axios.delete(`${url}/event/`+body.id, {id: body.id}, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}} )
                     .then(async()=> {
                         setRefreshUser(state=>!state)
                     })
