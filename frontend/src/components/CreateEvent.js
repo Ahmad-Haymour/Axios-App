@@ -86,7 +86,7 @@ export default function CreateEvent({handleCloseOptoins}){
                                 </label>
                             </div> 
         </div>
-        <button onClick={handleCreate} className="cursor-pointer rounded-xl bg-white py-2 px-6 font-semibold">Update</button>
+        <button onClick={handleCreate} className="cursor-pointer rounded-xl bg-white py-2 px-6 font-semibold">Create</button>
     </form>
     )
 }
