@@ -127,8 +127,6 @@ export function UserProvider (props){
             },
 
             createEvent: async (body) => {
-                if(!body.title || !body.address || !body.date || !body.description || !body.category ) return false
-
                 setError('')
                 setIsFetching(true)
 
