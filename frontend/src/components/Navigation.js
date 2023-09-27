@@ -65,30 +65,30 @@ export default function Navigation() {
                   <span>Events App</span>
                 </Link>
                 <nav className="px-4">
-                  <Link to={"/"} className="text-white block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700">
+                  <Link to={"/"} className="text-white block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-400">
                     Home
                   </Link>
-                  <Link to={"/events"} onClick={() => setOpen(false)} className="text-white block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700">
+                  <Link to={"/events"} onClick={() => setOpen(false)} className="text-white block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-500">
                     Events
                   </Link>
                   {!user.data && <>
-                  <Link to={"/login"} className="text-white block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700">
+                  <Link to={"/login"} className="text-white block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-200">
                     Login
                   </Link>
-                  <Link to={"/register"} className="text-white block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700">
+                  <Link to={"/register"} className="text-white block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-300">
                     Signup
                   </Link>
                   </>
                   }
                   { user?.data && <>
-                    <Link to={"/account"} className="text-white block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700" >
+                    <Link to={"/account"} className="text-white block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-600" >
                       Account
                     </Link>
-                    <Link to={"/messenger"} className="text-white block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700" >
+                    <Link to={"/messenger"} className="text-white block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-300" >
                       Messenger
                     </Link>
                     <div onClick={handleLogout} >
-                      <Link  to={"/login"} className="text-white block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700" >
+                      <Link  to={"/login"} className="text-white block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-100" >
                         Logout
                       </Link>
                     </div>
