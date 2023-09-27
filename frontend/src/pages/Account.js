@@ -120,10 +120,10 @@ export default function Account(){
                                 </div>
                                 <div className="w-full md:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center lg:min-w-[290px]">
                                     <div className="flex justify-between pt-16 sm:py-12 lg:mt-0 sm:mt-0 lg:px-8">
-                                        <button  onClick={()=>setShowEventOptions(true)}  className="bg-blue-600 sm:min-w-[115px] hover:bg-blue-400 text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150" type="button">
+                                        <button  onClick={()=>setShowEventOptions(true)}  className="bg-blue-300 sm:min-w-[115px] hover:bg-blue-500 text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150" type="button">
                                             Creat an Event
                                         </button>
-                                        <button onClick={()=>setShowUserOptions(true)} className="bg-blue-600 sm:min-w-[115px] hover:bg-blue-400 text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150" type="button">
+                                        <button onClick={()=>setShowUserOptions(true)} className="bg-blue-300 sm:min-w-[115px] hover:bg-blue-500 text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150" type="button">
                                             Edit Profile
                                         </button>
                                     </div>
