@@ -89,7 +89,7 @@ export default function Event(){
                 <img className="w-full h-full max-h-[450px] rounded-b-2xl" src={event.img && `${url}/${event?.img}` } alt="Event bg" />
             </div>
 
-            {user.data?._id === event.user?._id && 
+            { user.data?._id === event.user?._id && 
                 <div className="flex justify-between md:mx-8 mt-4 py-5 sm:relative right-0 top-10 text-right shadow-xl px-16 bg-gray-200/50 rounded-xl">
                     <button onClick={()=> {
                         setNewUpdate(false)
@@ -118,7 +118,7 @@ export default function Event(){
                             !user.data ?
 
                             <Link to={'/login'} >Sign in to join</Link>
-                            
+
                             :
                             loading ? 
 

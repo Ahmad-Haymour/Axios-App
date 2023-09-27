@@ -151,24 +151,6 @@ export function UserProvider (props){
                 } catch (error) {
                     console.error('Error creating event:', error);
                 }
-                // const formData = new FormData()
-                // formData.append("title", body.title)
-                // formData.append("address", body.address)
-                // formData.append("date", body.date)
-                // formData.append("description", body.description)
-                // formData.append("category", body.category)
-                // formData.append("eventBild", body.eventBild)
-
-                // await Axios.post(`${url}/event`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
-                //     .then(async(res)=> {
-                //         eventID = res.data._id
-                //         setRefreshUser(state=>!state)  
-                //     })
-                //     .catch(err=>{
-                //         setError(err.response.data.error)
-                //     })
-                    
-                // return eventID
             },
 
             updateEvent: async (body) => {
@@ -192,6 +174,7 @@ export function UserProvider (props){
             },
 
             deleteEvent: async (body) => {
+                console.log('Body from deleted Event', body);
                 await Axios.delete(`${url}/event/`+body.id, {id: body.id}, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}} )
                     .then(async()=> {
                         setRefreshUser(state=>!state)
