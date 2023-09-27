@@ -2,7 +2,6 @@ import { useState } from "react";
 import useUser from "../hooks/useUser";
 import { useNavigate } from "react-router-dom";
 
-
 export default function CreateEvent({handleCloseOptoins}){
 
     const user = useUser(),

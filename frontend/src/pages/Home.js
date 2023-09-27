@@ -1,7 +1,6 @@
 import React from 'react';
 
 import img2 from '../images/img2.jpg'
-
 import img_1 from '../images/img_1.png'
 import img_2 from '../images/img_2.jpg'
 import img_3 from '../images/img_3.jpg'

@@ -127,6 +127,8 @@ export function UserProvider (props){
             },
 
             createEvent: async (body) => {
+                if(!body.title || !body.addrerss || !body.date || !body.description || !body.category ) return false
+                
                 setError('')
                 setIsFetching(true)
 
@@ -147,7 +149,7 @@ export function UserProvider (props){
                     return eventID
 
                 } catch (error) {
-                    console.error('Error creating event:', error);
+                    console.error('Error by creating an event:', error);
                 }
             },
 
