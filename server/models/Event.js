@@ -20,7 +20,6 @@ const eventSchema = Schema({
     team:[{
         type: SchemaTypes.ObjectId,
         ref: 'User',
-        unique: true
     }],
 
     comments: [{
