@@ -37,8 +37,6 @@ export function UserProvider (props){
         )
             .then(async (res) =>{
                 setUser(res.data)
-                console.log("Use Effect:  ", res);
-
             })
             .catch(err=> console.log(err))
     }, [refreshUser])
@@ -121,7 +119,7 @@ export function UserProvider (props){
             invokeUser: async()=>{
                 await  Axios.get(`${url}/user`,
                 {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
-            )
+                )
                 .then(async (res) =>{
                     setUser(res.data)
                 })
@@ -174,7 +172,6 @@ export function UserProvider (props){
             },
 
             deleteEvent: async (body) => {
-                console.log('Body from deleted Event', body);
                 await Axios.delete(`${url}/event/`+body.id, {id: body.id}, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}} )
                     .then(async()=> {
                         setRefreshUser(state=>!state)
@@ -187,7 +184,7 @@ export function UserProvider (props){
             joinEvent: async (body) => {
                 await Axios.post(`${url}/event/join`, {id: body.id}, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}} )
                     .then(async(res)=> {
-                        console.log('Join Res:  ',res.data);
+                        console.log('Join Response:  ',res.data);
                     })
                     .catch(error =>{
                         console.log(error);
