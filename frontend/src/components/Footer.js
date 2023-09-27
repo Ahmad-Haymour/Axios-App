@@ -103,7 +103,7 @@ export default function Footer() {
                 Privacy | Terms | Cookies
             </div>
             <div className='cursor-pointer'>
-                <p>&copy;2023 Events-App, All Rights Reserved</p>
+                <p>&copy;2023 Events-App</p>
             </div>
         </div>
     </div>
