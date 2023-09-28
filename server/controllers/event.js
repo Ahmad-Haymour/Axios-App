@@ -63,7 +63,7 @@ exports.getSingleEvent = async(req, res, next)=>{
 exports.joinEvent = async(req,res,next)=>{
     const userID = req.user._id
   
-    const user = await User.findById(userID)
+    const user = await User.findById(userID, '-password -token -__v')
 
     if(!user){
         const error = new Error('Authorization USER failed!!!')
