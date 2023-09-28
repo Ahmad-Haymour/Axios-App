@@ -57,7 +57,7 @@ export default function Event(){
         finally{
             setTimeout(() => {
                 setLoading(false)
-            }, 2000);
+            }, 1000);
         }
     },
 
@@ -94,19 +94,19 @@ export default function Event(){
                     <button onClick={()=> {
                         setNewUpdate(false)
                         setShowEventOptions(true)
-                        }} className="cursor-pointer border-transparent rounded-xl bg-blue-700 py-2 px-6 font-semibold text-white me-10"
+                        }} className="cursor-pointer border-transparent rounded-xl bg-blue-500 hover:bg-blue-300 py-2 px-6 font-semibold text-white me-10"
                     >
                             Edit
                     </button>
-                    <button onClick={handleDeleteEvent} className="cursor-pointer border-transparent rounded-xl bg-red-600 py-2 px-6 font-semibold text-white">
+                    <button onClick={handleDeleteEvent} className="cursor-pointer border-transparent rounded-xl bg-red-500 py-2 px-6 font-semibold text-white">
                             Delete
                     </button>
                 </div>
             }
             <div className="mx-2 my-6 md:px-8">
                 <div className=" my-6">
-                    <p className="text-red-700 text-lg font-bold text-center mt-10">{event.date}</p>
-                    <p className="text-blue-700 font-bold py-4 text-2xl sm:text-4xl">{event.title}</p>
+                    <p className="text-red-500 text-lg font-bold text-center mt-10">{event.date}</p>
+                    <p className="text-blue-500 font-bold py-4 text-2xl sm:text-4xl">{event.title}</p>
                     <p className="text-gray-700 text-base">{event.address}</p>
                     <p className="text-gray-700 text-base">{event.description}</p>
                     <p className="text-gray-700 text-base text-end"> By {event.user?.lastname}</p>
@@ -116,20 +116,16 @@ export default function Event(){
                         <p className="inline-block align-bottom mt-2">From open airs & indoor raves</p>
                         {
                             !user.data ?
-
-                            <Link to={'/login'} >Sign in to join</Link>
-
+                                <Link to={'/login'} >Sign in to join</Link>
                             :
-                            loading ? 
-
-                            <button className="cursor-pointer animate-spin border-transparent rounded-xl bg-blue-700 py-2 px-6 font-semibold text-white">
-                                Loading...
-                            </button>
-                            :
-                            <button onClick={handleJoinEvent} className="cursor-pointer border-transparent rounded-xl bg-blue-700 py-2 px-6 font-semibold text-white">
-                                { !isUserJoined ? 'Reserve a spot' : 'Cancel reservation'}
-                            </button>
-                          
+                                loading ? 
+                                    <button className="cursor-pointer animate-spin border-transparent rounded-xl bg-blue-500 hover:bg-blue-300 py-2 px-6 font-semibold text-white">
+                                        Loading...
+                                    </button>
+                                :
+                                    <button onClick={handleJoinEvent} className="cursor-pointer border-transparent rounded-xl bg-blue-500 hover:bg-blue-300 py-2 px-6 font-semibold text-white">
+                                        { !isUserJoined ? 'Reserve a spot' : 'Cancel reservation'}
+                                    </button>
                         }
                     </div>
                 }

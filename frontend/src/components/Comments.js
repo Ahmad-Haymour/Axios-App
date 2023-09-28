@@ -57,7 +57,7 @@ export default function Comments({event, handleCloseOptoins}){
                             placeholder="Write a comment..." required></textarea>
                     </div>
                     <button type="submit" onClick={handleAddComment}
-                        className="inline-flex items-center py-2.5 px-4 text-xs text-white font-medium text-center bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
+                        className="inline-flex items-center py-2.5 px-4 text-xs text-white font-medium text-center bg-blue-500 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-700 hover:bg-blue-300">
                         Post comment
                     </button>
                 </form>
@@ -97,15 +97,12 @@ export default function Comments({event, handleCloseOptoins}){
 
                                 <div className="flex flex-col justify-between items-start w-32 h-28 p-3 text-sm text-gray-700 dark:text-gray-200">
                                     <button className="w-full text-left text-black hover:bg-gray-300" onClick={(e)=>{handleDeleteComment(e, comment._id)}}>
-                                        {/* <span className="block py-2 px-4 hover:bg-gray-100 hover:bg-gray-300 hover:text-black"></span> */}
                                         Remove
                                     </button>
                                     <button className="w-full text-left text-black hover:bg-gray-300">
-                                        {/* <span className="block py-2 px-4 hover:bg-gray-100 hover:bg-gray-300 hover:text-black"></span> */}
                                         Edit
                                     </button>
                                     <button className="w-full text-left text-black hover:bg-gray-300">
-                                        {/* <span className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-black"></span> */}
                                         Report
                                     </button>
                                 </div>
