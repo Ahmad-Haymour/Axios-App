@@ -148,7 +148,6 @@ export default function Navigation() {
             </Routes>
           </div>
       </div>
-      <div  className='h-[2px] w-full bg-blue-300 px-8'/>
       <Footer/>
     </Router>
   );
