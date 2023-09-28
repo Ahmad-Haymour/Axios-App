@@ -112,7 +112,6 @@ export default function Event(){
                     <p className="text-gray-700 text-base">{event.description}</p>
                     <p className="text-gray-700 text-base text-end"> By {event.user?.lastname}</p>
                 </div>
-                { user.data && 
                     <div className="flex justify-between align-center gap-6 my-8 rounded-xl p-3 sm:p-6 bg-gray-200">
                         <p className="inline-block align-bottom mt-2">From open airs & indoor raves</p>
                         {
@@ -129,7 +128,6 @@ export default function Event(){
                                     </button>
                         }
                     </div>
-                }
                 <div className="my-6">
                     <p className="text-black-700 font-bold text-xl mb-6">
                         Team ({event.team? event.team.length : 0})
