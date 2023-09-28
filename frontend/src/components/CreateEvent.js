@@ -15,7 +15,9 @@ export default function CreateEvent({handleCloseOptoins}){
 
     handleCreate =async(e)=>{
         e.preventDefault()
-        if(!title || !address || !date || !description || !category) return
+        if(!title || !address || !date || !description || !category) {
+            return
+        }
 
         try {
             const eventId = await user.createEvent({title,address,date, description, category, eventBild})
