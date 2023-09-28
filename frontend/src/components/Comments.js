@@ -58,7 +58,7 @@ export default function Comments({event, handleCloseOptoins}){
                     </div>
                     <button type="submit" onClick={handleAddComment}
                         className="inline-flex items-center py-2.5 px-4 text-xs text-white font-medium text-center bg-blue-500 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-700 hover:bg-blue-300">
-                        Post comment
+                        { user.data ? "Post comment" : "You must login to comment" }
                     </button>
                 </form>
 

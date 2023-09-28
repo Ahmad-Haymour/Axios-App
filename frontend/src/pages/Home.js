@@ -28,7 +28,7 @@ export default function Home() {
             </div>
         </section>
         
-        <div  className='h-[5px] w-full bg-gray-400/50 px-8'/>
+        <div  className='h-[5px] w-full bg-blue-300 px-8'/>
 
         <section className='p-10' >
             <div className='text-lg'>
@@ -95,7 +95,7 @@ export default function Home() {
                 </div>
             </div>
         </section>
-        <div  className='h-[5px] w-full bg-gray-400/50 px-8'/>
+        <div  className='h-[5px] w-full bg-blue-300 px-8'/>
 
         <section className='py-12 px-10'>
           <h3 className='text-2xl font-bold pb-8'>TRENDING</h3>
