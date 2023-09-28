@@ -96,10 +96,10 @@ export default function Event(){
                         setShowEventOptions(true)
                         }} className="cursor-pointer border-transparent rounded-xl bg-blue-500 hover:bg-blue-300 py-2 px-6 font-semibold text-white me-10"
                     >
-                            Edit
+                        Edit
                     </button>
                     <button onClick={handleDeleteEvent} className="cursor-pointer border-transparent rounded-xl bg-red-500 py-2 px-6 font-semibold text-white">
-                            Delete
+                        Delete
                     </button>
                 </div>
             }
