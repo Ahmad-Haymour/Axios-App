@@ -129,9 +129,7 @@ exports.updateEvent = async(req,res,next)=>{
     event.address = address ? address : event.address
     event.category = category ? category : event.category
     event.description = description ? description : event.description
-
-    // Save the image file path in the "img" field if exist : else do nothing
-    event.img = req.file ? req.file.path : null 
+    event.img = req.file ? req.file.path : event.img 
 
     await event.save()
 
