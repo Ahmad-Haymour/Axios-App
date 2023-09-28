@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Axios  from "axios";
+import image_not_found from "../images/image_not_found.png"
 
 export default function Events(){
     const url = 'https://axios-app.onrender.com'
@@ -38,7 +39,7 @@ export default function Events(){
 
     return (
         <div className="bg-white-400 min-w-[74.8vw]">
-            <div className='min-w-[100%]  mx-auto pt-14'>
+            <div className='min-w-[100%] mx-auto pt-14'>
                 <div className="relative mx-auto flex items-center w-[70%] h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden">
                     <div className="grid place-items-center h-full w-12 text-gray-300">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -88,7 +89,7 @@ export default function Events(){
                 {   events.length > 0 &&
                     filterEvents?.map((e)=>(
                         <Link to={'/events/'+e._id} key={e._id} className="rounded bg-white overflow-hidden shadow-md hover:shadow-xl w-[270px] h-[380px]">
-                            <img className="w-full h-[150px]" src={e.img && `${url}/${e?.img}` } alt="Event bg"/>
+                            <img className="w-full h-[150px]" src={e.img ? `${url}/${e?.img}` : image_not_found } alt="Event bg"/>
                             
                             <div className="px-4 py-0 min-h-[160px]">
                                 <div className="font-bold text-xl mb-2">

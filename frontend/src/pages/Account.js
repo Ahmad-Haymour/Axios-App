@@ -4,6 +4,8 @@ import UpdateUser from "../components/UpdateUser";
 import CreateEvent from "../components/CreateEvent";
 import { Link } from "react-router-dom";
 import Axios from "axios";
+import image_not_found from "../images/image_not_found.png"
+import no_image_available from "../images/no_image_available.jfif"
 
 export default function Account(){
     
@@ -42,7 +44,6 @@ export default function Account(){
                 <div className="absolute bottom-0 left-0 right-auto top-auto z-20 inline-block -translate-x-2/4 translate-y-1/2 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 rounded-full bg-red-600/75 px-2 text-lg text-white"
                 >
                     {user.notifications?.length}
-                        
                 </div>
                 <div className="flex items-center justify-center rounded-lg bg-blue-500 px-2 py-1.5 text-center shadow-lg z-10">
                     <div>
@@ -115,7 +116,7 @@ export default function Account(){
                             <div className="flex flex-wrap justify-between ">
                                 <div className="w-full  flex justify-center">
                                     <div className="absolute -top-16">
-                                        <img src={user?.avatar} alt="UserAvatar" className="shadow-xl rounded-full align-middle border-none w-[100px] h-[100px] md:w-[150px] md:h-[150px] lg:-mt-2"/>
+                                        <img src={user?.avatar ? user.avatar : no_image_available } alt="UserAvatar" className="shadow-xl rounded-full align-middle border-none w-[100px] h-[100px] md:w-[150px] md:h-[150px] lg:-mt-2"/>
                                     </div>
                                 </div>
                                 <div className="w-full md:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center lg:min-w-[290px]">
@@ -166,7 +167,7 @@ export default function Account(){
                                 <div className="p-10 flex flex-wrap justify-center gap-5">
                                     {user.events.map(e=>(
                                         <Link to={'/events/'+e._id} key={e._id} className="rounded bg-white overflow-hidden shadow-md hover:shadow-xl w-[280px] h-[375px]">
-                                            <img className="w-full h-[150px]" src={e.img && `${url}/${e.img}` } alt="Event bg"/>
+                                            <img className="w-full h-[150px]" src={e.img ? `${url}/${e.img}` : image_not_found } alt="Event bg"/>
                                             
                                             <div className="px-6 py-2 text-left">
                                                 <p className="font-bold text-lg text-black sm:min-h-[48px] ">
