@@ -1,10 +1,11 @@
 
 # Axios-App
 
-Open [Axios App](https://axios-events.onrender.com) to view the app in your browser.
+**Open [Axios Events App](https://axios-events.onrender.com) to view the app in your browser.**
+
  
-# Project Overview
-The Events App is a dynamic and user-friendly web application designed to connect people with exciting events, whether they're organizers looking to create memorable experiences or attendees seeking the perfect event to join. This platform serves as a hub for event creation, registration, and seamless communication among event-goers.
+## Project Overview
+The Events App is a dynamic, responsive and user-friendly web application designed to connect people with exciting events, whether they're organizers looking to create memorable experiences or attendees seeking the perfect event to join. This platform serves as a hub for event creation, registration, and seamless communication among event-goers.
 
 ## Model UML Diagram
 ![Model UML Diagram](./images/Axios_Events_Diagram.png)

@@ -1,7 +1,6 @@
 const express = require('express')
 const controller = require('../controllers/event')
 const auth = require('../lib/middlewares/auth')
-// const validation = require('../lib/validators/events-list')
 const multer = require("multer")
 const path = require("path")
 require('express-async-errors')

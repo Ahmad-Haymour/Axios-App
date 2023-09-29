@@ -35,14 +35,15 @@ exports.createComment = async(req, res, next)=>{
     res.status(200).send(comment)
 }
 
-
 exports.deleteComment = async(req, res, next)=>{
 
     const {commentID, eventID} = req.body
 
     const comment = await Comment.findById(commentID).populate('user', '-token -password -__v')
     
-    const event = await Event.findById(eventID).populate('user', '-token -password -__v').populate('comments').populate('team', '-token -password -__v')
+    const event = await Event.findById(eventID).populate('user', '-token -password -__v')
+                                               .populate('comments')
+                                               .populate('team', '-token -password -__v')
 
     if( !(comment.user?._id.toString() === req.user?._id.toString())){  
         return res.status(201).json('Its not your comment')
