@@ -2,10 +2,13 @@
 # Axios-App
 
 **Open [Axios Events App](https://axios-events.onrender.com) to view the app in your browser.**
-
  
 ## Project Overview
 The Events App is a dynamic, responsive and user-friendly web application designed to connect people with exciting events, whether they're organizers looking to create memorable experiences or attendees seeking the perfect event to join. This platform serves as a hub for event creation, registration, and seamless communication among event-goers. 
+
+<img src="./images/Screenshot(07).png" width="300"/> <img src="./images/Screenshot(08).png" width="300"/>
+
+<img src="./images/Screenshot(09).png" width="300"/> <img src="./images/Screenshot(11).png" width="300"/>
 
 ## Model UML Diagram
 ![Model UML Diagram](./images/Axios_Events_Diagram.png)
@@ -27,11 +30,6 @@ The Events App is a dynamic, responsive and user-friendly web application design
 
 - **Privacy and Security:** We prioritize the security of user data and use robust authentication and authorization mechanisms to protect user accounts and event information.
 
-## Main Components: 
-
-<img src="./images/Screenshot(01).png" width="425"/> <img src="./images/Screenshot(02).png" width="425"/>
-<img src="./images/Screenshot(03).png" width="425"/> <img src="./images/Screenshot(04).png" width="425"/>
-
 ## Purpose
 The Events App was created with the aim of making event planning, discovery, and interaction more accessible and enjoyable for everyone. Whether you're hosting a local meetup, a concert, a conference, or simply looking for fun activities in your area, our platform brings together organizers and attendees in one unified space.
 
@@ -40,3 +38,10 @@ The Events App was created with the aim of making event planning, discovery, and
 Empowers event organizers to reach a broader audience and efficiently manage their events.
 Enables users to discover, participate in, and connect with a wide array of events.
 Fosters a vibrant community by facilitating communication and interaction among event-goers.
+
+## Screenshots: 
+
+<img src="./images/Screenshot(01).png" width="400"/> <img src="./images/Screenshot(02).png" width="400"/>
+<img src="./images/Screenshot(03).png" width="400"/> <img src="./images/Screenshot(04).png" width="400"/>
+
+

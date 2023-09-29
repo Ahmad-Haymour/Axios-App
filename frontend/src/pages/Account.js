@@ -84,14 +84,14 @@ export default function Account(){
                         </button>
                         <h3 className="md:text-2xl text-white p-4">You have {user.notifications.length} new messages!</h3>
                         {user.notifications?.map(n=> (
-                            <div key={n._id} className="flex justify-between cursor-pointer rounded-lg  z-100 px-7 pb-2.5 m-6 text-xs md:text-lg font-medium uppercase leading-normal text-black shadow-[0_4px_9px_-4px_#dc4c64] transition duration-150 ease-in-out hover:bg-gray-600/50 focus:bg-red-600 focus:outline-none focus:ring-0 active:bg-red-700"  title="Delete notification!"
+                            <div key={n._id} className="flex justify-between cursor-pointer rounded-lg  z-100 px-7 pb-2.5 m-6 text-xs md:text-lg font-medium uppercase leading-normal text-black shadow-[0_4px_9px_-4px_#dc4c64] transition duration-150 ease-in-out hover:bg-gray-600/50 focus:bg-blue-300 focus:outline-none focus:ring-0 active:bg-blue-400"  title="Delete notification!"
                                 onClick={(e)=>handleReadMessage(e, n._id)}>
                                 <span className="inline-block shadow-[0_4px_9px_-4px_#dc4c64] p-5 text-gray-300">
                                     {n.user.firstname+' '+n.user.lastname}
                                 </span>
                                 <span
                                     tabIndex="0"
-                                    className="block rounded bg-red z-100 px-7 pb-2.5 md:text-lg font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#dc4c64] transition duration-150 ease-in-out focus:bg-red-600 focus:outline-none focus:ring-0 active:bg-red-700 p-5"
+                                    className="block rounded bg-blue z-100 px-7 pb-2.5 md:text-lg font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#dc4c64] transition duration-150 ease-in-out focus:bg-blue-300 focus:outline-none focus:ring-0 active:bg-blue-400 p-5"
                                     data-te-toggle="popover"
                                     data-te-trigger="focus"
                                     

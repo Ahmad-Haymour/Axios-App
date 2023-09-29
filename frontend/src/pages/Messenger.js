@@ -109,7 +109,7 @@ export default function Messenger(){
                         <!-- user list --> */}
                     { user.data && users && filterUsers.filter(element=>element._id !== user.data?._id).map((u)=>( 
 
-                        <div onClick={(e)=>handleSetChat(e, u._id)} key={u._id} className="flex flex-row py-4 px-2 justify-between items-center border-b-2">
+                        <div onClick={(e)=>handleSetChat(e, u._id)} key={u._id} className="flex flex-row py-4 px-2 justify-between items-center border-b-2 cursor-pointer">
                             <div className="w-2/4">
                                 <img
                                 src={u.avatar}
@@ -130,7 +130,11 @@ export default function Messenger(){
 
                 {/* <!-- Participant -->  */}
                 <div className="flex sm:p-2 justify-between flex-col w-full h-[66vh] sm:h-full">
-                { !participantReady ? <h1 className="text-sky-700 text-center text-4xl animate-bounce mt-40">LOADING...</h1> : <>
+
+                { participantReady || chat?.participants ? 
+
+                  
+                <>
                     <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
                         {/* { chat?.participants &&  */}
 
@@ -141,7 +145,7 @@ export default function Messenger(){
                                             <circle cx="8" cy="8" r="8" fill="currentColor"></circle>
                                         </svg>
                                     </span>
-                                    <img src={chat.participants?.filter(u=> u._id !== user.data?._id)[0].avatar} alt="" className="w-10 sm:w-16 h-10 sm:h-16 rounded-full"/>
+                                    <img src={chat.participants?.filter(u=> u._id !== user.data?._id)[0].avatar} alt="Participant" className="w-10 sm:w-16 h-10 sm:h-16 rounded-full"/>
                                 </div>
                                 
                                 <div className="flex flex-col leading-tight">
@@ -214,7 +218,11 @@ export default function Messenger(){
                             onEnter={handleSendMessage}
                             placeholder="Type a message"
                         />
-                    </div></>
+                    </div>
+                    </>
+                    :
+                    <h1 className="text-sky-700 text-center text-4xl animate-bounce mt-40">LOADING...</h1> 
+                    
                 }
                 </div>
             </div>
