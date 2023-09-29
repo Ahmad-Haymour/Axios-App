@@ -6,8 +6,8 @@
 ## Project Overview
 The Events App is a dynamic, responsive and user-friendly web application designed to connect people with exciting events, whether they're organizers looking to create memorable experiences or attendees seeking the perfect event to join. This platform serves as a hub for event creation, registration, and seamless communication among event-goers. 
 
-<img src="./images/Screenshot(07).png" width="425"/> <img src="./images/Screenshot(08).png" width="425"/>
-<img src="./images/Screenshot(09).png" width="425"/> <img src="./images/Screenshot(11).png" width="425"/>
+<img src="./images/Screenshot(07).png" width="400"/> <img src="./images/Screenshot(08).png" width="400"/>
+<img src="./images/Screenshot(09).png" width="400"/> <img src="./images/Screenshot(11).png" width="400"/>
 
 # MERN Full-Stack Project
 
