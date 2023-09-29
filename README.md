@@ -5,7 +5,7 @@
 
  
 ## Project Overview
-The Events App is a dynamic, responsive and user-friendly web application designed to connect people with exciting events, whether they're organizers looking to create memorable experiences or attendees seeking the perfect event to join. This platform serves as a hub for event creation, registration, and seamless communication among event-goers.
+The Events App is a dynamic, responsive and user-friendly web application designed to connect people with exciting events, whether they're organizers looking to create memorable experiences or attendees seeking the perfect event to join. This platform serves as a hub for event creation, registration, and seamless communication among event-goers. 
 
 ## Model UML Diagram
 ![Model UML Diagram](./images/Axios_Events_Diagram.png)
@@ -26,6 +26,11 @@ The Events App is a dynamic, responsive and user-friendly web application design
 - **User-friendly Interface:** The application offers an intuitive and aesthetically pleasing user interface, ensuring a seamless and enjoyable user experience.
 
 - **Privacy and Security:** We prioritize the security of user data and use robust authentication and authorization mechanisms to protect user accounts and event information.
+
+## Main Components: 
+
+<img src="./images/Screenshot(01).png" width="425"/> <img src="./images/Screenshot(02).png" width="425"/>
+<img src="./images/Screenshot(03).png" width="425"/> <img src="./images/Screenshot(04).png" width="425"/>
 
 ## Purpose
 The Events App was created with the aim of making event planning, discovery, and interaction more accessible and enjoyable for everyone. Whether you're hosting a local meetup, a concert, a conference, or simply looking for fun activities in your area, our platform brings together organizers and attendees in one unified space.

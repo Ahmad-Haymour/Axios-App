@@ -36,7 +36,9 @@ exports.register = async(req, res, next)=>{
 
 exports.login = async(req, res, next) =>{
     const {email, password} = req.body
-    const user = await User.findOne({'email':email}).populate('events').populate('eventslist')
+    const user = await User.findOne({'email':email})
+                            .populate('events')
+                            .populate('eventslist')
     await Promise.all( user.events.map((e)=>e.populate('user', '-token -password -__v')) )
 
     if(!user){
@@ -62,7 +64,7 @@ exports.login = async(req, res, next) =>{
                                             secure: true,
                                             httpOnly: true,
                                             crossSiteCookiesAllowed: true
-                                          } )
+                                          })
 
     delete user.password
 
