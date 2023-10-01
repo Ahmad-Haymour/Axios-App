@@ -2,7 +2,7 @@
 # Axios-App
 
 **Open [Axios Events App](https://axios-events.onrender.com) to view the app in your browser.**
- 
+
 ## Project Overview
 The Events App is a dynamic, responsive and user-friendly web application designed to connect people with exciting events, whether they're organizers looking to create memorable experiences or attendees seeking the perfect event to join. This platform serves as a hub for event creation, registration, and seamless communication among event-goers. 
 
@@ -12,6 +12,10 @@ The Events App is a dynamic, responsive and user-friendly web application design
 
 ## Model UML Diagram
 ![Model UML Diagram](./images/Axios_Events_Diagram.png)
+
+- **This application works only when** I activate the database on my computer or when you establish a connection to MongoDB to enable user methods and event actions, as well as chatting.
+
+- To do that you need to go into the 'server' folder, then open the '.env.template' file to add your MongoDB Connection cluster. After that, you need to change the file name to '.env,' which means deleting '.template'.
 
 ## Key Features
 - **User Registration and Authentication:** Users can easily create accounts, log in, and manage their profiles securely. Account registration provides a personalized experience, allowing users to keep track of their event history and activity.
