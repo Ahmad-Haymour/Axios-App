@@ -6,9 +6,26 @@
 ## Project Overview
 The Events App is a dynamic, responsive and user-friendly web application designed to connect people with exciting events, whether they're organizers looking to create memorable experiences or attendees seeking the perfect event to join. This platform serves as a hub for event creation, registration, and seamless communication among event-goers. 
 
-<img src="./images/Screenshot(07).png" width="300"/> <img src="./images/Screenshot(08).png" width="300"/>
+<img src="./images/Screenshot(07).png" width="400"/> <img src="./images/Screenshot(08).png" width="400"/>
+<img src="./images/Screenshot(09).png" width="400"/> <img src="./images/Screenshot(11).png" width="400"/>
 
-<img src="./images/Screenshot(09).png" width="300"/> <img src="./images/Screenshot(11).png" width="300"/>
+# MERN Full-Stack Project
+
+This project is a full-stack web application developed using the MERN stack, which stands for MongoDB, Express, React, and Node.js. Below is an overview of the technologies and tools used in this project:
+
+## Backend Technologies
+
+- **MongoDB**: We used MongoDB as our database system. MongoDB is a NoSQL database that allows us to store and manage data in a flexible and scalable manner.
+
+- **Node.js**: The server-side application is built using Node.js, which provides a runtime environment for executing JavaScript code on the server. It allows us to handle server-side logic and APIs.
+
+- **Express.js**: Express is a minimal and flexible Node.js web application framework that we used to build our server and handle HTTP requests and routing.
+
+## Frontend Technologies
+
+- **React.js**: The frontend of the application is built using React.js, a popular JavaScript library for building user interfaces. React enables us to create dynamic and responsive UI components.
+
+- **Tailwind CSS**: For styling the frontend, we adopted Tailwind CSS, a utility-first CSS framework that streamlines the process of designing and styling web applications. It offers a highly customizable and responsive design system.
 
 ## Model UML Diagram
 ![Model UML Diagram](./images/Axios_Events_Diagram.png)
