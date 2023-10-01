@@ -13,9 +13,20 @@ The Events App is a dynamic, responsive and user-friendly web application design
 ## Model UML Diagram
 ![Model UML Diagram](./images/Axios_Events_Diagram.png)
 
-- **This application works only when** I activate the database on my computer or when you establish a connection to MongoDB to enable user methods and event actions, as well as chatting.
+# MERN Full-Stack Project
+This project is a full-stack web application developed using the MERN stack, which stands for MongoDB, Express, React, and Node.js. Below is an overview of the technologies and tools used in this project:
 
-- To do that you need to go into the 'server' folder, then open the '.env.template' file to add your MongoDB Connection cluster. After that, you need to change the file name to '.env,' which means deleting '.template'.
+## Backend Technologies
+- MongoDB: We used MongoDB as our database system. MongoDB is a NoSQL database that allows us to store and manage data in a flexible and scalable manner.
+
+- Node.js: The server-side application is built using Node.js, which provides a runtime environment for executing JavaScript code on the server. It allows us to handle server-side logic and APIs.
+
+- Express.js: Express is a minimal and flexible Node.js web application framework that we used to build our server and handle HTTP requests and routing.
+
+## Frontend Technologies
+- React.js: The frontend of the application is built using React.js, a popular JavaScript library for building user interfaces. React enables us to create dynamic and responsive UI components.
+
+- Tailwind CSS: For styling the frontend, we adopted Tailwind CSS, a utility-first CSS framework that streamlines the process of designing and styling web applications. It offers a highly customizable and responsive design system.
 
 ## Key Features
 - **User Registration and Authentication:** Users can easily create accounts, log in, and manage their profiles securely. Account registration provides a personalized experience, allowing users to keep track of their event history and activity.
@@ -42,6 +53,11 @@ The Events App was created with the aim of making event planning, discovery, and
 Empowers event organizers to reach a broader audience and efficiently manage their events.
 Enables users to discover, participate in, and connect with a wide array of events.
 Fosters a vibrant community by facilitating communication and interaction among event-goers.
+
+## This application works only when:
+I activate the database on my computer or when you establish a connection to MongoDB to enable user methods and event actions, as well as chatting.
+
+To do that you need to go into the 'server' folder, then open the '.env.template' file to add your MongoDB Connection cluster. After that, you need to change the file name to '.env' .
 
 ## Screenshots: 
 
