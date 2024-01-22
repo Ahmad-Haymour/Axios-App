@@ -53,11 +53,8 @@ Empowers event organizers to reach a broader audience and efficiently manage the
 Enables users to discover, participate in, and connect with a wide array of events.
 Fosters a vibrant community by facilitating communication and interaction among event-goers.
 
-## This application works only when:
-I activate the database on my computer or when you establish a connection to MongoDB to enable user methods and event actions, as well as chatting.
-
-To do that you need to go into the 'server' folder, then open the '.env.template' file to add your MongoDB Connection cluster. After that, you need to change the file name to '.env' .
-
+## This application is running smoothly,
+but unfortunately, event images are currently lost due to a database configuration issue. 
 ## Screenshots: 
 
 <img src="./images/Screenshot(01).png" width="400"/> <img src="./images/Screenshot(02).png" width="400"/>
